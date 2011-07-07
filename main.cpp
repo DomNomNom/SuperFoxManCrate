@@ -4,21 +4,31 @@
 #include "player.hpp"
 #include "utils.hpp"
 
-void placeObject(sf::Drawable& d) {
+float scale = 4;  // grobal variable to be written to by main() and read by placeObject()
+int screenWd = sf::VideoMode::GetDesktopMode().Width; // faster than calling the function everytime
+int screenHt = sf::VideoMode::GetDesktopMode().Height;
+
+sf::Drawable &placeObject(sf::Drawable &d) {
   d.SetScale(scale, scale);
-  d.SetPosition(
+  d.Move(
+    d.GetPosition().x * (scale-1),
+    d.GetPosition().y * (scale-1) 
+  );
+  d.Move( // translation
     screenWd/2 - scale*WIDTH/2, 
     screenHt/2 - scale*HEIGHT/2
   );
 }
 
+
 int main() {
+
   // create the window
   sf::VideoMode screen(sf::VideoMode::GetDesktopMode());
   sf::RenderWindow app(screen, "Hi World?", sf::Style::Fullscreen);
   app.SetFramerateLimit(60); // Limit to 60 frames per second
-  
-  scale = screen.Height / (float)HEIGHT; // (un-)comment this line to enable/disable dynamic scaling
+  app.EnableVerticalSync(true);
+  //scale = screen.Height / (float)HEIGHT; // (un-)comment this line to enable/disable dynamic scaling
   //std::cout << "scale: x" << scale << std::endl;
   
   // bg image
@@ -41,26 +51,33 @@ int main() {
   placeObject(tri);
   
   // player
-  Player p(WIDTH/2, HEIGHT/2);
+  sf::Image playerImage;
+  if (!playerImage.LoadFromFile("images/player_16x16.png")) return -1;
+  Player p(WIDTH/2, HEIGHT/2, playerImage);
+  
   
   // main game loop
   while (app.IsOpened()) {
     if (app.GetInput().IsKeyDown(sf::Key::Escape)) app.Close(); 
     // process window events
+    
+    // game logic
+    p.checkKeys(app);
+    
     sf::Event event;
     while (app.PollEvent(event)) {
       // check for window exit
       if (event.Type == sf::Event::Closed) app.Close();
     }
     
-    // game logic
-    p.checkKeys(app);
-    
+    float frameTime = app.GetFrameTime();
+    p.update(frameTime);
     
     // draw
     app.Clear();
     app.Draw(bg);
-    app.Draw(tri);
+    //app.Draw(tri);
+    app.Draw(placeObject(p.draw()));
     
     app.Display();
     
