@@ -25,27 +25,23 @@ void Player::checkKeys(sf::RenderWindow& rw) {
     cancleJump = false;
   }
   if (rw.GetInput().IsKeyDown(sf::Key::Down))  ;
-  if (rw.GetInput().IsKeyDown(sf::Key::Left))  dV.x -= PLAYER_WALKSPEED;
+  if (rw.GetInput().IsKeyDown(sf::Key::Left))  dV.x -= PLAYER_WALKSPEED;  // TODO: implement friction affecting acceleration/decelleration
   if (rw.GetInput().IsKeyDown(sf::Key::Right)) dV.x += PLAYER_WALKSPEED;
 }
 
-void Player::update(int dt) {
+void Player::update(float dt) {
   dV.y += PLAYER_GRAVITY;
   
   // calculate vel
-  FVector acceleration = dV;
-  acceleration *= dt;
-  vel += acceleration;
-  vel.x *= (1.f-PLAYER_GROUND_FRICTION);
-  if (inAir && vel.y<0 && cancleJump) vel.y = 0;
+  vel += dV * dt;
+  vel.x *= (1.f-PLAYER_GROUND_FRICTION);  // slow the player down. TODO: change this accordingly with the above todo.
+  if (inAir && vel.y<0 && cancleJump) vel.y = 0;  // cancle the jump if possible
   cancleJump = true;
   
   // calculate pos
-  FVector dx = vel;
-  dx *= dt;
-  pos += dx;
+  pos += vel * dt;
   
-  dV.x=0; dV.y=0;
+  dV.x=0; dV.y=0; 
   
   if (pos.x > WIDTH -PLAYER_SIZE) { pos.x = WIDTH -PLAYER_SIZE;  vel.x=0; }
   if (pos.y > HEIGHT-PLAYER_SIZE) { pos.y = HEIGHT-PLAYER_SIZE; vel.y=0; inAir=false; }

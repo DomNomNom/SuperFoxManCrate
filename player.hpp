@@ -1,22 +1,22 @@
+#include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics.hpp>
-#include "fvector.hpp"
 #include "collisionObject.hpp"
 
 class Player {
 private:
-  FVector pos;
-  FVector vel;
-  FVector dV;
+  sf::Vector2<float> pos;
+  sf::Vector2<float> vel;
+  sf::Vector2<float> dV;
   bool inAir;
   bool cancleJump;
   sf::Sprite img;
   
 public:
-  Player (float x, float y, const sf::Image &image);
+  Player(float x, float y, const sf::Image &image);
   
   void checkKeys(sf::RenderWindow& rw);
   
-  void update(int dt);
+  void update(float dt);  // dt: delta time => frameTime
   
   bool colidesWith(CollisionObject o);
   

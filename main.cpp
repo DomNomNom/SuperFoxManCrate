@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "player.hpp"
+#include "bullet.hpp"
 #include "utils.hpp"
 
 float scale = 4;  // grobal variable to be written to by main() and read by placeObject()
