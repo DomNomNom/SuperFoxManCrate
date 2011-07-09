@@ -7,9 +7,9 @@ private:
   sf::Vector2<float> pos;
   sf::Vector2<float> vel;
   sf::Vector2<float> dV;
-  float currentAcc;
   bool inAir;
   bool cancleJump;
+  bool facingLeft;
   sf::Sprite img;
   
 public:
