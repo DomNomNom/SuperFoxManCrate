@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <iostream>
+#include "physics.hpp"
 #include "player.hpp"
 #include "bullet.hpp"
 #include "utils.hpp"
@@ -56,10 +57,12 @@ int main() {
   if (!playerImage.LoadFromFile("images/player_16x16.png")) return -1;
   Player p(WIDTH/2, HEIGHT/2, playerImage);
   
+  Physics phys(p);
   
   // main game loop
   while (app.IsOpened()) {
     if (app.GetInput().IsKeyDown(sf::Key::Escape)) app.Close(); 
+    if (app.GetInput().IsKeyDown(sf::Key::Space )) usleep(50000);
     // process window events
     
     // game logic
@@ -72,7 +75,7 @@ int main() {
     }
     
     float frameTime = app.GetFrameTime();
-    p.update(frameTime);
+    phys.update(frameTime);
     
     // draw
     app.Clear();

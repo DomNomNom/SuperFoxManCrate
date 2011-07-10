@@ -10,7 +10,7 @@ protected:
   float wd;
   float ht;
 public:
-  virtual bool collideWith(CollisionObject o);
+  virtual bool collidesWith(CollisionObject o);
 };
   
 #endif

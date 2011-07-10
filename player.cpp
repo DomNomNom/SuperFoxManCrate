@@ -4,8 +4,8 @@
 #include "utils.hpp"
 
 #define PLAYER_WALKSPEED 0.3
-#define PLAYER_GRAVITY 0.002
-#define PLAYER_JUMP_STRENGTH 0.03
+#define PLAYER_GRAVITY 0.005
+#define PLAYER_JUMP_STRENGTH 0.8
 #define PLAYER_SIZE 16
 
 Player::Player (float x, float y, const sf::Image &image) {
@@ -14,13 +14,12 @@ Player::Player (float x, float y, const sf::Image &image) {
   dV.x =0; dV.y =0;
   inAir = true;
   img.SetImage(image);
-  img.SetBlendMode(sf::Blend::Mode(3));
 }
 
 void Player::checkKeys(sf::RenderWindow& rw) {
   if (rw.GetInput().IsKeyDown(sf::Key::Up)) {
     if (!inAir) { 
-      dV.y -= PLAYER_JUMP_STRENGTH; 
+      vel.y -= PLAYER_JUMP_STRENGTH; 
       inAir = true; 
     }
     cancleJump = false;
@@ -31,10 +30,10 @@ void Player::checkKeys(sf::RenderWindow& rw) {
 }
 
 void Player::update(float dt) {
-  
+  //vel.y += dt * PLATER_GRAVITY
   // calculate vel
   dV.y += PLAYER_GRAVITY;
-  vel += dV*dt;
+  vel += dV * dt;
   vel.x = dV.x * PLAYER_WALKSPEED;
   if (inAir && vel.y<0 && cancleJump) vel.y = 0;  // cancle the jump if possible
   cancleJump = true;
@@ -51,7 +50,7 @@ void Player::update(float dt) {
 }
 
 sf::Drawable &Player::draw() {
-  img.FlipX(facingLeft);  // TODO; moonWalk
+  img.FlipX(facingLeft);  // TODO: moonWalk
   img.SetPosition(pos.x, pos.y);
   sf::Drawable &d = img;
   return d;

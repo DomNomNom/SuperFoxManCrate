@@ -9,6 +9,8 @@ private:
   sf::Vector2<float> dV;
   bool inAir;
   bool cancleJump;
+  float jumpStartHeight;
+  float jumpStartTime;
   bool facingLeft;
   sf::Sprite img;
   
