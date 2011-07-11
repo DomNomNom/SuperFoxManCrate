@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 
 #include <iostream>
+
+#include "platform.hpp"
 #include "physics.hpp"
 #include "player.hpp"
 #include "bullet.hpp"
@@ -24,7 +26,6 @@ sf::Drawable &placeObject(sf::Drawable &d) {
 
 
 int main() {
-
   // create the window
   sf::VideoMode screen(sf::VideoMode::GetDesktopMode());
   sf::RenderWindow app(screen, "Hi World?", sf::Style::Fullscreen);
@@ -41,17 +42,6 @@ int main() {
   bg.SetColor(sf::Color::Blue);
   placeObject(bg);
   
-  // size triangle
-  sf::Color c(sf::Color::Red);
-  sf::Shape tri;
-  tri.AddPoint(0,   0  ,c,c);
-  tri.AddPoint(256, 0  ,c,c);
-  tri.AddPoint(128, 160,c,c);
-  tri.EnableOutline(true);
-  tri.SetOutlineThickness(1);
-  tri.EnableFill(false);
-  placeObject(tri);
-  
   // player
   sf::Image playerImage;
   if (!playerImage.LoadFromFile("images/player_16x16.png")) return -1;
@@ -61,26 +51,23 @@ int main() {
   
   // main game loop
   while (app.IsOpened()) {
+    // input
     if (app.GetInput().IsKeyDown(sf::Key::Escape)) app.Close(); 
-    if (app.GetInput().IsKeyDown(sf::Key::Space )) usleep(50000);
-    // process window events
-    
-    // game logic
+    if (app.GetInput().IsKeyDown(sf::Key::Space )) usleep(50000); // create artificially low frame rate
     p.checkKeys(app);
     
+    // process window events
     sf::Event event;
-    while (app.PollEvent(event)) {
-      // check for window exit
-      if (event.Type == sf::Event::Closed) app.Close();
-    }
+    while (app.PollEvent(event)) if (event.Type == sf::Event::Closed) app.Close(); // check for window exit
     
+    // game logic
     float frameTime = app.GetFrameTime();
     phys.update(frameTime);
+    //std::cout << "Framerate: " << 1000.f/frameTime << std::endl;
     
     // draw
     app.Clear();
     app.Draw(bg);
-    //app.Draw(tri);
     app.Draw(placeObject(p.draw()));
     
     app.Display();

@@ -16,7 +16,7 @@ Player::Player (float x, float y, const sf::Image &image) {
   img.SetImage(image);
 }
 
-void Player::checkKeys(sf::RenderWindow& rw) {
+void Player::checkKeys(sf::RenderWindow &rw) {
   if (rw.GetInput().IsKeyDown(sf::Key::Up)) {
     if (!inAir) { 
       vel.y -= PLAYER_JUMP_STRENGTH; 
@@ -30,7 +30,6 @@ void Player::checkKeys(sf::RenderWindow& rw) {
 }
 
 void Player::update(float dt) {
-  //vel.y += dt * PLATER_GRAVITY
   // calculate vel
   dV.y += PLAYER_GRAVITY;
   vel += dV * dt;
@@ -41,7 +40,7 @@ void Player::update(float dt) {
   // calculate pos
   pos += vel * dt;
   
-  dV.x=0; dV.y=0;
+  dV.x=0; dV.y=0; // reset dV
   
   if (pos.x > WIDTH -PLAYER_SIZE) { pos.x = WIDTH -PLAYER_SIZE;  vel.x=0; }
   if (pos.y > HEIGHT-PLAYER_SIZE) { pos.y = HEIGHT-PLAYER_SIZE; vel.y=0; inAir=false; }

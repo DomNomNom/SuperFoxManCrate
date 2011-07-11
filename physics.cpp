@@ -7,7 +7,6 @@ Physics::Physics(Player& play) : p(play) { }
 
 void Physics::update(float dt) {
   p.update(dt);
-  std::cout << dt << std::endl;
   //TODO: collisions
 }
 
