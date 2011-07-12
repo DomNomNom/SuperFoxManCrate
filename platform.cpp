@@ -4,4 +4,7 @@ Platform::Platform(float x, float y, float wd, float ht) : CollisionObject(x, y,
 
 }
 
-bool Platform::collidesWith(CollisionObject o) { }
+bool Platform::collidesWith(CollisionObject o) {
+  
+}
+

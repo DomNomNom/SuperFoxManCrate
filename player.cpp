@@ -6,7 +6,7 @@
 #define PLAYER_WALKSPEED 0.3
 #define PLAYER_GRAVITY 0.005
 #define PLAYER_JUMP_STRENGTH 0.8
-#define PLAYER_SIZE 16
+#define PLAYER_SIZE 8
 
 Player::Player (float x, float y, const sf::Image &image) {
   pos.x=x; pos.y=y;

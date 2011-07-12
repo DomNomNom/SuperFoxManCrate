@@ -44,7 +44,7 @@ int main() {
   
   // player
   sf::Image playerImage;
-  if (!playerImage.LoadFromFile("images/player_16x16.png")) return -1;
+  if (!playerImage.LoadFromFile("images/player_8x8.png")) return -1;
   Player p(WIDTH/2, HEIGHT/2, playerImage);
   
   Physics phys(p);
