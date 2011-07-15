@@ -17,11 +17,11 @@ private:
 public:
   Player(float x, float y, const sf::Image &image);
   
-  void checkKeys(sf::RenderWindow& rw);
+  void checkKeys(sf::RenderWindow &rw);
   
   void update(float dt);  // dt: delta time => frameTime
   
-  bool colidesWith(CollisionObject o);
+  bool colidesWith(CollisionObject &o);
   
   sf::Drawable &draw();
 };

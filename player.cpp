@@ -3,10 +3,10 @@
 #include "player.hpp"
 #include "utils.hpp"
 
-#define PLAYER_WALKSPEED 0.3
-#define PLAYER_GRAVITY 0.005
-#define PLAYER_JUMP_STRENGTH 0.8
-#define PLAYER_SIZE 8
+#define PLAYER_WALKSPEED 0.1
+#define PLAYER_GRAVITY 0.0006
+#define PLAYER_JUMP_STRENGTH 0.37
+#define TILE_SIZE 8
 
 Player::Player (float x, float y, const sf::Image &image) {
   pos.x=x; pos.y=y;
@@ -42,8 +42,8 @@ void Player::update(float dt) {
   
   dV.x=0; dV.y=0; // reset dV
   
-  if (pos.x > WIDTH -PLAYER_SIZE) { pos.x = WIDTH -PLAYER_SIZE;  vel.x=0; }
-  if (pos.y > HEIGHT-PLAYER_SIZE) { pos.y = HEIGHT-PLAYER_SIZE; vel.y=0; inAir=false; }
+  if (pos.x > WIDTH -TILE_SIZE) { pos.x = WIDTH -TILE_SIZE;  vel.x=0; }
+  if (pos.y > HEIGHT-TILE_SIZE) { pos.y = HEIGHT-TILE_SIZE; vel.y=0; inAir=false; }
   if (pos.x < 0) { pos.x=0; vel.x=0; }
   if (pos.y < 0) { pos.y=0; vel.y=0; }
 }
@@ -53,4 +53,20 @@ sf::Drawable &Player::draw() {
   img.SetPosition(pos.x, pos.y);
   sf::Drawable &d = img;
   return d;
+}
+
+bool Player::colidesWith(CollisionObject &o) {
+  // Compute the intersection boundaries
+  float left   = std::max(pos.x,        o.pos.x);
+  float top    = std::max(pos.y,        o.pos.y);
+  float right  = std::min(pos.x + TILE_SIZE, o.pos.x + o.sz.x);
+  float bottom = std::min(pos.y + TILE_SIZE, o.pos.y + o.sz.y);
+  // If the intersection is valid (positive non zero area), then there is an intersection
+  if ((left < right) && (top < bottom)) {
+    pos.y = o.pos.y - TILE_SIZE;
+    vel.y = 0;
+    inAir=false;
+    return true;
+  }
+  else return false;
 }

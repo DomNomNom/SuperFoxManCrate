@@ -1,10 +1,27 @@
+#include "utils.hpp"
 #include "platform.hpp"
 
-Platform::Platform(float x, float y, float wd, float ht) : CollisionObject(x, y, wd, ht) {
-
+Platform::Platform(float X, float Y, float wd, float ht, sf::Image &texture) : CollisionObject(X, Y, wd, ht) {
+  for (int y=0; y<ht/TILE_SIZE; ++y) {
+    for (int x=0; x<wd/TILE_SIZE; ++x) {
+      tiles.push_back(sf::Sprite());
+      tiles[tiles.size()-1].SetImage(texture);
+      tiles[tiles.size()-1].Move(X+x*TILE_SIZE, Y+y*TILE_SIZE);
+    }
+  }
 }
 
 bool Platform::collidesWith(CollisionObject o) {
-  
+
+}
+/*
+void Platform::draw(sf::RenderWindow &rw) {
+  for (int i=0; i<tiles.size(); ++i) {
+    rw.Draw(tiles[i]);
+  }
+}
+*/
+std::vector<sf::Sprite> *Platform::draw() {
+  return &tiles;
 }
 

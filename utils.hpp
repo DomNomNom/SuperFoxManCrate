@@ -1,5 +1,9 @@
+#ifndef UTILS_H
+#define UTILS_H
 
-#define WIDTH 256 //16x10 tiles with soze of 16x16
+#include <SFML/Graphics.hpp>
+
+#define WIDTH 256 //16x10 tiles with size of 16x16
 #define HEIGHT 160
 
 #define TILE_SIZE 8
@@ -8,3 +12,5 @@
 
 
 
+
+#endif

@@ -7,7 +7,10 @@ Physics::Physics(Player& play) : p(play) { }
 
 void Physics::update(float dt) {
   p.update(dt);
-  //TODO: collisions
+  for(int i=0; i<level.size(); ++i) {
+    //if (p.colidesWith(*(level[i]))) std::cout << "collision!" << std::endl;  //TODO: collisions
+    p.colidesWith(*(level[i]));
+  }
 }
 
 void Physics::addPlatform(CollisionObject *platform) {   level.push_back(platform); }
