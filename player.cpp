@@ -63,9 +63,16 @@ bool Player::colidesWith(CollisionObject &o) {
   float bottom = std::min(pos.y + TILE_SIZE, o.pos.y + o.sz.y);
   // If the intersection is valid (positive non zero area), then there is an intersection
   if ((left < right) && (top < bottom)) {
-    pos.y = o.pos.y - TILE_SIZE;
-    vel.y = 0;
-    inAir=false;
+    if (vel.y > 0) {
+      pos.y = o.pos.y - TILE_SIZE;
+      vel.y = 0;
+      inAir=false;
+    }
+    else {
+      pos.y = o.pos.y + TILE_SIZE;
+      vel.y = 0;
+      inAir=true;
+    }
     return true;
   }
   else return false;

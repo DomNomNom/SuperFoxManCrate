@@ -14,13 +14,7 @@ Platform::Platform(float X, float Y, float wd, float ht, sf::Image &texture) : C
 bool Platform::collidesWith(CollisionObject o) {
 
 }
-/*
-void Platform::draw(sf::RenderWindow &rw) {
-  for (int i=0; i<tiles.size(); ++i) {
-    rw.Draw(tiles[i]);
-  }
-}
-*/
+
 std::vector<sf::Sprite> *Platform::draw() {
   return &tiles;
 }
