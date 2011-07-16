@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+#include "level.hpp"
 #include "platform.hpp"
 #include "physics.hpp"
 #include "player.hpp"
@@ -49,19 +50,14 @@ int main() {
   sf::Image playerImage;
   if (!playerImage.LoadFromFile("images/player_8x8.png")) return -1;
   Player p(WIDTH/2, HEIGHT/2, playerImage);
-  
-  Physics phys(p);
-  
+    
   // Level
-  sf::Image platformTexture;
-  if (!platformTexture.LoadFromFile("images/platform.png")) return -1;
-  Platform platform1(WIDTH/2, HEIGHT/2, TILE_SIZE*4, TILE_SIZE, platformTexture);
-  phys.addPlatform(&platform1);
-  std::vector<sf::Sprite> *level = platform1.draw();
-  for (int i=0; i<level->size(); ++i) {
-    placeObject((*level)[i]);
-  }
+  Level level("levels/test.lvl");
+  for (int i=0; i<level.tiles.size(); ++i) placeObject(*level.tiles[i]);
   
+  // Physics
+  Physics phys(p, level);
+
   // main game loop
   while (app.IsOpened()) {
     // input
@@ -82,8 +78,8 @@ int main() {
     app.Clear();
     app.Draw(bg);
     app.Draw(placeObject(p.draw()));
-    for (int i=0; i<level->size(); ++i) {
-      app.Draw((*level)[i]);
+    for (int i=0; i<level.tiles.size(); ++i) {
+      app.Draw(*level.tiles[i]);
     }
     
     app.Display();

@@ -21,7 +21,7 @@ public:
   
   void update(float dt);  // dt: delta time => frameTime
   
-  bool colidesWith(CollisionObject &o);
+  bool collidesWith(CollisionObject &o);
   
   sf::Drawable &draw();
 };

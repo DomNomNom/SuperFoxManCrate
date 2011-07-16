@@ -55,7 +55,7 @@ sf::Drawable &Player::draw() {
   return d;
 }
 
-bool Player::colidesWith(CollisionObject &o) {
+bool Player::collidesWith(CollisionObject &o) {
   // Compute the intersection boundaries
   float left   = std::max(pos.x,        o.pos.x);
   float top    = std::max(pos.y,        o.pos.y);

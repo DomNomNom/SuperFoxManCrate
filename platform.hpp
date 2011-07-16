@@ -2,6 +2,7 @@
 #include <vector>
 #include "collisionObject.hpp"
 
+
 class Platform : public CollisionObject {
   std::vector<sf::Sprite> tiles;
 public:
