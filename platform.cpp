@@ -6,7 +6,7 @@ Platform::Platform(float X, float Y, float wd, float ht, sf::Image &texture) : C
     for (int x=0; x<wd/TILE_SIZE; ++x) {
       tiles.push_back(sf::Sprite());
       tiles[tiles.size()-1].SetImage(texture);
-      tiles[tiles.size()-1].Move(X+x*TILE_SIZE, Y+y*TILE_SIZE);
+      tiles[tiles.size()-1].SetPosition(X+x*TILE_SIZE, Y+y*TILE_SIZE);
     }
   }
 }
