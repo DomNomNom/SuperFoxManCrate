@@ -60,14 +60,18 @@ int main() {
 
   // main game loop
   while (app.IsOpened()) {
+  
     // input
-    if (app.GetInput().IsKeyDown(sf::Key::Escape)) app.Close(); 
-    if (app.GetInput().IsKeyDown(sf::Key::Space )) usleep(50000); // create artificially low frame rate
-    p.checkKeys(app);
-    
-    // process window events
-    sf::Event event;
-    while (app.PollEvent(event)) if (event.Type == sf::Event::Closed) app.Close(); // check for window exit
+    p.checkKeys();    // gets more raw keyboard input
+    sf::Event event;  // process window events
+    while (app.PollEvent(event)) {
+      if (event.Type == sf::Event::Closed) app.Close(); // check for window exit
+      else if(event.Type == sf::Event::KeyPressed) {    // check key events
+        if (event.Key.Code == sf::Keyboard::Escape) app.Close();       // escape => exit
+        else if (event.Key.Code == sf::Keyboard::Space) usleep(50000); // space  => low framerate (for testing)
+        //else if (p.checkKeys(event.Key.Code));
+      }
+    }
     
     // game logic
     float frameTime = app.GetFrameTime();

@@ -16,17 +16,17 @@ Player::Player (float x, float y, const sf::Image &image) {
   img.SetImage(image);
 }
 
-void Player::checkKeys(sf::RenderWindow &rw) {
-  if (rw.GetInput().IsKeyDown(sf::Key::Up)) {
+void Player::checkKeys() {
+  if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Up)) {
     if (!inAir) { 
       vel.y -= PLAYER_JUMP_STRENGTH; 
       inAir = true; 
     }
     cancleJump = false;
   }
-  if (rw.GetInput().IsKeyDown(sf::Key::Down))  ;
-  if (rw.GetInput().IsKeyDown(sf::Key::Left))  { --dV.x; facingLeft = true;  }
-  if (rw.GetInput().IsKeyDown(sf::Key::Right)) { ++dV.x; facingLeft = false; }
+  if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Down))  ;
+  if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Left))  { --dV.x; facingLeft = true;  }
+  if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Right)) { ++dV.x; facingLeft = false; }
 }
 
 void Player::update(float dt) {

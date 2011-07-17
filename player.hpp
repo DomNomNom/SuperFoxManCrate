@@ -1,5 +1,6 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/Window/Event.hpp>
 #include "collisionObject.hpp"
 
 class Player {
@@ -17,7 +18,7 @@ private:
 public:
   Player(float x, float y, const sf::Image &image);
   
-  void checkKeys(sf::RenderWindow &rw);
+  void checkKeys();
   
   void update(float dt);  // dt: delta time => frameTime
   
