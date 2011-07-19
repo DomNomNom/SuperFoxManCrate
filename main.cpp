@@ -53,7 +53,11 @@ int main() {
     
   // Level
   Level level("levels/test.lvl");
-  for (int i=0; i<level.tiles.size(); ++i) placeObject(*level.tiles[i]);
+  for (int i=0; i<level.platforms.size(); ++i) {
+    for (int j=0; j<level.platforms[i].tiles.size(); ++j) {
+      placeObject(level.platforms[i].tiles[j]);
+    }
+  }
   
   // Physics
   Physics phys(p, level);
@@ -69,7 +73,6 @@ int main() {
       else if(event.Type == sf::Event::KeyPressed) {    // check key events
         if (event.Key.Code == sf::Keyboard::Escape) app.Close();       // escape => exit
         else if (event.Key.Code == sf::Keyboard::Space) usleep(50000); // space  => low framerate (for testing)
-        //else if (p.checkKeys(event.Key.Code));
       }
     }
     
@@ -82,8 +85,10 @@ int main() {
     app.Clear();
     app.Draw(bg);
     app.Draw(placeObject(p.draw()));
-    for (int i=0; i<level.tiles.size(); ++i) {
-      app.Draw(*level.tiles[i]);
+    for (int i=0; i<level.platforms.size(); ++i) {
+      for (int j=0; j<level.platforms[i].tiles.size(); ++j) {
+        app.Draw(level.platforms[i].tiles[j]);
+      }
     }
     
     app.Display();

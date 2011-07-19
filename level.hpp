@@ -6,11 +6,11 @@ class Player;
 
 class Level {
   sf::Image platformTexture;
-  std::vector<Platform> platforms;
 public:
   Level(const char *filePath);
+  std::vector<Platform> platforms;
   
-  std::vector<sf::Sprite*> tiles;
+  //std::vector<sf::Sprite*> tiles;
   
   bool collidesWith(Player &p);
 };

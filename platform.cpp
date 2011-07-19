@@ -15,6 +15,7 @@ bool Platform::collidesWith(CollisionObject o) {
 
 }
 
+
 std::vector<sf::Sprite> *Platform::draw() {
   return &tiles;
 }

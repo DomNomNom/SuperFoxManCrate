@@ -69,7 +69,7 @@ bool Player::collidesWith(CollisionObject &o) {
       inAir=false;
     }
     else {
-      pos.y = o.pos.y + TILE_SIZE;
+      pos.y = o.pos.y + o.sz.y;
       vel.y = 0;
       inAir=true;
     }
