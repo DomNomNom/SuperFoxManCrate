@@ -5,7 +5,7 @@
 
 #define PLAYER_WALKSPEED 0.1
 #define PLAYER_GRAVITY 0.0006
-#define PLAYER_JUMP_STRENGTH 0.37
+#define PLAYER_JUMP_STRENGTH 0.27
 #define TILE_SIZE 8
 
 Player::Player (float x, float y, const sf::Image &image) {
@@ -30,6 +30,8 @@ void Player::checkKeys() {
 }
 
 void Player::update(float dt) {
+
+  inAir = true;
   // calculate vel
   dV.y += PLAYER_GRAVITY;
   vel += dV * dt;

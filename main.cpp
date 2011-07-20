@@ -52,7 +52,8 @@ int main() {
   Player p(WIDTH/2, HEIGHT/2, playerImage);
     
   // Level
-  Level level("levels/test.lvl");
+  //Level level("levels/test.lvl");
+  Level level("levels/level1.png");
   for (int i=0; i<level.platforms.size(); ++i) {
     for (int j=0; j<level.platforms[i].tiles.size(); ++j) {
       placeObject(level.platforms[i].tiles[j]);
@@ -66,13 +67,13 @@ int main() {
   while (app.IsOpened()) {
   
     // input
+    if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Space)) usleep(50000); // space  => low framerate (for testing)
     p.checkKeys();    // gets more raw keyboard input
     sf::Event event;  // process window events
     while (app.PollEvent(event)) {
       if (event.Type == sf::Event::Closed) app.Close(); // check for window exit
       else if(event.Type == sf::Event::KeyPressed) {    // check key events
         if (event.Key.Code == sf::Keyboard::Escape) app.Close();       // escape => exit
-        else if (event.Key.Code == sf::Keyboard::Space) usleep(50000); // space  => low framerate (for testing)
       }
     }
     
