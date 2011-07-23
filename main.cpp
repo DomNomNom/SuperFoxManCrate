@@ -1,12 +1,15 @@
 #include <SFML/Graphics.hpp>
 
 #include <iostream>
+#include <vector>
 
 #include "level.hpp"
 #include "platform.hpp"
-#include "physics.hpp"
-#include "player.hpp"
+#include "guns/gun.hpp"
 #include "bullet.hpp"
+#include "physics.hpp"
+#include "enemy.hpp"
+#include "player.hpp"
 #include "utils.hpp"
 
 
@@ -40,7 +43,7 @@ int main() {
   
   // bg image
   sf::Image bgImage;
-  if (!bgImage.LoadFromFile("images/bg.png")) return -1;
+  bgImage.LoadFromFile("images/bg.png");
   sf::Sprite bg;
   bg.SetImage(bgImage);
   bg.SetColor(sf::Color::Blue);
@@ -48,11 +51,10 @@ int main() {
   
   // player
   sf::Image playerImage;
-  if (!playerImage.LoadFromFile("images/player_8x8.png")) return -1;
+  playerImage.LoadFromFile("images/player_8x8.png");
   Player p(WIDTH/2, HEIGHT/2, playerImage);
     
   // Level
-  //Level level("levels/test.lvl");
   Level level("levels/level1.png");
   for (int i=0; i<level.platforms.size(); ++i) {
     for (int j=0; j<level.platforms[i].tiles.size(); ++j) {
@@ -60,8 +62,17 @@ int main() {
     }
   }
   
+  // Bullets
+  std::vector<Bullet> bullets;
+  
+  // Enemies
+  sf::Image enemyTile;
+  enemyTile.LoadFromFile("images/enemy.png");
+  Enemy e1(WIDTH/2+2, HEIGHT/2, enemyTile);
+  std::vector<Enemy> enemies;
+  enemies.push_back(e1);  
   // Physics
-  Physics phys(p, level);
+  Physics phys(p, level, bullets, enemies);
 
   // main game loop
   while (app.IsOpened()) {
@@ -86,11 +97,11 @@ int main() {
     app.Clear();
     app.Draw(bg);
     app.Draw(placeObject(p.draw()));
-    for (int i=0; i<level.platforms.size(); ++i) {
-      for (int j=0; j<level.platforms[i].tiles.size(); ++j) {
+    for (int i=0; i<enemies.size(); ++i)
+      app.Draw(placeObject(enemies[i].tile));
+    for (int i=0; i<level.platforms.size(); ++i)
+      for (int j=0; j<level.platforms[i].tiles.size(); ++j)
         app.Draw(level.platforms[i].tiles[j]);
-      }
-    }
     
     app.Display();
     

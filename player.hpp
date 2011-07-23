@@ -1,7 +1,8 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Event.hpp>
-#include "collisionObject.hpp"
+
+class CollisionObject;
 
 class Player {
 private:

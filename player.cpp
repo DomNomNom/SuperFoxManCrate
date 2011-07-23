@@ -1,5 +1,6 @@
 #include <iostream>
 #include <math.h>
+#include "collisionObject.hpp"
 #include "player.hpp"
 #include "utils.hpp"
 

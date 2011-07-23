@@ -3,17 +3,17 @@
 class Player;
 class Level;
 class CollisionObject;
-
+class Bullet;
+class Enemy;
 
 class Physics {
   Player &p;
   Level &l;
-  std::vector<CollisionObject*> bullets;
-  std::vector<CollisionObject*> enemies;
+  std::vector<Bullet> &bullets;
+  std::vector<Enemy> &enemies;
 public:
-  Physics(Player &play, Level &l);
+  Physics(Player &play, Level &l, std::vector<Bullet> &b, std::vector<Enemy> &e);
   void update(float dt);
-  //void addPlatform(CollisionObject *platform);
-  void addEnemy(CollisionObject *enemy);
-  void addBullet(CollisionObject *bullet);
+  void addBullet(Bullet b);
+  //void addEnemy(CollisionObject *enemy);
 };

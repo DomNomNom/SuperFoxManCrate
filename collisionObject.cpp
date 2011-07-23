@@ -15,3 +15,7 @@ bool CollisionObject::collidesWith(CollisionObject &o) {
   else return false;
 }
 
+void CollisionObject::update(float dt) {
+  pos += vel * dt;
+}
+
