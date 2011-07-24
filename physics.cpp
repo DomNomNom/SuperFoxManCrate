@@ -17,10 +17,11 @@ void Physics::update(float dt) {
   // check for death
   for (int i=0; i<enemies.size(); ++i) {
     if (enemies[i].dead) {
-      enemies.erase(enemies.begin() + i);
-      --i;
+      //enemies.erase(enemies.begin() + i);
+      //--i;
     }
   }
+  
   // collide stuff
   l.collidesWith(p);   // level - player
   for (int i=0; i<enemies.size(); ++i) l.collidesWith(enemies[i]);  // level - enemy

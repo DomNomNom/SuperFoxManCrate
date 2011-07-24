@@ -5,6 +5,7 @@
 
 Enemy::Enemy(float x, float y, sf::Image &pic) : CollisionObject(x, y, TILE_SIZE, TILE_SIZE), tile(pic) {
   vel.x = ENEMY_WALKSPEED;
+  dead = false;
 }
 
 void Enemy::update(float dt) {
