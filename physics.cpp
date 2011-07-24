@@ -12,16 +12,16 @@ Physics::Physics(Player &play, Level &level, std::vector<Bullet> &b, std::vector
 void Physics::update(float dt) {
   // update stuff
   p.update(dt);
-  for (int i=0; i<enemies.size(); ++i) 
-    enemies[i].update(dt);
+  for (int i=0; i<enemies.size(); ++i) enemies[i].update(dt);
   
   // collide stuff
   l.collidesWith(p);   // level - player
+  for (int i=0; i<enemies.size(); ++i) l.collidesWith(enemies[i]);  // level - enemy
+  
   /* TODO:
-  level  - enemy
   bullet - enemy
   player - enemy
   */
 }
 
-void Physics::addBullet   (Bullet b) { bullets.push_back(b); }
+void Physics::addBullet(Bullet b) { bullets.push_back(b); }

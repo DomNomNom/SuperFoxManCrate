@@ -30,7 +30,6 @@ void Player::checkKeys() {
 }
 
 void Player::update(float dt) {
-
   inAir = true;
   // calculate vel
   dV.y += GRAVITY;

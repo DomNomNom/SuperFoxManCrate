@@ -3,6 +3,8 @@
 #include <iostream>
 #include <vector>
 
+#include <stdio.h>  // for fps text
+
 #include "level.hpp"
 #include "platform.hpp"
 #include "guns/gun.hpp"
@@ -68,17 +70,23 @@ int main() {
   // Enemies
   sf::Image enemyTile;
   enemyTile.LoadFromFile("images/enemy.png");
-  Enemy e1(WIDTH/2+2, HEIGHT/2, enemyTile);
+  Enemy e1(WIDTH/2+2, 0, enemyTile);
   std::vector<Enemy> enemies;
   enemies.push_back(e1);  
+
   // Physics
   Physics phys(p, level, bullets, enemies);
+
+  // leet FPS counter
+  char fpsString[15]  = "";
+  sf::Text fps;
+  fps.SetColor(sf::Color(128, 0, 0));
 
   // main game loop
   while (app.IsOpened()) {
   
     // input
-    if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Space)) usleep(50000); // space  => low framerate (for testing)
+    if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Space)) usleep(50000); // space  => low framerate for testing (~19 fps)
     p.checkKeys();    // gets more raw keyboard input
     sf::Event event;  // process window events
     while (app.PollEvent(event)) {
@@ -91,7 +99,6 @@ int main() {
     // game logic
     float frameTime = app.GetFrameTime();
     phys.update(frameTime);
-    //std::cout << "Framerate: " << 1000.f/frameTime << std::endl;
     
     // draw
     app.Clear();
@@ -102,6 +109,10 @@ int main() {
     for (int i=0; i<level.platforms.size(); ++i)
       for (int j=0; j<level.platforms[i].tiles.size(); ++j)
         app.Draw(level.platforms[i].tiles[j]);
+    
+    sprintf(fpsString, "%.1f", 1000.f/frameTime); // fps
+    fps.SetString(fpsString);
+    app.Draw(fps);
     
     app.Display();
     

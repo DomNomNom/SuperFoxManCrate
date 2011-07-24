@@ -4,9 +4,11 @@
 
 class Enemy : public CollisionObject {
 public:
+  sf::Sprite tile;
+  
   Enemy(float x, float y, sf::Image &pic);
   
   void update(float dt);
   
-  sf::Sprite tile;
+  bool collidesWith(CollisionObject &o);
 };
