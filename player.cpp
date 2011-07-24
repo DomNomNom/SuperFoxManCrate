@@ -45,7 +45,7 @@ void Player::update(float dt) {
   dV.x=0; dV.y=0; // reset dV
   
   if (pos.x > WIDTH -TILE_SIZE) { pos.x = WIDTH -TILE_SIZE;  vel.x=0; }
-  if (pos.y > HEIGHT-TILE_SIZE) { pos.y = HEIGHT-TILE_SIZE; vel.y=0; inAir=false; }
+  if (pos.y > HEIGHT-TILE_SIZE) { pos.y = HEIGHT-TILE_SIZE; vel.y=0; inAir=false; dead=true; }
   if (pos.x < 0) { pos.x=0; vel.x=0; }
   if (pos.y < 0) { pos.y=0; vel.y=0; }
 }
