@@ -5,11 +5,10 @@
 #include "utils.hpp"
 
 #define PLAYER_WALKSPEED 0.1
-#define PLAYER_GRAVITY 0.0006
 #define PLAYER_JUMP_STRENGTH 0.27
 #define TILE_SIZE 8
 
-Player::Player (float x, float y, const sf::Image &image) {
+Player::Player (float x, float y, const sf::Image &image) : CollisionObject(x, y, TILE_SIZE, TILE_SIZE) {
   pos.x=x; pos.y=y;
   vel.x=0; vel.y=0;
   dV.x =0; dV.y =0;
@@ -34,7 +33,7 @@ void Player::update(float dt) {
 
   inAir = true;
   // calculate vel
-  dV.y += PLAYER_GRAVITY;
+  dV.y += GRAVITY;
   vel += dV * dt;
   vel.x = dV.x * PLAYER_WALKSPEED;
   if (inAir && vel.y<0 && cancleJump) vel.y = 0;  // cancle the jump if possible

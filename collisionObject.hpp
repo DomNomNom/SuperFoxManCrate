@@ -3,7 +3,7 @@
 
 #include <SFML/System/Vector2.hpp>
 
-class CollisionObject{
+class CollisionObject {
 public:
   sf::Vector2<float> pos;
   sf::Vector2<float> vel;

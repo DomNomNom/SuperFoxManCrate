@@ -4,10 +4,8 @@
 
 class CollisionObject;
 
-class Player {
+class Player : public CollisionObject {
 private:
-  sf::Vector2<float> pos;
-  sf::Vector2<float> vel;
   sf::Vector2<float> dV;
   bool cancleJump;
   bool facingLeft;

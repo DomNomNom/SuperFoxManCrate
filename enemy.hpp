@@ -2,7 +2,7 @@
 
 #include "collisionObject.hpp"
 
-class Enemy : CollisionObject {
+class Enemy : public CollisionObject {
 public:
   Enemy(float x, float y, sf::Image &pic);
   

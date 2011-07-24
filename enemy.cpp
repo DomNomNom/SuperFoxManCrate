@@ -2,7 +2,7 @@
 #include "utils.hpp"
 
 Enemy::Enemy(float x, float y, sf::Image &pic) : CollisionObject(x, y, TILE_SIZE, TILE_SIZE), tile(pic) {
-  vel.x = 0.001;
+  vel.x = 0.005;
 }
 
 void Enemy::update(float dt) {

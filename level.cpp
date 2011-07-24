@@ -53,7 +53,7 @@ Level::Level(const char *filePath) {
   */
 }
 
-bool Level::collidesWith(Player &p) {
+bool Level::collidesWith(CollisionObject &p) {
   int collision = false;
   for (int i=0; i<platforms.size(); ++i) {
     if (p.collidesWith(platforms[i])) collision = true;

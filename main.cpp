@@ -18,12 +18,12 @@ int screenWd; // faster than calling the function everytime
 int screenHt;
 
 sf::Drawable &placeObject(sf::Drawable &d) {
-  d.SetScale(scale, scale);
-  d.Move(
+  d.SetScale(scale, scale); // scale size
+  d.Move( // scale position
     d.GetPosition().x * (scale-1),
     d.GetPosition().y * (scale-1) 
   );
-  d.Move( // translation
+  d.Move( // shift to game top-left cornet
     screenWd/2 - scale*WIDTH/2, 
     screenHt/2 - scale*HEIGHT/2
   );

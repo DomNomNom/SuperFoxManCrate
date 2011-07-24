@@ -1,7 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-class Platform; //forward declarations
+class CollisionObject; //forward declarations
+class Platform;
 class Player;
 
 class Level {
@@ -12,5 +13,5 @@ public:
   // Constructor
   Level(const char *filePath);
   
-  bool collidesWith(Player &p);
+  bool collidesWith(CollisionObject &p);
 };
