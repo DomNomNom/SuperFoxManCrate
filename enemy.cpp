@@ -12,7 +12,7 @@ void Enemy::update(float dt) {
   pos += vel * dt;
   
   if (pos.x > WIDTH -TILE_SIZE) { pos.x = WIDTH -TILE_SIZE;  vel.x=-ENEMY_WALKSPEED; }
-  if (pos.y > HEIGHT-TILE_SIZE) { pos.y = HEIGHT-TILE_SIZE; vel.y=0; }
+  if (pos.y > HEIGHT-TILE_SIZE) { dead=true; }
   if (pos.x < 0) { pos.x=0; vel.x=ENEMY_WALKSPEED; }
   if (pos.y < 0) { pos.y=0; vel.y=0; }
 
