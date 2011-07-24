@@ -17,10 +17,18 @@ void Physics::update(float dt) {
   // collide stuff
   l.collidesWith(p);   // level - player
   for (int i=0; i<enemies.size(); ++i) l.collidesWith(enemies[i]);  // level - enemy
+
+  // player - enemy
+  for (int i=0; i<enemies.size(); ++i) {
+    if (p.collidesWith(enemies[i])) {
+      p.dead = true;
+      break;
+    }
+  }  
+  
   
   /* TODO:
   bullet - enemy
-  player - enemy
   */
 }
 

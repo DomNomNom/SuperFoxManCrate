@@ -100,6 +100,11 @@ int main() {
     float frameTime = app.GetFrameTime();
     phys.update(frameTime);
     
+    if (p.dead) {
+      playerImage.LoadFromFile("images/player_fail.png");
+      p = Player(WIDTH/2, HEIGHT/2-3*TILE_SIZE, playerImage);
+    }
+    
     // draw
     app.Clear();
     app.Draw(bg);
@@ -110,7 +115,8 @@ int main() {
       for (int j=0; j<level.platforms[i].tiles.size(); ++j)
         app.Draw(level.platforms[i].tiles[j]);
     
-    sprintf(fpsString, "%.1f", 1000.f/frameTime); // fps
+    // fps
+    sprintf(fpsString, "%.1f", 1000.f/frameTime); 
     fps.SetString(fpsString);
     app.Draw(fps);
     

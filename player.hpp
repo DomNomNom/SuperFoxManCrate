@@ -13,6 +13,8 @@ private:
   sf::Sprite img;
   
 public:
+  bool dead;
+
   Player(float x, float y, const sf::Image &image);
   
   void checkKeys();

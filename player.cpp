@@ -13,6 +13,7 @@ Player::Player (float x, float y, const sf::Image &image) : CollisionObject(x, y
   vel.x=0; vel.y=0;
   dV.x =0; dV.y =0;
   inAir = true;
+  dead = false;
   img.SetImage(image);
 }
 
