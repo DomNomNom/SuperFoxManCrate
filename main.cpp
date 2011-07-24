@@ -8,7 +8,7 @@
 #include "level.hpp"
 #include "platform.hpp"
 #include "guns/gun.hpp"
-#include "bullet.hpp"
+#include "bullets/bullet.hpp"
 #include "physics.hpp"
 #include "enemy.hpp"
 #include "player.hpp"
@@ -100,9 +100,15 @@ int main() {
     float frameTime = app.GetFrameTime();
     phys.update(frameTime);
     
+    // do things with the dead
     if (p.dead) {
       playerImage.LoadFromFile("images/player_fail.png");
       p = Player(WIDTH/2, HEIGHT/2-3*TILE_SIZE, playerImage);
+    }
+    for (int i=0; i<enemies.size(); ++i) {
+      if (enemies[i].dead) {
+        enemies[i] = Enemy(WIDTH/2+2, 0, enemyTile);
+      }
     }
     
     // draw
