@@ -6,7 +6,7 @@ Spawner::Spawner(int X, int Y, std::vector<Enemy> &e) : x(X), y(Y), enemies(e) {
 }
 
 void Spawner::update() {
-  if (spawnTime.GetElapsedTime() > 1000) {
+  if (spawnTime.GetElapsedTime() > 1500) {
     addEnemy();
     spawnTime.Reset();
   }

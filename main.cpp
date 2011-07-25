@@ -77,9 +77,19 @@ int main() {
   Physics phys(p, level, bullets, enemies);
 
   // leet FPS counter
-  char fpsString[15]  = "";
+  char fpsString[15];
   sf::Text fps;
   fps.SetColor(sf::Color(128, 0, 0));
+  
+  // high score timer
+  sf::Clock gameTime;
+  char timeString[15];
+  bool playerDied = false;
+  sf::Text timeText;
+  timeText.SetCharacterSize(40);
+  timeText.SetColor(sf::Color(200, 0, 0));
+  timeText.SetPosition(screenWd/2-30, 0);
+  
   // main game loop
   while (app.IsOpened()) {
   
@@ -104,8 +114,12 @@ int main() {
     if (p.dead) {
       playerImage.LoadFromFile("images/player_fail.png");
       p = Player(WIDTH/2, HEIGHT/2-3*TILE_SIZE, playerImage);
+      playerDied = true;
     }
-    
+    if (!playerDied) {
+      sprintf(timeString, "%.2f", gameTime.GetElapsedTime()/1000.f);   
+      timeText.SetString(timeString);
+    }
     
     // draw
     app.Clear();
@@ -118,9 +132,12 @@ int main() {
         app.Draw(level.platforms[i].tiles[j]);
     
     // fps
-    sprintf(fpsString, "%.1f", 1000.f/frameTime); 
+    sprintf(fpsString, "fps: %.2f", 1000.f/frameTime); 
     fps.SetString(fpsString);
     app.Draw(fps);
+    
+    // record time
+    app.Draw(timeText);
     
     app.Display();
     
