@@ -71,6 +71,7 @@ int main() {
   // Enemies
   std::vector<Enemy> enemies;
   Spawner spawner(WIDTH/2, 0, enemies);
+  spawner.addEnemy();
 
   // Physics
   Physics phys(p, level, bullets, enemies);
@@ -79,7 +80,6 @@ int main() {
   char fpsString[15]  = "";
   sf::Text fps;
   fps.SetColor(sf::Color(128, 0, 0));
-
   // main game loop
   while (app.IsOpened()) {
   
@@ -98,6 +98,7 @@ int main() {
     float frameTime = app.GetFrameTime();
     phys.update(frameTime);
     spawner.update();
+    
     
     // do things with the dead
     if (p.dead) {

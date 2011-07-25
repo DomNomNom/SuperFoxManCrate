@@ -1,10 +1,12 @@
+#include <stdlib.h>  // for rand()
+
 #include "enemy.hpp"
 #include "utils.hpp"
 
 #define ENEMY_WALKSPEED 0.05
 
 Enemy::Enemy(float x, float y, sf::Image &pic) : CollisionObject(x, y, TILE_SIZE, TILE_SIZE), tile(pic) {
-  vel.x = ENEMY_WALKSPEED;
+  vel.x = (rand()%2*2-1) * ENEMY_WALKSPEED; // either left or right walking
   dead = false;
 }
 
