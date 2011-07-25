@@ -11,6 +11,7 @@
 #include "bullets/bullet.hpp"
 #include "physics.hpp"
 #include "enemy.hpp"
+#include "spawner.hpp"
 #include "player.hpp"
 #include "utils.hpp"
 
@@ -68,11 +69,8 @@ int main() {
   std::vector<Bullet> bullets;
   
   // Enemies
-  sf::Image enemyTile;
-  enemyTile.LoadFromFile("images/enemy.png");
-  Enemy e1(WIDTH/2+2, 0, enemyTile);
   std::vector<Enemy> enemies;
-  enemies.push_back(e1);  
+  Spawner spawner(WIDTH/2, 0, enemies);
 
   // Physics
   Physics phys(p, level, bullets, enemies);
@@ -99,17 +97,14 @@ int main() {
     // game logic
     float frameTime = app.GetFrameTime();
     phys.update(frameTime);
+    spawner.update();
     
     // do things with the dead
     if (p.dead) {
       playerImage.LoadFromFile("images/player_fail.png");
       p = Player(WIDTH/2, HEIGHT/2-3*TILE_SIZE, playerImage);
     }
-    for (int i=0; i<enemies.size(); ++i) {
-      if (enemies[i].dead) {
-        enemies[i] = Enemy(WIDTH/2+2, 0, enemyTile);
-      }
-    }
+    
     
     // draw
     app.Clear();
