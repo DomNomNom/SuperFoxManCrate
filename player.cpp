@@ -8,13 +8,12 @@
 #define PLAYER_JUMP_STRENGTH 0.27
 #define TILE_SIZE 8
 
-Player::Player (float x, float y, const sf::Image &image) : CollisionObject(x, y, TILE_SIZE, TILE_SIZE) {
+Player::Player (float x, float y, sf::Image &playerImage) : CollisionObject(x, y, TILE_SIZE, TILE_SIZE), dead(false) {
   pos.x=x; pos.y=y;
   vel.x=0; vel.y=0;
   dV.x =0; dV.y =0;
   inAir = true;
-  dead = false;
-  img.SetImage(image);
+  img.SetImage(playerImage);
 }
 
 void Player::checkKeys() {

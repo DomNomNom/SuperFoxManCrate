@@ -53,9 +53,9 @@ int main() {
   placeObject(bg);
   
   // player
-  sf::Image playerImage;
-  playerImage.LoadFromFile("images/player_8x8.png");
-  Player p(WIDTH/2, HEIGHT/2, playerImage);
+  sf::Image playerLive; playerLive.LoadFromFile("images/player_8x8.png");
+  sf::Image playerDead; playerDead.LoadFromFile("images/player_fail.png");
+  Player p(WIDTH/2, HEIGHT/2, playerLive);
     
   // Level
   Level level("levels/level1.png");
@@ -94,7 +94,15 @@ int main() {
   while (app.IsOpened()) {
   
     // input
-    if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Space)) usleep(50000); // space  => low framerate for testing (~19 fps)
+    if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Dash)) usleep(50000); // space  => low framerate for testing (~19 fps)
+    if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Return)) { // restart the game
+      enemies.clear();
+      spawner.reset();
+      gameTime.Reset();
+      playerDied = false;
+      p = Player (WIDTH/2, HEIGHT/2, playerLive);
+    }
+    
     p.checkKeys();    // gets more raw keyboard input
     sf::Event event;  // process window events
     while (app.PollEvent(event)) {
@@ -112,8 +120,7 @@ int main() {
     
     // do things with the dead
     if (p.dead) {
-      playerImage.LoadFromFile("images/player_fail.png");
-      p = Player(WIDTH/2, HEIGHT/2-3*TILE_SIZE, playerImage);
+      p = Player(WIDTH/2, HEIGHT/2-4*TILE_SIZE, playerDead);
       playerDied = true;
     }
     if (!playerDied) {

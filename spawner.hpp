@@ -11,4 +11,5 @@ public:
   Spawner(int X, int Y, std::vector<Enemy> &e);
   void addEnemy();
   void update();
+  void reset();
 };

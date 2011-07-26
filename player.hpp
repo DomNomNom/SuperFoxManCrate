@@ -15,7 +15,7 @@ private:
 public:
   bool dead;
 
-  Player(float x, float y, const sf::Image &image);
+  Player(float x, float y, sf::Image &tile);
   
   void checkKeys();
   

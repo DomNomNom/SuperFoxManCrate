@@ -18,3 +18,5 @@ void Spawner::update() {
 }
 
 void Spawner::addEnemy() { enemies.push_back(Enemy(x, y, enemyTile)); }
+
+void Spawner::reset() { spawnTime.Reset(); }
