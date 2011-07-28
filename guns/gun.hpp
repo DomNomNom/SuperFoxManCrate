@@ -1,9 +1,13 @@
+#include <vector>
 
-class Physics;
+
+class Bullet;
+class Player;
 
 class Gun {
-  Physics &phys;
+  Player &shooter;
+  std::vector<Bullet> &bullets;
 public:
-  Gun(Physics &p);
+  Gun(std::vector<Bullet> &b, Player &p);
   void checkKeys();
 };

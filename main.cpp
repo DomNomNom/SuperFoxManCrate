@@ -68,6 +68,9 @@ int main() {
   // Bullets
   std::vector<Bullet> bullets;
   
+  // Gun
+  Gun gun(bullets, p);
+  
   // Enemies
   std::vector<Enemy> enemies;
   Spawner spawner(WIDTH/2, 0, enemies);
@@ -96,6 +99,7 @@ int main() {
     // input
     if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Dash)) usleep(50000); // space  => low framerate for testing (~19 fps)
     if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Return)) { // restart the game
+      bullets.clear();
       enemies.clear();
       spawner.reset();
       gameTime.Reset();
@@ -103,7 +107,8 @@ int main() {
       p = Player (WIDTH/2, HEIGHT/2, playerLive);
     }
     
-    p.checkKeys();    // gets more raw keyboard input
+    p.checkKeys();
+    gun.checkKeys();
     sf::Event event;  // process window events
     while (app.PollEvent(event)) {
       if (event.Type == sf::Event::Closed) app.Close(); // check for window exit
@@ -117,6 +122,7 @@ int main() {
     phys.update(frameTime);
     spawner.update();
     
+    //std::cout << "bullets: " << bullets.size() << std::endl;
     
     // do things with the dead
     if (p.dead) {
