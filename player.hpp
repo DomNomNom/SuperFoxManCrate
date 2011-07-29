@@ -1,18 +1,17 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Event.hpp>
-
-class CollisionObject;
+#include "collisionObject.hpp"
 
 class Player : public CollisionObject {
 private:
   sf::Vector2<float> dV;
   bool cancleJump;
-  bool facingLeft;
   bool inAir;
-  sf::Sprite img;
+  sf::Sprite visual;
   
 public:
+  bool facingLeft;
   bool dead;
 
   Player(float x, float y, sf::Image &tile);

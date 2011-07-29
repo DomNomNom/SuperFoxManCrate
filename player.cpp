@@ -13,7 +13,7 @@ Player::Player (float x, float y, sf::Image &playerImage) : CollisionObject(x, y
   vel.x=0; vel.y=0;
   dV.x =0; dV.y =0;
   inAir = true;
-  img.SetImage(playerImage);
+  visual.SetImage(playerImage);
 }
 
 void Player::checkKeys() {
@@ -50,9 +50,9 @@ void Player::update(float dt) {
 }
 
 sf::Drawable &Player::draw() {
-  img.FlipX(facingLeft);  // TODO: moonWalk
-  img.SetPosition(pos.x, pos.y);
-  sf::Drawable &d = img;
+  visual.FlipX(facingLeft);  // TODO: moonWalk
+  visual.SetPosition(pos.x, pos.y);
+  sf::Drawable &d = visual;
   return d;
 }
 

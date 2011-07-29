@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-#include <stdio.h>  // for fps text
+#include <stdio.h>  // for text (sprintf())
 
 #include "level.hpp"
 #include "platform.hpp"
@@ -66,10 +66,11 @@ int main() {
   }
   
   // Bullets
+  sf::Image smallBullet; smallBullet.LoadFromFile("images/bullet_4x4.png");
   std::vector<Bullet> bullets;
   
   // Gun
-  Gun gun(bullets, p);
+  Gun gun(bullets, p, smallBullet);
   
   // Enemies
   std::vector<Enemy> enemies;
@@ -95,8 +96,10 @@ int main() {
   
   // main game loop
   while (app.IsOpened()) {
-  
+    //std::cout << "bullets[" << bullets.size()-1 << "].x = " << bullets[bullets.size()-1].pos.x << std::endl; 
     // input
+    p.checkKeys();
+    gun.checkKeys();
     if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Dash)) usleep(50000); // space  => low framerate for testing (~19 fps)
     if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Return)) { // restart the game
       bullets.clear();
@@ -107,8 +110,6 @@ int main() {
       p = Player (WIDTH/2, HEIGHT/2, playerLive);
     }
     
-    p.checkKeys();
-    gun.checkKeys();
     sf::Event event;  // process window events
     while (app.PollEvent(event)) {
       if (event.Type == sf::Event::Closed) app.Close(); // check for window exit
@@ -122,14 +123,12 @@ int main() {
     phys.update(frameTime);
     spawner.update();
     
-    //std::cout << "bullets: " << bullets.size() << std::endl;
-    
     // do things with the dead
     if (p.dead) {
       p = Player(WIDTH/2, HEIGHT/2-4*TILE_SIZE, playerDead);
       playerDied = true;
     }
-    if (!playerDied) {
+    if (!playerDied) {  // note playerDied != p.dead
       sprintf(timeString, "%.2f", gameTime.GetElapsedTime()/1000.f);   
       timeText.SetString(timeString);
     }
@@ -138,9 +137,11 @@ int main() {
     app.Clear();
     app.Draw(bg);
     app.Draw(placeObject(p.draw()));
-    for (int i=0; i<enemies.size(); ++i)
+    for (int i=0; i<bullets.size(); ++i)  // draw bullets
+      app.Draw(placeObject(bullets[i].visual));
+    for (int i=0; i<enemies.size(); ++i)  // draw enemies
       app.Draw(placeObject(enemies[i].tile));
-    for (int i=0; i<level.platforms.size(); ++i)
+    for (int i=0; i<level.platforms.size(); ++i)  // draw level
       for (int j=0; j<level.platforms[i].tiles.size(); ++j)
         app.Draw(level.platforms[i].tiles[j]);
     

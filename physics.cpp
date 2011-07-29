@@ -13,12 +13,13 @@ void Physics::update(float dt) {
   // update stuff
   p.update(dt);
   for (int i=0; i<enemies.size(); ++i) enemies[i].update(dt);
+  for (int i=0; i<bullets.size(); ++i) bullets[i].update(dt);
   
   // check for death
-  for (int i=0; i<enemies.size(); ++i) {
-    if (enemies[i].dead) {
-      //enemies.erase(enemies.begin() + i);
-      //--i;
+  for (int i=0; i<bullets.size(); ++i) {
+    if (bullets[i].dead) {
+      enemies.erase(enemies.begin() + i);
+      --i;
     }
   }
   
@@ -34,10 +35,8 @@ void Physics::update(float dt) {
     }
   }  
   
-  
   /* TODO:
+  level - bullet
   bullet - enemy
   */
 }
-
-void Physics::addBullet(Bullet b) { bullets.push_back(b); }

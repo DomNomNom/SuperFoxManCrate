@@ -14,6 +14,4 @@ class Physics {
 public:
   Physics(Player &play, Level &l, std::vector<Bullet> &b, std::vector<Enemy> &e);
   void update(float dt);
-  void addBullet(Bullet b);
-  //void addEnemy(CollisionObject *enemy);
 };
