@@ -26,17 +26,30 @@ void Physics::update(float dt) {
   // collide stuff
   l.collidesWith(p);   // level - player
   for (int i=0; i<enemies.size(); ++i) l.collidesWith(enemies[i]);  // level - enemy
+  for (int i=0; i<bullets.size(); ++i) // level - bullet
+    if (l.collidesWith(bullets[i]))
+      bullets.erase(bullets.begin() + i);
 
-  // player - enemy
-  for (int i=0; i<enemies.size(); ++i) {
+  for (int i=0; i<enemies.size(); ++i) { // player - enemy
     if (p.collidesWith(enemies[i])) {
       p.dead = true;
       break;
     }
-  }  
+  }
   
+  
+  
+  for (int b=0; b<bullets.size(); ++b) { // bullet - enemy
+    for (int e=0; e<enemies.size(); ++e) {
+      if (bullets[b].collidesWith(enemies[e]) ) {
+        enemies[e].dead = true; // you are dead, no big surprise
+        bullets.erase(bullets.begin() + b);
+        --b;
+        break;
+      }
+    }
+  }
   /* TODO:
   level - bullet
-  bullet - enemy
   */
 }

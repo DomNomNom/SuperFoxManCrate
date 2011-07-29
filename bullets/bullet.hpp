@@ -3,10 +3,11 @@
 
 #include "../collisionObject.hpp"
 
-class Bullet : CollisionObject {
+class Bullet : public CollisionObject {
 public:
   bool dead;
   sf::Sprite visual;
   Bullet(float x, float y, float v_x, float v_y, sf::Image &texture);
   void update(float dt);
+  bool collidesWith(CollisionObject &o);
 };
