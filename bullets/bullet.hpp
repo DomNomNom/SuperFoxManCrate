@@ -6,6 +6,7 @@
 class Bullet : public CollisionObject {
 public:
   bool dead;
+  int damadge;
   sf::Sprite visual;
   Bullet(float x, float y, float v_x, float v_y, sf::Image &texture);
   void update(float dt);

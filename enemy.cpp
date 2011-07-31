@@ -5,7 +5,7 @@
 
 #define ENEMY_WALKSPEED 0.05
 
-Enemy::Enemy(float x, float y, sf::Image &pic) : CollisionObject(x, y, TILE_SIZE, TILE_SIZE), tile(pic) {
+Enemy::Enemy(float x, float y, sf::Image &pic) : CollisionObject(x, y, TILE_SIZE, TILE_SIZE), tile(pic), health(2) {
   vel.x = (rand()%2*2-1) * ENEMY_WALKSPEED; // either left or right walking
   dead = false;
 }
@@ -42,4 +42,9 @@ bool Enemy::collidesWith(CollisionObject &o) {
     return true;
   }
   else return false;
+}
+
+void Enemy::hurt(int dmg) {
+  health -= dmg;
+  if (health <= 0) dead = true;
 }

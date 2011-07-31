@@ -3,6 +3,7 @@
 #include "collisionObject.hpp"
 
 class Enemy : public CollisionObject {
+  int health;
 public:
   sf::Sprite tile;
   bool dead;
@@ -12,4 +13,6 @@ public:
   void update(float dt);
   
   bool collidesWith(CollisionObject &o);
+  
+  void hurt(int dmg);
 };

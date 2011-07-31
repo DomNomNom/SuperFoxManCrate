@@ -43,7 +43,7 @@ void Physics::update(float dt) {
   for (int b=0; b<bullets.size(); ++b) { // bullet - enemy
     for (int e=0; e<enemies.size(); ++e) {
       if (bullets[b].collidesWith(enemies[e]) ) {
-        enemies[e].dead = true; // you are dead, no big surprise
+        enemies[e].hurt(bullets[b].damadge);
         bullets.erase(bullets.begin() + b);
         --b;
         break;
