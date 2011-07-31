@@ -13,4 +13,5 @@ class Gun {
 public:
   Gun(std::vector<Bullet> &b, Player &p, sf::Image &bulletTex);
   void checkKeys();
+  void shoot();
 };

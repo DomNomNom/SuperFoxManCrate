@@ -99,7 +99,7 @@ int main() {
     //std::cout << "bullets[" << bullets.size()-1 << "].x = " << bullets[bullets.size()-1].pos.x << std::endl; 
     // input
     p.checkKeys();
-    gun.checkKeys();
+    //gun.checkKeys();
     if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Dash)) usleep(50000); // space  => low framerate for testing (~19 fps)
     if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Return)) { // restart the game
       bullets.clear();
@@ -115,6 +115,7 @@ int main() {
       if (event.Type == sf::Event::Closed) app.Close(); // check for window exit
       else if(event.Type == sf::Event::KeyPressed) {    // check key events
         if (event.Key.Code == sf::Keyboard::Escape) app.Close();       // escape => exit
+        else if (event.Key.Code == sf::Keyboard::Space) gun.shoot();       // escape => exit
       }
     }
     

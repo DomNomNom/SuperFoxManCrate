@@ -8,7 +8,11 @@
 Gun::Gun(std::vector<Bullet> &b, Player &p, sf::Image &bulletTex) : bullets(b), shooter(p), bulletTexture(bulletTex) { }
 
 void Gun::checkKeys() { 
-  if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Space) && coolDown.GetElapsedTime() > GUN_COOLDOWN) {
+  if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Space) ) shoot();
+}
+
+void Gun::shoot() {
+  if (coolDown.GetElapsedTime() > GUN_COOLDOWN) {
     coolDown.Reset();
     bullets.push_back( Bullet(
       shooter.pos.x, 
