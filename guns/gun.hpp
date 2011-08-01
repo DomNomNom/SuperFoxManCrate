@@ -10,8 +10,9 @@ class Gun {
   sf::Image &bulletTexture;
   sf::Clock coolDown;
   std::vector<Bullet> &bullets;
+  void shoot();
 public:
   Gun(std::vector<Bullet> &b, Player &p, sf::Image &bulletTex);
-  void checkKeys();
-  void shoot();
+  void pullTrigger();
+  void releaseTrigger();
 };

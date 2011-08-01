@@ -2,14 +2,16 @@
 #include "../bullets/bullet.hpp"
 #include "gun.hpp"
 
-#define GUN_COOLDOWN 100  // in millis
+#define GUN_COOLDOWN 50  // in millis
 #define BULLET_SPEED 0.2
 
 Gun::Gun(std::vector<Bullet> &b, Player &p, sf::Image &bulletTex) : bullets(b), shooter(p), bulletTexture(bulletTex) { }
 
-void Gun::checkKeys() { 
-  if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Space) ) shoot();
+void Gun::pullTrigger() { 
+  shoot();
 }
+
+void Gun::releaseTrigger () { }
 
 void Gun::shoot() {
   if (coolDown.GetElapsedTime() > GUN_COOLDOWN) {
