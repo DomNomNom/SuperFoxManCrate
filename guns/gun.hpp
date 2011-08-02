@@ -10,17 +10,15 @@ class Player;
 
 class Gun {
 protected:
-public:
   Player &shooter;
   sf::Image &bulletTexture;
   sf::Clock coolDown;
   std::vector<Bullet> &bullets;
   virtual void shoot();
+public:
   bool trigger;  
   Gun(std::vector<Bullet> &b, Player &p, sf::Image &bulletTex);
-  void update();
-  //void pullTrigger();
-  //void releaseTrigger();
+  virtual void update();
 };
 
 #endif

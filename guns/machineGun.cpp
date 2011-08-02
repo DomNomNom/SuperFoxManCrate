@@ -8,7 +8,6 @@
 MachineGun::MachineGun(std::vector<Bullet> &b, Player &p, sf::Image &bulletTex) : Gun(b, p, bulletTex) { }
 
 
-
 void MachineGun::shoot() {
   if (coolDown.GetElapsedTime() > GUN_COOLDOWN) {
     coolDown.Reset();
@@ -23,6 +22,5 @@ void MachineGun::shoot() {
 }
 
 void MachineGun::update() {
-  //if (trigger) 
-  shoot(); // duh!
+  if (trigger) shoot(); // duh!
 }

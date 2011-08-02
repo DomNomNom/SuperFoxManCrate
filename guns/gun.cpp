@@ -7,9 +7,6 @@
 
 Gun::Gun(std::vector<Bullet> &b, Player &p, sf::Image &bulletTex) : bullets(b), shooter(p), bulletTexture(bulletTex), trigger(false) { }
 
-//void Gun::pullTrigger() { trigger = true; }
-//void Gun::releaseTrigger () { trigger = false; }
-
 
 void Gun::shoot() {
   if (coolDown.GetElapsedTime() > GUN_COOLDOWN) {
