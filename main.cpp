@@ -69,12 +69,14 @@ int main() {
   
   // Bullets
   sf::Image smallBullet; smallBullet.LoadFromFile("images/bullet_4x4.png");
+  sf::Image largeBullet; largeBullet.LoadFromFile("images/bullet_8x8.png");
   std::vector<Bullet> bullets;
   
   // Gun
- // Gun handGun(bullets, p, smallBullet);
-  MachineGun mg(bullets, p, smallBullet);
-  Gun &gun = mg;
+  Gun pistol(bullets, p, smallBullet, 1);
+  Gun revolver(bullets, p, largeBullet, 2);
+  MachineGun mg(bullets, p, smallBullet, 1);
+  Gun &gun = revolver;
   
   // Enemies
   std::vector<Enemy> enemies;

@@ -1,10 +1,10 @@
 #include "../collisionObject.hpp"
 #include "bullet.hpp"
 
-Bullet::Bullet(float x, float y, float v_x, float v_y, sf::Image &texture) : CollisionObject(x, y, 4, 4), dead(false), damadge(1)  {
+Bullet::Bullet(float x, float y, float v_x, float v_y, sf::Image &tex, int dmg) : CollisionObject(x, y, tex.GetWidth(), tex.GetHeight()), dead(false), damadge(dmg) {
   vel.x = v_x;
   vel.y = v_y;
-  visual.SetImage(texture);
+  visual.SetImage(tex);
   update(0);
 }
 

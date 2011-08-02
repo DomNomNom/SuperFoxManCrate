@@ -9,6 +9,6 @@ class Player;
 class MachineGun : public Gun {
   void shoot();
 public:
-  MachineGun(std::vector<Bullet> &b, Player &p, sf::Image &bulletTex);
+  MachineGun(std::vector<Bullet> &b, Player &p, sf::Image &bulletTex, int dmg);
   void update();
 };

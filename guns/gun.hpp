@@ -14,10 +14,11 @@ protected:
   sf::Image &bulletTexture;
   sf::Clock coolDown;
   std::vector<Bullet> &bullets;
+  int damadge;
   virtual void shoot();
 public:
-  bool trigger;  
-  Gun(std::vector<Bullet> &b, Player &p, sf::Image &bulletTex);
+  bool trigger;
+  Gun(std::vector<Bullet> &b, Player &p, sf::Image &bulletTex, int dmg);
   virtual void update();
 };
 
