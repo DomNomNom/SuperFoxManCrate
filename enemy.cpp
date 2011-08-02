@@ -8,6 +8,7 @@
 Enemy::Enemy(float x, float y, sf::Image &pic) : CollisionObject(x, y, TILE_SIZE, TILE_SIZE), tile(pic), health(2) {
   vel.x = (rand()%2*2-1) * ENEMY_WALKSPEED; // either left or right walking
   dead = false;
+  update(0);
 }
 
 void Enemy::update(float dt) {

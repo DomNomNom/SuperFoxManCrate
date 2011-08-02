@@ -5,6 +5,7 @@ Bullet::Bullet(float x, float y, float v_x, float v_y, sf::Image &texture) : Col
   vel.x = v_x;
   vel.y = v_y;
   visual.SetImage(texture);
+  update(0);
 }
 
 void Bullet::update(float dt) {
