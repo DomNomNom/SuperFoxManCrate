@@ -8,6 +8,7 @@
 #include "level.hpp"
 #include "platform.hpp"
 #include "guns/gun.hpp"
+#include "guns/machineGun.hpp"
 #include "bullets/bullet.hpp"
 #include "physics.hpp"
 #include "enemy.hpp"
@@ -38,6 +39,7 @@ int main() {
   sf::RenderWindow app(screen, "Hi World?", sf::Style::Fullscreen);
   app.SetFramerateLimit(60); // Limit to 60 frames per second
   app.EnableVerticalSync(true);
+  app.EnableKeyRepeat(false);
   //scale = screen.Height / (float)HEIGHT; // (un-)comment this line to enable/disable dynamic scaling
   //std::cout << "scale: x" << scale << std::endl;
   
@@ -71,6 +73,7 @@ int main() {
   
   // Gun
   Gun gun(bullets, p, smallBullet);
+  //gun = Gun(bullets, p, smallBullet);
   
   // Enemies
   std::vector<Enemy> enemies;
@@ -113,16 +116,17 @@ int main() {
       if (event.Type == sf::Event::Closed) app.Close(); // check for window exit
       else if (event.Type == sf::Event::KeyPressed) {    // check key events
         if (event.Key.Code == sf::Keyboard::Escape) app.Close();       // escape => exit
-        else if (event.Key.Code == sf::Keyboard::Space) gun.pullTrigger();       // escape => exit
+        else if (event.Key.Code == sf::Keyboard::Space) gun.trigger = true;       // space => fire
       }
-      else if (event.Type == sf::Event::KeyPressed)
-        if (event.Key.Code == sf::Keyboard::Space) gun.releaseTrigger();
+      else if (event.Type == sf::Event::KeyReleased)
+        if (event.Key.Code == sf::Keyboard::Space) gun.trigger = false;
     }
     
     // game logic
     float frameTime = app.GetFrameTime();
     phys.update(frameTime);
     spawner.update();
+    gun.update();
     
     // do things with the dead
     if (p.dead) {

@@ -15,10 +15,11 @@ SET(SRCS
   ./platform.cpp 
   ./collisionObject.cpp 
   ./level.cpp 
-  ./guns/gun.cpp
-  ./bullets/bullet.cpp
   ./enemy.cpp
   ./spawner.cpp
+  ./bullets/bullet.cpp
+  ./guns/gun.cpp
+  ./guns/machineGun.cpp
   )
 
 SET(PROGRAMS sfmc)

@@ -1,16 +1,16 @@
 #include "../player.hpp"
 #include "../bullets/bullet.hpp"
-#include "gun.hpp"
+#include "machineGun.hpp"
 
-#define GUN_COOLDOWN 50  // in millis
+#define GUN_COOLDOWN 10  // in millis
 #define BULLET_SPEED 0.2
 
-Gun::Gun(std::vector<Bullet> &b, Player &p, sf::Image &bulletTex) : bullets(b), shooter(p), bulletTexture(bulletTex) { }
+MachineGun::MachineGun(std::vector<Bullet> &b, Player &p, sf::Image &bulletTex) : Gun(b, p, bulletTex) { }
 
-//void Gun::pullTrigger() { trigger = true; }
-//void Gun::releaseTrigger () { trigger = false; }
+//void MachineGun::pullTrigger() { shoot(); }
+//void MachineGun::releaseTrigger () { }
 
-void Gun::shoot() {
+void MachineGun::shoot() {
   if (coolDown.GetElapsedTime() > GUN_COOLDOWN) {
     coolDown.Reset();
     bullets.push_back( Bullet(
@@ -20,10 +20,9 @@ void Gun::shoot() {
       0, 
       bulletTexture
     ));
-    trigger = false;
   }
 }
 
-void Gun::update() {
+void MachineGun::update() {
   if (trigger) shoot(); // duh!
 }
