@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-#include <stdio.h>  // for text (sprintf())
+#include <stdio.h>  // for text sprintf()
 
 #include "level.hpp"
 #include "platform.hpp"
@@ -72,8 +72,9 @@ int main() {
   std::vector<Bullet> bullets;
   
   // Gun
-  Gun gun(bullets, p, smallBullet);
-  //gun = Gun(bullets, p, smallBullet);
+ // Gun handGun(bullets, p, smallBullet);
+  MachineGun mg(bullets, p, smallBullet);
+  Gun &gun = mg;
   
   // Enemies
   std::vector<Enemy> enemies;

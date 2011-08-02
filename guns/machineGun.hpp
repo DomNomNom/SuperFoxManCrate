@@ -6,15 +6,14 @@
 class Bullet;
 class Player;
 
-class MachineGun : protected Gun {
+class MachineGun : public Gun {
   /*Player &shooter;
   sf::Image &bulletTexture;
   sf::Clock coolDown;
-  std::vector<Bullet> &bullets;
-  void shoot(); */
+  std::vector<Bullet> &bullets; */
+  void shoot();
 public:
   MachineGun(std::vector<Bullet> &b, Player &p, sf::Image &bulletTex);
-  void shoot();
   void update();
 
   //bool trigger;
