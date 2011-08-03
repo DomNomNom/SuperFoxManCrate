@@ -76,7 +76,7 @@ int main() {
   Gun pistol(bullets, p, smallBullet, 1);
   Gun revolver(bullets, p, largeBullet, 2);
   MachineGun mg(bullets, p, smallBullet, 1);
-  Gun &gun = revolver;
+  Gun *gun = &mg;
   
   // Enemies
   std::vector<Enemy> enemies;
@@ -119,17 +119,20 @@ int main() {
       if (event.Type == sf::Event::Closed) app.Close(); // check for window exit
       else if (event.Type == sf::Event::KeyPressed) {    // check key events
         if (event.Key.Code == sf::Keyboard::Escape) app.Close();       // escape => exit
-        else if (event.Key.Code == sf::Keyboard::Space) gun.trigger = true;       // space => fire
+        else if (event.Key.Code == sf::Keyboard::Space) gun->trigger = true;       // space => fire
+        else if (event.Key.Code == sf::Keyboard::Num1) gun = &pistol;       // number keys => gun selection
+        else if (event.Key.Code == sf::Keyboard::Num2) gun = &revolver;     // number keys => gun selection
+        else if (event.Key.Code == sf::Keyboard::Num3) gun = &mg;           // number keys => gun selection
       }
       else if (event.Type == sf::Event::KeyReleased)
-        if (event.Key.Code == sf::Keyboard::Space) gun.trigger = false;
+        if (event.Key.Code == sf::Keyboard::Space) gun->trigger = false;
     }
     
     // game logic
     float frameTime = app.GetFrameTime();
     phys.update(frameTime);
     spawner.update();
-    gun.update();
+    gun->update();
     
     // do things with the dead
     if (p.dead) {

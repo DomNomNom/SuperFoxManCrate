@@ -8,7 +8,7 @@ public:
   bool dead;
   int damadge;
   sf::Sprite visual;
-  Bullet(float x, float y, float v_x, float v_y, sf::Image &tex, int dmg);
+  Bullet(float x, float y, float v_x, float v_y, const sf::Image &tex, int dmg);
   void update(float dt);
   bool collidesWith(CollisionObject &o);
 };
