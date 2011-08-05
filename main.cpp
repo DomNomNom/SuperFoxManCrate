@@ -2,13 +2,13 @@
 
 #include <iostream>
 #include <vector>
-
 #include <stdio.h>  // for text sprintf()
 
 #include "level.hpp"
 #include "platform.hpp"
 #include "guns/gun.hpp"
 #include "guns/machineGun.hpp"
+#include "guns/rocketLauncher.hpp"
 #include "bullets/bullet.hpp"
 #include "physics.hpp"
 #include "enemy.hpp"
@@ -70,13 +70,15 @@ int main() {
   // Bullets
   sf::Image smallBullet; smallBullet.LoadFromFile("images/bullet_4x4.png");
   sf::Image largeBullet; largeBullet.LoadFromFile("images/bullet_8x8.png");
+  sf::Image rocketShell; rocketShell.LoadFromFile("images/rocket_8x4.png");
   std::vector<Bullet> bullets;
   
   // Gun
   Gun pistol(bullets, p, smallBullet, 1);
   Gun revolver(bullets, p, largeBullet, 2);
   MachineGun mg(bullets, p, smallBullet, 1);
-  Gun *gun = &mg;
+  RocketLauncher rocketLauncher(bullets, p, rocketShell, 10);
+  Gun *gun = &rocketLauncher;
   
   // Enemies
   std::vector<Enemy> enemies;
