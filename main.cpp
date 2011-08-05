@@ -73,7 +73,7 @@ int main() {
   sf::Image rocketShell; rocketShell.LoadFromFile("images/rocket_8x4.png");
   std::vector<Bullet> bullets;
   
-  // Gun
+  // Guns
   Gun pistol(bullets, p, smallBullet, 1);
   Gun revolver(bullets, p, largeBullet, 2);
   MachineGun mg(bullets, p, smallBullet, 1);
@@ -122,9 +122,10 @@ int main() {
       else if (event.Type == sf::Event::KeyPressed) {    // check key events
         if (event.Key.Code == sf::Keyboard::Escape) app.Close();       // escape => exit
         else if (event.Key.Code == sf::Keyboard::Space) gun->trigger = true;       // space => fire
-        else if (event.Key.Code == sf::Keyboard::Num1) gun = &pistol;       // number keys => gun selection
-        else if (event.Key.Code == sf::Keyboard::Num2) gun = &revolver;     // number keys => gun selection
-        else if (event.Key.Code == sf::Keyboard::Num3) gun = &mg;           // number keys => gun selection
+        else if (event.Key.Code == sf::Keyboard::Num1) gun = &pistol;        // number keys => gun selection
+        else if (event.Key.Code == sf::Keyboard::Num2) gun = &revolver;      // number keys => gun selection
+        else if (event.Key.Code == sf::Keyboard::Num3) gun = &mg;            // number keys => gun selection
+        else if (event.Key.Code == sf::Keyboard::Num4) gun = &rocketLauncher;// number keys => gun selection
       }
       else if (event.Type == sf::Event::KeyReleased)
         if (event.Key.Code == sf::Keyboard::Space) gun->trigger = false;

@@ -2,7 +2,8 @@
 
 Bullet::Bullet(float x, float y, float v_x, float v_y, const sf::Image &tex, int dmg)
  :  CollisionObject(x, y, tex.GetWidth(), tex.GetHeight()), 
- dead(false), 
+ dead(false),
+ upsideDown(false),
  damadge(dmg) {
   vel.x = v_x;
   vel.y = v_y;
@@ -15,8 +16,7 @@ void Bullet::update(float dt) {
   pos += vel * dt;
   visual.SetPosition(pos.x, pos.y);
   
-  upsideDown = !upsideDown;
-  visual.FlipY(upsideDown);
+  visual.FlipY((int(pos.x)%2)==0);  // cheap animation
 }
 
 bool Bullet::collidesWith(CollisionObject &o) {

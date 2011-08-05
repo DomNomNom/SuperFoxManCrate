@@ -2,8 +2,8 @@
 #include "../bullets/bullet.hpp"
 #include "rocketLauncher.hpp"
 
-#define GUN_COOLDOWN 50  // in millis
-#define ROCKET_SPEED 0.025
+#define GUN_COOLDOWN 500  // in millis
+#define ROCKET_SPEED 0.1
 
 RocketLauncher::RocketLauncher(std::vector<Bullet> &b, Player &p, sf::Image &bulletTex, int dmg) : Gun(b, p, bulletTex, dmg) { }
 
@@ -16,7 +16,7 @@ void RocketLauncher::shoot() {
       (shooter.facingLeft)? -ROCKET_SPEED : ROCKET_SPEED, 
       0, 
       bulletTexture,
-      0
+      damadge
     ));
     trigger = false;
   }
