@@ -4,7 +4,7 @@
 
 #define BULLET_SPEED 0.2
 
-Gun::Gun(std::vector<Bullet> &b, Player &p, const sf::Image &bulletTex, int coolTime, int dmg, int burst, float var_x, float var_y) 
+Gun::Gun(std::vector<Bullet> &b, Player &p, const sf::Image &bulletTex, int coolTime, int dmg, int burst, float var_x, float var_y, bool autoFire) 
  : bullets(b), 
  shooter(p), 
  bulletTexture(bulletTex), 
@@ -13,15 +13,16 @@ Gun::Gun(std::vector<Bullet> &b, Player &p, const sf::Image &bulletTex, int cool
  burstCount(burst),
  inaccuracy_x(var_x),
  inaccuracy_y(var_y),
+ automatic(autoFire),
  trigger(false) { }
 
 
 void Gun::shoot() {
   if (coolDown.GetElapsedTime() > coolingTime) {
     coolDown.Reset();
-    float vel_x = BULLET_SPEED;
+    float dir = (shooter.facingLeft)? -1 : 1; // dir: direction
+    float vel_x = dir*BULLET_SPEED;
     float vel_y = 0;
-    if (shooter.facingLeft) vel_x *= -1;
     for (int i=0; i<burstCount; ++i) {
       bullets.push_back( Bullet(
         shooter.pos.x, 
@@ -34,7 +35,7 @@ void Gun::shoot() {
         damadge
       ));
     }
-    trigger = false;
+    trigger = automatic;
   }
 }
 

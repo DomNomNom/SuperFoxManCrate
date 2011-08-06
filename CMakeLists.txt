@@ -19,8 +19,6 @@ SET(SRCS
   ./spawner.cpp
   ./bullets/bullet.cpp
   ./guns/gun.cpp
-  ./guns/machineGun.cpp
-  ./guns/rocketLauncher.cpp
   )
 
 SET(PROGRAMS sfmc)

@@ -7,8 +7,6 @@
 #include "level.hpp"
 #include "platform.hpp"
 #include "guns/gun.hpp"
-#include "guns/machineGun.hpp"
-#include "guns/rocketLauncher.hpp"
 #include "bullets/bullet.hpp"
 #include "physics.hpp"
 #include "enemy.hpp"
@@ -74,12 +72,12 @@ int main() {
   std::vector<Bullet> bullets;
   
   // Guns
-  //<GunClass>                  (bullets, p, <bulletImage>, <coolTime>, <dmg>,  <burst>,  <var_x>,  <var_y> );
-  Gun pistol                    (bullets, p, smallBullet,   100,         1,     1,        0,        0       );
-  Gun revolver                  (bullets, p, largeBullet,   100,         2,     1,        0,        0       );
-  Gun shotgun                   (bullets, p, smallBullet,   500,         1,     5,        0.05,     0.05    );
-  MachineGun mg                 (bullets, p, smallBullet,    50,         1,     1,        0,        0.02    );
-  RocketLauncher rocketLauncher (bullets, p, rocketShell,  1000,        10,     1,        0,        0       );
+  //  <GunClass>                (bullets, p, <bulletImage>, <coolTime>, <dmg>,  <burst>,  <var_x>,  <var_y>, <automatic> );
+  Gun pistol                    (bullets, p, smallBullet,   100,         1,     1,        0,        0,       false);
+  Gun revolver                  (bullets, p, largeBullet,   100,         2,     1,        0,        0,       false);
+  Gun shotgun                   (bullets, p, smallBullet,   500,         1,     5,        0.05,     0.05,    false);
+  Gun mg                        (bullets, p, smallBullet,    50,         1,     1,        0,        0.02,    true );
+  Gun rocketLauncher            (bullets, p, rocketShell,  1000,        10,     1,        0,        0,       false);
   Gun *gun = &rocketLauncher;
   
   // Enemies

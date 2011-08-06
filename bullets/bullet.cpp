@@ -19,7 +19,8 @@ void Bullet::update(float dt) {
   pos += vel * dt;
   visual.SetPosition(pos.x, pos.y);
   
-  visual.FlipY((int(pos.x)%2)==0);  // cheap animation
+  upsideDown = !upsideDown;
+  visual.FlipY(upsideDown);  // cheap animation
 }
 
 bool Bullet::collidesWith(CollisionObject &o) {

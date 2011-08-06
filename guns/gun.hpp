@@ -19,10 +19,11 @@ protected:
   int burstCount;
   float inaccuracy_x;
   float inaccuracy_y;
+  bool automatic;
   virtual void shoot();
 public:
   bool trigger;
-  Gun(std::vector<Bullet> &b, Player &p, const sf::Image &bulletTex, int coolTime, int dmg, int burst, float var_x, float var_y);
+  Gun(std::vector<Bullet> &b, Player &p, const sf::Image &bulletTex, int coolTime, int dmg, int burst, float var_x, float var_y, bool autoFire);
   virtual void update();
 };
 
