@@ -5,12 +5,15 @@
 #define GUN_COOLDOWN 50  // in millis
 #define BULLET_SPEED 0.2
 
-Gun::Gun(std::vector<Bullet> &b, Player &p, const sf::Image &bulletTex, int dmg) 
+Gun::Gun(std::vector<Bullet> &b, Player &p, const sf::Image &bulletTex, int dmg, int burst, float var_x, float var_y) 
  : bullets(b), 
  shooter(p), 
  bulletTexture(bulletTex), 
- trigger(false),
- damadge(dmg) { }
+ damadge(dmg),
+ burstCount(burst),
+ inaccuracy_x(var_x),
+ inaccuracy_y(var_y),
+ trigger(false) { }
 
 
 void Gun::shoot() {

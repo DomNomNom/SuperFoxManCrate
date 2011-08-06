@@ -9,6 +9,6 @@ class Player;
 class RocketLauncher : public Gun {
   void shoot();
 public:
-  RocketLauncher(std::vector<Bullet> &b, Player &p, sf::Image &bulletTex, int dmg);
+  RocketLauncher(std::vector<Bullet> &b, Player &p, const sf::Image &bulletTex, int dmg, int burst, float var_x, float var_y);
   void update();
 };

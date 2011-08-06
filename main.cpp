@@ -74,10 +74,11 @@ int main() {
   std::vector<Bullet> bullets;
   
   // Guns
-  Gun pistol(bullets, p, smallBullet, 1);
-  Gun revolver(bullets, p, largeBullet, 2);
-  MachineGun mg(bullets, p, smallBullet, 1);
-  RocketLauncher rocketLauncher(bullets, p, rocketShell, 10);
+  //<GunClass>                  (bullets, p, <bulletImage>, <dmg>,  <burst>,  <var_x>,  <var_y>);
+  Gun pistol                    (bullets, p, smallBullet,   1,      1,        0,        0     );
+  Gun revolver                  (bullets, p, largeBullet,   2,      1,        0,        0     );
+  MachineGun mg                 (bullets, p, smallBullet,   1,      1,        0,        0.02  );
+  RocketLauncher rocketLauncher (bullets, p, rocketShell,   10,     1,        0,        0     );
   Gun *gun = &rocketLauncher;
   
   // Enemies

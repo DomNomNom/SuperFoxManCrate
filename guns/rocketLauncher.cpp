@@ -5,7 +5,8 @@
 #define GUN_COOLDOWN 500  // in millis
 #define ROCKET_SPEED 0.1
 
-RocketLauncher::RocketLauncher(std::vector<Bullet> &b, Player &p, sf::Image &bulletTex, int dmg) : Gun(b, p, bulletTex, dmg) { }
+RocketLauncher::RocketLauncher(std::vector<Bullet> &b, Player &p, const sf::Image &bulletTex, int dmg, int burst, float var_x, float var_y) 
+  : Gun(b, p, bulletTex, dmg, burst, var_x, var_y) { }
 
 void RocketLauncher::shoot() {
   if (coolDown.GetElapsedTime() > GUN_COOLDOWN) {
