@@ -2,13 +2,13 @@
 #include "../bullets/bullet.hpp"
 #include "gun.hpp"
 
-#define GUN_COOLDOWN 50  // in millis
 #define BULLET_SPEED 0.2
 
-Gun::Gun(std::vector<Bullet> &b, Player &p, const sf::Image &bulletTex, int dmg, int burst, float var_x, float var_y) 
+Gun::Gun(std::vector<Bullet> &b, Player &p, const sf::Image &bulletTex, int coolTime, int dmg, int burst, float var_x, float var_y) 
  : bullets(b), 
  shooter(p), 
  bulletTexture(bulletTex), 
+ coolingTime(coolTime),
  damadge(dmg),
  burstCount(burst),
  inaccuracy_x(var_x),
@@ -17,7 +17,7 @@ Gun::Gun(std::vector<Bullet> &b, Player &p, const sf::Image &bulletTex, int dmg,
 
 
 void Gun::shoot() {
-  if (coolDown.GetElapsedTime() > GUN_COOLDOWN) {
+  if (coolDown.GetElapsedTime() > coolingTime) {
     coolDown.Reset();
     float vel_x = BULLET_SPEED;
     float vel_y = 0;
