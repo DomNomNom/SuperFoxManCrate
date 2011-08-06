@@ -1,18 +1,21 @@
 #include "bullet.hpp"
 
-Bullet::Bullet(float x, float y, float v_x, float v_y, const sf::Image &tex, int dmg)
+Bullet::Bullet(float x, float y, float v_x, float v_y, float a_x, float a_y, const sf::Image &tex, int dmg)
  :  CollisionObject(x, y, tex.GetWidth(), tex.GetHeight()), 
  dead(false),
  upsideDown(false),
  damadge(dmg) {
   vel.x = v_x;
   vel.y = v_y;
+  acc.x = a_x;
+  acc.y = a_y;
   visual.SetImage(tex);
   visual.FlipX(vel.x<0);
   update(0);
 }
 
 void Bullet::update(float dt) {
+  vel += acc * dt;
   pos += vel * dt;
   visual.SetPosition(pos.x, pos.y);
   

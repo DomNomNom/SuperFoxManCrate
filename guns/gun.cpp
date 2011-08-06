@@ -28,6 +28,8 @@ void Gun::shoot() {
         shooter.pos.y, 
         vel_x + inaccuracy_x*(float)rand()/(float)RAND_MAX - inaccuracy_x/2,
         vel_y + inaccuracy_y*(float)rand()/(float)RAND_MAX - inaccuracy_y/2, 
+        0,
+        0,
         bulletTexture,
         damadge
       ));

@@ -17,6 +17,8 @@ void MachineGun::shoot() {
       shooter.pos.y, 
       (shooter.facingLeft)? -BULLET_SPEED : BULLET_SPEED, 
       inaccuracy_y*(float)rand()/(float)RAND_MAX - inaccuracy_y/2, 
+      0,
+      0,
       bulletTexture,
       damadge
     ));

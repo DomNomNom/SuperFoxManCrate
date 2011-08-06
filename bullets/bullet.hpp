@@ -8,12 +8,14 @@
 
 class Bullet : public CollisionObject  {
   bool upsideDown;
+  sf::Vector2<float> acc;
 public:
   bool dead;
   int damadge;
   sf::Sprite visual;
   
-  Bullet(float x, float y, float v_x, float v_y, /*float a_x, float a_y,*/ const sf::Image &tex, int dmg);
+  // TODO: acceleration
+  Bullet(float x, float y, float v_x, float v_y, float a_x, float a_y, const sf::Image &tex, int dmg);
   void update(float dt);
   bool collidesWith(CollisionObject &o);
 };
