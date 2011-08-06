@@ -74,11 +74,12 @@ int main() {
   std::vector<Bullet> bullets;
   
   // Guns
-  //<GunClass>                  (bullets, p, <bulletImage>, <dmg>,  <burst>,  <var_x>,  <var_y>);
-  Gun pistol                    (bullets, p, smallBullet,   1,      1,        0,        0     );
-  Gun revolver                  (bullets, p, largeBullet,   2,      1,        0,        0     );
-  MachineGun mg                 (bullets, p, smallBullet,   1,      1,        0,        0.02  );
-  RocketLauncher rocketLauncher (bullets, p, rocketShell,   10,     1,        0,        0     );
+  //<GunClass>                  (bullets, p, <bulletImage>, <dmg>,  <burst>,  <var_x>,  <var_y> );
+  Gun pistol                    (bullets, p, smallBullet,   1,      1,        0,        0       );
+  Gun revolver                  (bullets, p, largeBullet,   2,      1,        0,        0       );
+  Gun shotgun                   (bullets, p, smallBullet,   1,      5,        0.05,     0.05    );
+  MachineGun mg                 (bullets, p, smallBullet,   1,      1,        0,        0.02    );
+  RocketLauncher rocketLauncher (bullets, p, rocketShell,   10,     1,        0,        0       );
   Gun *gun = &rocketLauncher;
   
   // Enemies
@@ -123,10 +124,11 @@ int main() {
       else if (event.Type == sf::Event::KeyPressed) {    // check key events
         if (event.Key.Code == sf::Keyboard::Escape) app.Close();       // escape => exit
         else if (event.Key.Code == sf::Keyboard::Space) gun->trigger = true;       // space => fire
-        else if (event.Key.Code == sf::Keyboard::Num1) gun = &pistol;        // number keys => gun selection
-        else if (event.Key.Code == sf::Keyboard::Num2) gun = &revolver;      // number keys => gun selection
-        else if (event.Key.Code == sf::Keyboard::Num3) gun = &mg;            // number keys => gun selection
-        else if (event.Key.Code == sf::Keyboard::Num4) gun = &rocketLauncher;// number keys => gun selection
+        else if (event.Key.Code == sf::Keyboard::Num1) gun = &pistol;        // 1 => pistol
+        else if (event.Key.Code == sf::Keyboard::Num2) gun = &revolver;      // 2 => revolver
+        else if (event.Key.Code == sf::Keyboard::Num3) gun = &shotgun;       // 3 => shotgun
+        else if (event.Key.Code == sf::Keyboard::Num4) gun = &mg;            // 4 => machine gun
+        else if (event.Key.Code == sf::Keyboard::Num5) gun = &rocketLauncher;// 5 => rocket launcher
       }
       else if (event.Type == sf::Event::KeyReleased)
         if (event.Key.Code == sf::Keyboard::Space) gun->trigger = false;

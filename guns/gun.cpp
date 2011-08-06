@@ -19,14 +19,19 @@ Gun::Gun(std::vector<Bullet> &b, Player &p, const sf::Image &bulletTex, int dmg,
 void Gun::shoot() {
   if (coolDown.GetElapsedTime() > GUN_COOLDOWN) {
     coolDown.Reset();
-    bullets.push_back( Bullet(
-      shooter.pos.x, 
-      shooter.pos.y, 
-      (shooter.facingLeft)? -BULLET_SPEED : BULLET_SPEED, 
-      0, 
-      bulletTexture,
-      damadge
-    ));
+    float vel_x = BULLET_SPEED;
+    float vel_y = 0;
+    if (shooter.facingLeft) vel_x *= -1;
+    for (int i=0; i<burstCount; ++i) {
+      bullets.push_back( Bullet(
+        shooter.pos.x, 
+        shooter.pos.y, 
+        vel_x + inaccuracy_x*(float)rand()/(float)RAND_MAX - inaccuracy_x/2,
+        vel_y + inaccuracy_y*(float)rand()/(float)RAND_MAX - inaccuracy_y/2, 
+        bulletTexture,
+        damadge
+      ));
+    }
     trigger = false;
   }
 }
