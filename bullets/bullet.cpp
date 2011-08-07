@@ -1,16 +1,16 @@
 #include "bullet.hpp"
 
-Bullet::Bullet(float x, float y, float v_x, float v_y, float a_x, float a_y, const sf::Image &tex, int dmg)
- :  CollisionObject(x, y, tex.GetWidth(), tex.GetHeight()), 
+Bullet::Bullet(float x, float y, float vel_x, float vel_y, sf::Vector2<float> &acceleration, const sf::Image &tex, int dmg, bool explosion) : 
+ CollisionObject(x, y, tex.GetWidth(), tex.GetHeight()), 
  dead(false),
  upsideDown(false),
- damadge(dmg) {
-  vel.x = v_x;
-  vel.y = v_y;
-  acc.x = a_x;
-  acc.y = a_y;
+ damadge(dmg),
+ explosive(explosion),
+ acc(acceleration) {
+  vel.x = vel_x;
+  vel.y = vel_y;
   visual.SetImage(tex);
-  visual.FlipX(vel.x<0);
+  visual.FlipX((vel.x+acc.x)<0);
   update(0);
 }
 

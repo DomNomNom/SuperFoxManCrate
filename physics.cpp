@@ -1,6 +1,6 @@
 #include <iostream>
-#include "bullets/bullet.hpp"
 #include "collisionObject.hpp"
+#include "bullets/bullet.hpp"
 #include "level.hpp"
 #include "player.hpp"
 #include "physics.hpp"
@@ -21,10 +21,13 @@ void Physics::update(float dt) {
   l.collidesWith(p);                   // level - player
   for (int i=0; i<enemies.size(); ++i) // level - enemy 
     l.collidesWith(enemies[i]);  
-  for (int i=0; i<bullets.size(); ++i) // level - bullet
-    if (l.collidesWith(bullets[i]) || outsideBounds(bullets[i]))
+  for (int i=0; i<bullets.size(); ++i) {  // level - bullet
+    if (l.collidesWith(bullets[i]) || outsideBounds(bullets[i])) {
+      if (bullets[i].explosive) ;// TODO: explode
       bullets.erase(bullets.begin() + i);
-
+    }
+  }
+  
   for (int i=0; i<enemies.size(); ++i) { // player - enemy
     if (p.collidesWith(enemies[i])) {
       p.dead = true;
@@ -32,18 +35,20 @@ void Physics::update(float dt) {
     }
   }
   
+  
   // check for bullet death and remove
   for (int i=0; i<bullets.size(); ++i) {
     if (bullets[i].dead) {
-      enemies.erase(enemies.begin() + i);
+      enemies.erase(enemies.begin() + i); /// WTF man, WTF?!?!
       --i;
     }
-  }
+  } 
   
   for (int b=0; b<bullets.size(); ++b) { // bullet - enemy
     for (int e=0; e<enemies.size(); ++e) {
       if (bullets[b].collidesWith(enemies[e]) ) {
         enemies[e].hurt(bullets[b].damadge);
+        if (enemies[e].dead) enemies.erase(enemies.begin() + e);
         bullets.erase(bullets.begin() + b);
         --b;
         break;
