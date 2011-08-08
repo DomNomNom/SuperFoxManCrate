@@ -22,6 +22,7 @@ void Enemy::update(float dt) {
 
   tile.SetPosition(pos.x, pos.y);
   tile.FlipX(vel.x<0);
+  tile.SetScale(1, 1);
 }
 
 bool Enemy::collidesWith(CollisionObject &o) {

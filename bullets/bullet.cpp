@@ -21,6 +21,7 @@ void Bullet::update(float dt) {
   
   upsideDown = !upsideDown;
   visual.FlipY(upsideDown);  // cheap animation
+  visual.SetScale(1, 1);
 }
 
 bool Bullet::collidesWith(CollisionObject &o) {

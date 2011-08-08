@@ -18,6 +18,7 @@ SET(SRCS
   ./enemy.cpp
   ./spawner.cpp
   ./bullets/bullet.cpp
+  ./bullets/explosion.cpp
   ./guns/gun.cpp
   )
 

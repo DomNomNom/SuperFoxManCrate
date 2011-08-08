@@ -52,6 +52,7 @@ void Player::update(float dt) {
 sf::Drawable &Player::draw() {
   visual.FlipX(facingLeft);  // TODO: moonWalk
   visual.SetPosition(pos.x, pos.y);
+  visual.SetScale(1, 1);
   sf::Drawable &d = visual;
   return d;
 }

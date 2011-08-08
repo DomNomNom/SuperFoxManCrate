@@ -55,3 +55,5 @@ void Gun::shoot() {
 void Gun::update() {
   if (trigger) shoot(); // duh!
 }
+
+

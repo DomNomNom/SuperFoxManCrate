@@ -8,6 +8,7 @@
 #include "platform.hpp"
 #include "guns/gun.hpp"
 #include "bullets/bullet.hpp"
+#include "bullets/explosion.hpp"
 #include "physics.hpp"
 #include "enemy.hpp"
 #include "spawner.hpp"
@@ -20,7 +21,7 @@ int screenWd; // faster than calling the function everytime
 int screenHt;
 
 sf::Drawable &placeObject(sf::Drawable &d) {
-  d.SetScale(scale, scale); // scale size
+  d.Scale(scale, scale); // scale size
   d.Move( // scale position
     d.GetPosition().x * (scale-1),
     d.GetPosition().y * (scale-1) 
@@ -36,6 +37,7 @@ int main() {
   sf::VideoMode screen(sf::VideoMode::GetDesktopMode());
   sf::RenderWindow app(screen, "Hi World?", sf::Style::Fullscreen);
   app.SetFramerateLimit(60); // Limit to 60 frames per second
+  app.ShowMouseCursor(false);
   app.EnableVerticalSync(true);
   app.EnableKeyRepeat(false);
   //scale = screen.Height / (float)HEIGHT; // (un-)comment this line to enable/disable dynamic scaling
@@ -71,22 +73,25 @@ int main() {
   sf::Image rocketShell; rocketShell.LoadFromFile("images/rocket_8x4.png");
   std::vector<Bullet> bullets;
   
+  // Explosions
+  std::vector<Explosion> explosions;
+  
   // Guns
   //  <GunClass>     (bullets, p, <bulletImage>, <coolDn>, <dmg>, <#>, <vel_x/y>, <var_x/y>,  <acc_x/y>, <auto>, <explosive> );
-  Gun pistol         (bullets, p, smallBullet,   100,      1,    1,    0.2,  0,   0,    0,    0,     0,  false,   false );
-  Gun revolver       (bullets, p, largeBullet,   100,      2,    1,    0.2,  0,   0,    0,    0,     0,  false,   false );
-  Gun shotgun        (bullets, p, smallBullet,   500,      1,    5,    0.2,  0,   0.05, 0.05, 0,     0,  false,   false );
-  Gun mg             (bullets, p, smallBullet,    50,      1,    1,    0.2,  0,   0,    0.02, 0,     0,  true,    false );
-  Gun rocketLauncher (bullets, p, rocketShell,  1000,     10,    1,    0.0,  0,   0,    0,    0.0005,0,  false,   true  );
+  Gun pistol         (bullets, p, smallBullet,   100,       1,    1,   0.2,  0,   0,    0,    0,     0,  false,   false );
+  Gun revolver       (bullets, p, largeBullet,   100,       2,    1,   0.2,  0,   0,    0,    0,     0,  false,   false );
+  Gun shotgun        (bullets, p, smallBullet,   500,       1,    5,   0.2,  0,   0.05, 0.05, 0,     0,  false,   false );
+  Gun mg             (bullets, p, smallBullet,    50,       1,    1,   0.2,  0,   0,    0.02, 0,     0,  true,    false );
+  Gun rocketLauncher (bullets, p, rocketShell,  1000,      10,    1,   0.0,  0,   0,    0,    0.0005,0,  false,   true  );
   Gun *gun = &rocketLauncher;
-  
+    
   // Enemies
   std::vector<Enemy> enemies;
   Spawner spawner(WIDTH/2, 0, enemies);
   spawner.addEnemy();
 
   // Physics
-  Physics phys(p, level, bullets, enemies);
+  Physics phys(p, level, bullets, explosions, enemies);
 
   // leet FPS counter
   char fpsString[15];
@@ -158,7 +163,10 @@ int main() {
       app.Draw(placeObject(enemies[i].tile));
     for (int i=0; i<level.platforms.size(); ++i)  // draw level
       for (int j=0; j<level.platforms[i].tiles.size(); ++j)
-        app.Draw(level.platforms[i].tiles[j]);
+        app.Draw(level.platforms[i].tiles[j]);  // note: no need to call placeObject as the visual doesn't move.
+    for (int i=0; i<explosions.size(); ++i) // draw explosions
+      app.Draw(placeObject(explosions[i].visual));
+    
     
     // fps
     sprintf(fpsString, "fps: %.2f", 1000.f/frameTime); 
