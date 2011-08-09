@@ -14,7 +14,10 @@ Level::Level(const char *filePath) {
   int imgHt = lvl.GetHeight();
   
   bool isWall[imgWd][imgHt];
-  
+  for (int y=0; y<imgHt; ++y) 
+    for (int x=0; x<imgWd; ++x) 
+      isWall[x][y] = false;
+      
   for (int y=0; y<imgHt; ++y) {
     for (int x=0; x<imgWd; ++x) {
       // search for new platfomrs

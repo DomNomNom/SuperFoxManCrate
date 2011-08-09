@@ -79,8 +79,8 @@ int main() {
   // Guns
   //  <GunClass>     (bullets, p, <bulletImage>, <coolDn>, <dmg>, <#>, <vel_x/y>, <var_x/y>,  <acc_x/y>, <auto>, <explosive> );
   Gun pistol         (bullets, p, smallBullet,   100,       1,    1,   0.2,  0,   0,    0,    0,     0,  false,   false );
-  Gun revolver       (bullets, p, largeBullet,   100,       2,    1,   0.2,  0,   0,    0,    0,     0,  false,   false );
-  Gun shotgun        (bullets, p, smallBullet,   500,       1,    5,   0.2,  0,   0.05, 0.05, 0,     0,  false,   false );
+  Gun revolver       (bullets, p, largeBullet,   100,       5,    1,   0.2,  0,   0,    0,    0,     0,  false,   false );
+  Gun shotgun        (bullets, p, smallBullet,   500,       1,    6,   0.2,  0,   0.05, 0.05, 0,     0,  false,   false );
   Gun mg             (bullets, p, smallBullet,    50,       1,    1,   0.2,  0,   0,    0.02, 0,     0,  true,    false );
   Gun rocketLauncher (bullets, p, rocketShell,  1000,      10,    1,   0.0,  0,   0,    0,    0.0005,0,  false,   true  );
   Gun *gun = &rocketLauncher;

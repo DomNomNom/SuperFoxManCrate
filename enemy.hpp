@@ -8,7 +8,7 @@ public:
   sf::Sprite tile;
   bool dead;
   
-  Enemy(float x, float y, sf::Image &pic);
+  Enemy(float x, float y, int hp, sf::Image &pic);
   
   void update(float dt);
   
