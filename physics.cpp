@@ -48,7 +48,7 @@ void Physics::update(float dt) {
   
   for (int i=0; i<bullets.size(); ++i) {  // check bullet death
     if (bullets[i].dead) {
-      enemies.erase(enemies.begin() + i); /// WTF man, WTF?!?!
+      bullets.erase(bullets.begin() + i);
       --i;
     }
   } 
