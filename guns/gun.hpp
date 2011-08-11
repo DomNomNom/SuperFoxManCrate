@@ -25,6 +25,7 @@ protected:
   int burstCount;
   bool automatic;
   bool explosiveAmmo;
+  bool inverted;
   void shoot();
 public:
   bool trigger;

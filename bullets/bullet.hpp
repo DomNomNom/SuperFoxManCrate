@@ -12,6 +12,7 @@ class Bullet : public CollisionObject  {
 public:
   bool dead;
   bool explosive;
+  bool deadOnSlow;
   int damadge;
   sf::Sprite visual;
   

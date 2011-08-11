@@ -27,15 +27,19 @@ Gun::Gun(
    acc(acc_x, acc_y),
    automatic(autoFire),
    trigger(false),
-   explosiveAmmo(explosive)
- { }
-
+   explosiveAmmo(explosive),
+   inverted(true)
+{ }
 
 void Gun::shoot() {
   if (coolDown.GetElapsedTime() > coolingTime) {
     coolDown.Reset();
-    if (shooter.facingLeft ^ (vel.x<0)) vel.x *= -1;  // note: logical XOr
-    if (shooter.facingLeft ^ (acc.x<0)) acc.x *= -1;
+    if (shooter.facingLeft == inverted) {
+      vel.x *= -1;  // note: logical XOr
+      acc.x *= -1;
+      inverted = !inverted;
+    }    
+  //if (shooter.facingLeft ) acc.x *= -1;
     for (int i=0; i<burstCount; ++i) {
       bullets.push_back( Bullet(
         shooter.pos.x, 

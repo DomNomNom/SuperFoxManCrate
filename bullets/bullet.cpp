@@ -1,4 +1,7 @@
+#include <math.h>
 #include "bullet.hpp"
+
+#define MINIMUM_VEL 0.0005*dt
 
 Bullet::Bullet(float x, float y, float vel_x, float vel_y, sf::Vector2<float> &acceleration, const sf::Image &tex, int dmg, bool explosion) : 
  CollisionObject(x, y, tex.GetWidth(), tex.GetHeight()), 
@@ -6,11 +9,13 @@ Bullet::Bullet(float x, float y, float vel_x, float vel_y, sf::Vector2<float> &a
  upsideDown(false),
  damadge(dmg),
  explosive(explosion),
- acc(acceleration) {
+ acc(acceleration),
+ deadOnSlow(true) {
   vel.x = vel_x;
   vel.y = vel_y;
   visual.SetImage(tex);
-  visual.FlipX((vel.x+acc.x)<0);
+  visual.FlipX((vel.x)<0);
+  if (vel.x<0) acceleration.x *= 1;
   update(0);
 }
 
@@ -18,6 +23,8 @@ void Bullet::update(float dt) {
   vel += acc * dt;
   pos += vel * dt;
   visual.SetPosition(pos.x, pos.y);
+  
+  if (deadOnSlow && vel.x < MINIMUM_VEL  && vel.x > -MINIMUM_VEL) dead = true;
   
   upsideDown = !upsideDown;
   visual.FlipY(upsideDown);  // cheap animation
