@@ -8,6 +8,7 @@ private:
   sf::Vector2<float> dV;
   bool cancleJump;
   bool inAir;
+  bool freeFly;
   sf::Sprite visual;
   
 public:

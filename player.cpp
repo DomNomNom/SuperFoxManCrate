@@ -8,7 +8,7 @@
 #define PLAYER_JUMP_STRENGTH 0.27
 #define TILE_SIZE 8
 
-Player::Player (float x, float y, sf::Image &playerImage) : CollisionObject(x, y, TILE_SIZE, TILE_SIZE), dead(false), facingLeft(true) {
+Player::Player (float x, float y, sf::Image &playerImage) : CollisionObject(x, y, TILE_SIZE, TILE_SIZE), dead(false), facingLeft(true), freeFly(true) {
   pos.x=x; pos.y=y;
   vel.x=0; vel.y=0;
   dV.x =0; dV.y =0;
@@ -17,26 +17,37 @@ Player::Player (float x, float y, sf::Image &playerImage) : CollisionObject(x, y
 }
 
 void Player::checkKeys() {
-  if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Up)) {
-    if (!inAir) { 
-      vel.y -= PLAYER_JUMP_STRENGTH; 
-      inAir = true; 
-    }
-    cancleJump = false;
+  if (freeFly) {
+    vel.x=0; vel.y=0;
+    if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Up))    { vel.y -= PLAYER_WALKSPEED; }
+    if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Down))  { vel.y += PLAYER_WALKSPEED; }
+    if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Left))  { vel.x -= PLAYER_WALKSPEED; facingLeft = true;  }
+    if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Right)) { vel.x += PLAYER_WALKSPEED; facingLeft = false; }
   }
-  if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Down))  ;
-  if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Left))  { --dV.x; facingLeft = true;  }
-  if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Right)) { ++dV.x; facingLeft = false; }
+  else {
+    if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Up)) {
+      if (!inAir) { 
+        vel.y -= PLAYER_JUMP_STRENGTH; 
+        inAir = true; 
+      }
+      cancleJump = false;
+    }
+    if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Down))  ;
+    if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Left))  { --dV.x; facingLeft = true;  }
+    if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Right)) { ++dV.x; facingLeft = false; }
+  }
 }
 
 void Player::update(float dt) {
-  inAir = true;
-  // calculate vel
-  dV.y += GRAVITY;
-  vel += dV * dt;
-  vel.x = dV.x * PLAYER_WALKSPEED;
-  if (inAir && vel.y<0 && cancleJump) vel.y = 0;  // cancle the jump if possible
-  cancleJump = true;
+  if (!freeFly){
+    inAir = true;
+    // calculate vel
+    dV.y += GRAVITY;
+    vel += dV * dt;
+    vel.x = dV.x * PLAYER_WALKSPEED;
+    if (inAir && vel.y<0 && cancleJump) vel.y = 0;  // cancle the jump if possible
+    cancleJump = true;
+  }
   
   // calculate pos
   pos += vel * dt;
