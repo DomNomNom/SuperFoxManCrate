@@ -15,6 +15,7 @@ SET(SRCS
   ./platform.cpp 
   ./collisionObject.cpp 
   ./level.cpp 
+  ./box.cpp
   ./enemy.cpp
   ./spawner.cpp
   ./bullets/bullet.cpp

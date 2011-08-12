@@ -13,6 +13,7 @@
 #include "physics.hpp"
 #include "enemy.hpp"
 #include "spawner.hpp"
+#include "box.hpp"
 #include "player.hpp"
 #include "utils.hpp"
 
@@ -60,7 +61,7 @@ int main() {
   sf::Image playerDead; playerDead.LoadFromFile("images/player_fail.png");
   Player p(WIDTH/2, HEIGHT/2, playerLive);
     
-  // Level
+  // Level 
   Level level("levels/level1.png");
   for (int i=0; i<level.platforms.size(); ++i) {
     for (int j=0; j<level.platforms[i].tiles.size(); ++j) {
@@ -78,7 +79,6 @@ int main() {
   std::vector<Explosion> explosions;
   
   // Guns
-//  Gun *guns[] = {&pistol, &revolver, &shotgun, &mg, &rocketLauncher };
   Gun *guns[] = {
  // new Gun (bullets, p, <bulletImage>, <coolDn>, <dmg>, <#>, <vel_x/y>, <var_x/y>,  <acc_x/y>, <auto>, <explosive> );
     new Gun (bullets, p, smallBullet,   100,       1,    1,   0.2,  0,   0,    0,    0,     0,  false,   false ), // pistol
@@ -87,16 +87,22 @@ int main() {
     new Gun (bullets, p, smallBullet,   500,       1,    6,   0.25, 0,   0.05, 0.05, -.0005,0,  false,   false ), // shotgun
     new Gun (bullets, p, rocketShell,  1000,      10,    1,   0.01, 0,   0,    0,    0.0005,0,  false,   true  )  // rocketLauncher
   };
-  Gun *gun = guns[0];
   const int gunCount = 5;
+  int gunIndex = 0;
+  Gun *gun = guns[gunIndex];
+  
   
   // Enemies
   std::vector<Enemy> enemies;
   Spawner spawner(WIDTH/2, 0, enemies);
   spawner.addEnemy();
 
+  // The fox box
+  sf::Image boxImage; boxImage.LoadFromFile("images/foxCrate_7x7.png");
+  Box foxBox(WIDTH/2, HEIGHT/2, boxImage);
+
   // Physics
-  Physics phys(p, level, bullets, explosions, enemies);
+  Physics phys(p, level, bullets, explosions, enemies, foxBox);
 
   // leet FPS counter
   char fpsString[15];
@@ -133,8 +139,8 @@ int main() {
         if (event.Key.Code == sf::Keyboard::Escape) app.Close();       // escape => exit
         else if (event.Key.Code == sf::Keyboard::Space) gun->trigger = true;       // space => fire
         else {
-          int gunIndex = event.Key.Code - sf::Keyboard::Num1;
-          if (gunIndex>=0 && gunIndex<gunCount) gun = guns[gunIndex];
+//          gunIndex = event.Key.Code - sf::Keyboard::Num1;
+//          if (gunIndex>=0 && gunIndex<gunCount) gun = guns[gunIndex];
         }
       }
       else if (event.Type == sf::Event::KeyReleased)
@@ -144,6 +150,13 @@ int main() {
     // game logic
     float frameTime = app.GetFrameTime();
     phys.update(frameTime);
+    if (foxBox.collidesWith(p)) {
+      int newIndex = rand()%(gunCount-1); // choose different weapon
+      if (gunIndex == newIndex) newIndex = gunCount-1;
+      gunIndex = newIndex;
+      gun = guns[gunIndex];
+      foxBox.newPosition(p.pos.x, p.pos.y);
+    }
     spawner.update();
     gun->update();
     
@@ -160,15 +173,16 @@ int main() {
     // draw
     app.Clear();
     app.Draw(bg);
-    app.Draw(placeObject(p.draw()));
-    for (int i=0; i<bullets.size(); ++i)  // draw bullets
+    app.Draw(placeObject(p.draw()));      // player
+    app.Draw(placeObject(foxBox.visual)); 
+    for (int i=0; i<bullets.size(); ++i)  // bullets
       app.Draw(placeObject(bullets[i].visual));
-    for (int i=0; i<enemies.size(); ++i)  // draw enemies
+    for (int i=0; i<enemies.size(); ++i)  // enemies
       app.Draw(placeObject(enemies[i].tile));
-    for (int i=0; i<level.platforms.size(); ++i)  // draw level
+    for (int i=0; i<level.platforms.size(); ++i)  // level
       for (int j=0; j<level.platforms[i].tiles.size(); ++j)
         app.Draw(level.platforms[i].tiles[j]);  // note: no need to call placeObject as the visual doesn't move.
-    for (int i=0; i<explosions.size(); ++i) // draw explosions
+    for (int i=0; i<explosions.size(); ++i) // explosions
       app.Draw(placeObject(explosions[i].visual));
     
     

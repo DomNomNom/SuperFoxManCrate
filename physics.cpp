@@ -4,40 +4,40 @@
 #include "bullets/explosion.hpp"
 #include "level.hpp"
 #include "player.hpp"
-#include "physics.hpp"
 #include "enemy.hpp"
+#include "box.hpp"
 #include "utils.hpp"
+#include "physics.hpp"
 
-Physics::Physics(Player &play, Level &level, std::vector<Bullet> &b, std::vector<Explosion> &x, std::vector<Enemy> &e) : 
+Physics::Physics(Player &play, Level &level, std::vector<Bullet> &b, std::vector<Explosion> &x, std::vector<Enemy> &e, Box &bx) : 
   p(play), 
   l(level), 
   bullets(b), 
   explosions(x), 
-  enemies(e) 
+  enemies(e),
+  box(bx)
 { }
 
 
 void Physics::update(float dt) {
   // update stuff
   p.update(dt);
+  box.update(dt);
   for (int i=0; i<enemies.size(); ++i) enemies[i].update(dt);
   for (int i=0; i<bullets.size(); ++i) bullets[i].update(dt);
   for (int i=0; i<explosions.size(); ++i) explosions[i].update(dt);
   
   // collide stuff
-  l.collidesWith(p);                   // level - player
-  for (int i=0; i<enemies.size(); ++i) // level - enemy 
-    l.collidesWith(enemies[i]);  
-  for (int b=0; b<explosions.size(); ++b) // explosion - enemy
-    for (int e=0; e<enemies.size(); ++e)
-      if (explosions[b].collidesWith(enemies[e]))
-        enemies.erase(enemies.begin() + e);
+  l.collidesWith(p);                      // level - player
+  l.collidesWith(box);                    // level - box
   for (int i=0; i<bullets.size(); ++i) {  // level - bullet
     if (l.collidesWith(bullets[i]) || outsideBounds(bullets[i])) {
       if (bullets[i].explosive) explosions.push_back(Explosion(bullets[i].pos.x, bullets[i].pos.y));
       bullets.erase(bullets.begin() + i);
     }
   }
+  for (int i=0; i<enemies.size(); ++i) // level - enemy 
+    l.collidesWith(enemies[i]);  
   
   for (int i=0; i<enemies.size(); ++i) { // player - enemy
     if (p.collidesWith(enemies[i])) {
@@ -45,6 +45,10 @@ void Physics::update(float dt) {
       break;
     }
   }
+  for (int b=0; b<explosions.size(); ++b) // explosion - enemy
+    for (int e=0; e<enemies.size(); ++e)
+      if (explosions[b].collidesWith(enemies[e]))
+        enemies.erase(enemies.begin() + e);
   
   for (int i=0; i<bullets.size(); ++i) {  // check bullet death
     if (bullets[i].dead) {
