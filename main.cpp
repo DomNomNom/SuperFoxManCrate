@@ -78,13 +78,17 @@ int main() {
   std::vector<Explosion> explosions;
   
   // Guns
-  //  <GunClass>     (bullets, p, <bulletImage>, <coolDn>, <dmg>, <#>, <vel_x/y>, <var_x/y>,  <acc_x/y>, <auto>, <explosive> );
-  Gun pistol         (bullets, p, smallBullet,   100,       1,    1,   0.2,  0,   0,    0,    0,     0,  false,   false );
-  Gun revolver       (bullets, p, largeBullet,   100,       5,    1,   0.2,  0,   0,    0,    0,     0,  false,   false );
-  Gun shotgun        (bullets, p, smallBullet,   500,       1,    6,   0.25, 0,   0.05, 0.05, -.0005,0,  false,   false );
-  Gun mg             (bullets, p, smallBullet,    50,       1,    1,   0.2,  0,   0,    0.02, 0,     0,  true,    false );
-  Gun rocketLauncher (bullets, p, rocketShell,  1000,      10,    1,   0.01, 0,   0,    0,    0.0005,0,  false,   true  );
-  Gun *gun = &rocketLauncher;
+//  Gun *guns[] = {&pistol, &revolver, &shotgun, &mg, &rocketLauncher };
+  Gun *guns[] = {
+ // new Gun (bullets, p, <bulletImage>, <coolDn>, <dmg>, <#>, <vel_x/y>, <var_x/y>,  <acc_x/y>, <auto>, <explosive> );
+    new Gun (bullets, p, smallBullet,   100,       1,    1,   0.2,  0,   0,    0,    0,     0,  false,   false ), // pistol
+    new Gun (bullets, p, largeBullet,   100,       5,    1,   0.2,  0,   0,    0,    0,     0,  false,   false ), // revolver
+    new Gun (bullets, p, smallBullet,    50,       1,    1,   0.2,  0,   0,    0.02, 0,     0,  true,    false ), // machineGun
+    new Gun (bullets, p, smallBullet,   500,       1,    6,   0.25, 0,   0.05, 0.05, -.0005,0,  false,   false ), // shotgun
+    new Gun (bullets, p, rocketShell,  1000,      10,    1,   0.01, 0,   0,    0,    0.0005,0,  false,   true  )  // rocketLauncher
+  };
+  Gun *gun = guns[0];
+  const int gunCount = 5;
   
   // Enemies
   std::vector<Enemy> enemies;
@@ -128,11 +132,10 @@ int main() {
       else if (event.Type == sf::Event::KeyPressed) {    // check key events
         if (event.Key.Code == sf::Keyboard::Escape) app.Close();       // escape => exit
         else if (event.Key.Code == sf::Keyboard::Space) gun->trigger = true;       // space => fire
-        else if (event.Key.Code == sf::Keyboard::Num1) gun = &pistol;        // 1 => pistol
-        else if (event.Key.Code == sf::Keyboard::Num2) gun = &revolver;      // 2 => revolver
-        else if (event.Key.Code == sf::Keyboard::Num3) gun = &shotgun;       // 3 => shotgun
-        else if (event.Key.Code == sf::Keyboard::Num4) gun = &mg;            // 4 => machine gun
-        else if (event.Key.Code == sf::Keyboard::Num5) gun = &rocketLauncher;// 5 => rocket launcher
+        else {
+          int gunIndex = event.Key.Code - sf::Keyboard::Num1;
+          if (gunIndex>=0 && gunIndex<gunCount) gun = guns[gunIndex];
+        }
       }
       else if (event.Type == sf::Event::KeyReleased)
         if (event.Key.Code == sf::Keyboard::Space) gun->trigger = false;
