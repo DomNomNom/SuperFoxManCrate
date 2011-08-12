@@ -3,8 +3,8 @@
 
 #include "explosion.hpp"
 
-#define MAX_RADIUS 20
-#define SPREAD_SPEED 0.05
+#define MAX_RADIUS 40
+#define SPREAD_SPEED 0.1
 #define INIT_RADIUS 1
 
 Explosion::Explosion(float x, float y) : CollisionObject(x, y, 1, 1), dead(false), radius(INIT_RADIUS) {
@@ -18,14 +18,19 @@ void Explosion::update(float dt) {
   if (radius > MAX_RADIUS) dead = true;
   else {
     radius += SPREAD_SPEED * dt;
-    visual.SetPosition(pos.x-radius, pos.y-radius);
-    visual.SetScale(radius*2, radius*2);
+    visual.SetPosition(pos.x, pos.y);
+    visual.SetScale(radius, radius);
   }
 }
 
 bool Explosion::collidesWith(CollisionObject &o) {
 //  std::cout << "collision :" << hypot(pos.x - (o.pos.x), pos.y - (o.pos.y)) << " - " << radius << std::endl;
-  if (hypot(pos.x - (o.pos.x+o.sz.x/2), pos.y - (o.pos.y+o.sz.y/2)) <= radius) return true;  // radius * constant ?? wtf?
+  if ( // any of the four corners are within the circle
+    hypot(pos.x - (o.pos.x       ), pos.y - (o.pos.y       )) <= radius  ||
+    hypot(pos.x - (o.pos.x+o.sz.x), pos.y - (o.pos.y       )) <= radius  ||
+    hypot(pos.x - (o.pos.x       ), pos.y - (o.pos.y+o.sz.y)) <= radius  ||
+    hypot(pos.x - (o.pos.x+o.sz.x), pos.y - (o.pos.y+o.sz.y)) <= radius 
+  ) return true;  // radius * constant ?? wtf?
   return false;
 }
 

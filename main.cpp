@@ -84,8 +84,8 @@ int main() {
   Gun shotgun        (bullets, p, smallBullet,   500,       1,    6,   0.25, 0,   0.05, 0.05, -.0005,0,  false,   false );
   Gun mg             (bullets, p, smallBullet,    50,       1,    1,   0.2,  0,   0,    0.02, 0,     0,  true,    false );
   Gun rocketLauncher (bullets, p, rocketShell,  1000,      10,    1,   0.01, 0,   0,    0,    0.0005,0,  false,   true  );
-  Gun *gun = &shotgun;
-    
+  Gun *gun = &rocketLauncher;
+  
   // Enemies
   std::vector<Enemy> enemies;
   Spawner spawner(WIDTH/2, 0, enemies);

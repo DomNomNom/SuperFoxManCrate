@@ -8,7 +8,7 @@
 #define PLAYER_JUMP_STRENGTH 0.27
 #define TILE_SIZE 8
 
-Player::Player (float x, float y, sf::Image &playerImage) : CollisionObject(x, y, TILE_SIZE, TILE_SIZE), dead(false), facingLeft(true), freeFly(true) {
+Player::Player (float x, float y, sf::Image &playerImage) : CollisionObject(x, y, TILE_SIZE, TILE_SIZE), dead(false), facingLeft(true), freeFly(false) {
   pos.x=x; pos.y=y;
   vel.x=0; vel.y=0;
   dV.x =0; dV.y =0;
