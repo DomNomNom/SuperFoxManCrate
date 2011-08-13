@@ -150,6 +150,7 @@ int main() {
     phys.update(frameTime);
     if (foxBox.collidesWith(p)) {
       ++score;
+      gun->trigger = false;
       int newIndex = rand()%(gunCount-1); // choose different weapon
       if (gunIndex == newIndex) newIndex = gunCount-1;
       gunIndex = newIndex;
