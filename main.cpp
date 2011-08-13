@@ -111,12 +111,13 @@ int main() {
   
   // high score timer
   sf::Clock gameTime;
-  char timeString[15];
+  int score = -2;
+  char scoreString[15];
   bool playerDied = false;
-  sf::Text timeText;
-  timeText.SetCharacterSize(40);
-  timeText.SetColor(sf::Color(200, 0, 0));
-  timeText.SetPosition(screenWd/2-30, 0);
+  sf::Text scoreText;
+  scoreText.SetCharacterSize(40);
+  scoreText.SetColor(sf::Color(200, 0, 0));
+  scoreText.SetPosition(screenWd/2-30, 0);
   
   // main game loop
   while (app.IsOpened()) {
@@ -130,6 +131,7 @@ int main() {
       gameTime.Reset();
       playerDied = false;
       p = Player (WIDTH/2, HEIGHT/2, playerLive);
+      score = 0;
     }
     
     sf::Event event;  // process window events
@@ -138,10 +140,6 @@ int main() {
       else if (event.Type == sf::Event::KeyPressed) {    // check key events
         if (event.Key.Code == sf::Keyboard::Escape) app.Close();       // escape => exit
         else if (event.Key.Code == sf::Keyboard::Space) gun->trigger = true;       // space => fire
-        else {
-//          gunIndex = event.Key.Code - sf::Keyboard::Num1;
-//          if (gunIndex>=0 && gunIndex<gunCount) gun = guns[gunIndex];
-        }
       }
       else if (event.Type == sf::Event::KeyReleased)
         if (event.Key.Code == sf::Keyboard::Space) gun->trigger = false;
@@ -151,6 +149,7 @@ int main() {
     float frameTime = app.GetFrameTime();
     phys.update(frameTime);
     if (foxBox.collidesWith(p)) {
+      ++score;
       int newIndex = rand()%(gunCount-1); // choose different weapon
       if (gunIndex == newIndex) newIndex = gunCount-1;
       gunIndex = newIndex;
@@ -166,8 +165,8 @@ int main() {
       playerDied = true;
     }
     if (!playerDied) {  // note playerDied != p.dead
-      sprintf(timeString, "%.2f", gameTime.GetElapsedTime()/1000.f);   
-      timeText.SetString(timeString);
+      sprintf(scoreString, "%d", score);   
+      scoreText.SetString(scoreString);
     }
     
     // draw
@@ -192,7 +191,7 @@ int main() {
     app.Draw(fps);
     
     // record time
-    app.Draw(timeText);
+    app.Draw(scoreText);
     
     app.Display();
     
