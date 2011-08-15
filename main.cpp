@@ -73,6 +73,7 @@ int main() {
   sf::Image smallBullet; smallBullet.LoadFromFile("images/bullet_4x4.png");
   sf::Image largeBullet; largeBullet.LoadFromFile("images/bullet_8x8.png");
   sf::Image rocketShell; rocketShell.LoadFromFile("images/rocket_8x4.png");
+  sf::Image grenadeAmmo; grenadeAmmo.LoadFromFile("images/grenade_4x4.png");
   std::vector<Bullet> bullets;
   
   // Explosions
@@ -85,9 +86,10 @@ int main() {
     new Gun (bullets, p, largeBullet,   100,       5,    1,   0.2,  0,   0,    0,    0,     0,  false,   false ), // revolver
     new Gun (bullets, p, smallBullet,    50,       1,    1,   0.2,  0,   0,    0.02, 0,     0,  true,    false ), // machineGun
     new Gun (bullets, p, smallBullet,   500,       1,    6,   0.25, 0,   0.05, 0.05, -.0005,0,  false,   false ), // shotgun
-    new Gun (bullets, p, rocketShell,  1000,      10,    1,   0.01, 0,   0,    0,    0.0005,0,  false,   true  )  // rocketLauncher
+    new Gun (bullets, p, rocketShell,  1000,      10,    1,   0.01, 0,   0,    0,    0.0005,0,  false,   true  ),  // rocketLauncher
+    new Gun (bullets, p, grenadeAmmo,  1000,      10,    1,   0.1,  -.1, 0,    0,    0,GRAVITY, false,   true  )  // rocketLauncher
   };
-  const int gunCount = 5;
+  const int gunCount = 6;
   int gunIndex = 0;
   Gun *gun = guns[gunIndex];
   
