@@ -62,7 +62,8 @@ int main() {
   Player p(WIDTH/2, HEIGHT/2, playerLive);
     
   // Level 
-  Level level("levels/level1.png");
+  sf::Image levelData; levelData.LoadFromFile("levels/level1.png");
+  Level level(levelData);
   for (int i=0; i<level.platforms.size(); ++i) {
     for (int j=0; j<level.platforms[i].tiles.size(); ++j) {
       placeObject(level.platforms[i].tiles[j]);
@@ -86,8 +87,8 @@ int main() {
     new Gun (bullets, p, largeBullet,   100,       5,    1,   0.2,  0,   0,    0,    0,     0,  false,   false ), // revolver
     new Gun (bullets, p, smallBullet,    50,       1,    1,   0.2,  0,   0,    0.02, 0,     0,  true,    false ), // machineGun
     new Gun (bullets, p, smallBullet,   500,       1,    6,   0.25, 0,   0.05, 0.05, -.0005,0,  false,   false ), // shotgun
-    new Gun (bullets, p, rocketShell,  1000,      10,    1,   0.01, 0,   0,    0,    0.0005,0,  false,   true  ),  // rocketLauncher
-    new Gun (bullets, p, grenadeAmmo,  1000,      10,    1,   0.1,  -.1, 0,    0,    0,GRAVITY, false,   true  )  // rocketLauncher
+    new Gun (bullets, p, grenadeAmmo,  1000,      10,    1,   0.1,  -.1, 0,    0,    0,GRAVITY, false,   true  ), // rocketLauncher
+    new Gun (bullets, p, rocketShell,  1000,      10,    1,   0.01, 0,   0,    0,    0.0005,0,  false,   true  )  // 
   };
   const int gunCount = 6;
   int gunIndex = 0;
@@ -101,7 +102,7 @@ int main() {
 
   // The fox box
   sf::Image boxImage; boxImage.LoadFromFile("images/foxCrate_7x7.png");
-  Box foxBox(WIDTH/2, HEIGHT/2, boxImage);
+  Box foxBox(WIDTH/2, HEIGHT/2, boxImage, levelData, p);
 
   // Physics
   Physics phys(p, level, bullets, explosions, enemies, foxBox);
@@ -113,7 +114,7 @@ int main() {
   
   // high score timer
   sf::Clock gameTime;
-  int score = -2;
+  int score = 0;
   char scoreString[15];
   bool playerDied = false;
   sf::Text scoreText;
@@ -133,6 +134,7 @@ int main() {
       gameTime.Reset();
       playerDied = false;
       p = Player (WIDTH/2, HEIGHT/2, playerLive);
+      foxBox.newPosition();
       score = 0;
     }
     
@@ -157,7 +159,7 @@ int main() {
       if (gunIndex == newIndex) newIndex = gunCount-1;
       gunIndex = newIndex;
       gun = guns[gunIndex];
-      foxBox.newPosition(p.pos.x, p.pos.y);
+      foxBox.newPosition();
     }
     spawner.update();
     gun->update();

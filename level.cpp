@@ -5,11 +5,9 @@
 #include "level.hpp"
 #include "utils.hpp"
 
-Level::Level(const char *filePath) {
+Level::Level(sf::Image &lvl) {
   platformTexture.LoadFromFile("images/platform.png");
   
-  sf::Image lvl;  
-  lvl.LoadFromFile(filePath);
   int imgWd = lvl.GetWidth();
   int imgHt = lvl.GetHeight();
   

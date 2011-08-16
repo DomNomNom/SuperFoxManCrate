@@ -11,7 +11,7 @@ public:
   std::vector<Platform> platforms;
   
   // Constructor
-  Level(const char *filePath);
+  Level(sf::Image &lvl);
   
   bool collidesWith(CollisionObject &p);
 };
