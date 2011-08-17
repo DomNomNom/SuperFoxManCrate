@@ -1,4 +1,4 @@
-#include "math.h"
+#include <math.h>
 #include "utils.hpp"
 #include "player.hpp"
 #include "box.hpp"
@@ -25,11 +25,11 @@ Box::Box(float x, float y, sf::Image &pic, const sf::Image &lvl, const Player &p
 }
 
 void Box::newPosition() {
-  while(hypot(pos.x-player.pos.x, pos.y-player.pos.y) < MIN_DISTANCE) {
+  do {
     int index = rand() % spawnPoints.size();
     pos.x = spawnPoints[index].x * TILE_SIZE;
     pos.y = spawnPoints[index].y * TILE_SIZE;
-  }  
+  } while(hypot(pos.x-player.pos.x, pos.y-player.pos.y) < MIN_DISTANCE);
 }
 
 void Box::update(float dt) {
