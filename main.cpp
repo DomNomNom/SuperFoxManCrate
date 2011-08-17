@@ -72,7 +72,7 @@ int main() {
   
   // Bullets
   sf::Image smallBullet; smallBullet.LoadFromFile("images/bullet_4x4.png");
-  sf::Image largeBullet; largeBullet.LoadFromFile("images/bullet_8x8.png");
+  sf::Image largeBullet; largeBullet.LoadFromFile("images/bullet_6x6.png");
   sf::Image rocketShell; rocketShell.LoadFromFile("images/rocket_8x4.png");
   sf::Image grenadeAmmo; grenadeAmmo.LoadFromFile("images/grenade_4x4.png");
   std::vector<Bullet> bullets;
