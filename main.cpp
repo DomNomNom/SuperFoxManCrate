@@ -56,11 +56,6 @@ int main() {
   bg.SetColor(sf::Color::Blue);
   placeObject(bg);
   
-  // player
-  sf::Image playerLive; playerLive.LoadFromFile("images/player_8x8.png");
-  sf::Image playerDead; playerDead.LoadFromFile("images/player_fail.png");
-  Player p(WIDTH/2, HEIGHT/2, playerLive);
-    
   // Level 
   sf::Image levelData; levelData.LoadFromFile("levels/level1.png");
   Level level(levelData);
@@ -69,6 +64,11 @@ int main() {
       placeObject(level.platforms[i].tiles[j]);
     }
   }
+  
+  // player
+  sf::Image playerLive; playerLive.LoadFromFile("images/player_8x8.png");
+  sf::Image playerDead; playerDead.LoadFromFile("images/player_fail.png");
+  Player p(playerLive, levelData);
   
   // Bullets
   sf::Image smallBullet; smallBullet.LoadFromFile("images/bullet_4x4.png");
@@ -97,7 +97,7 @@ int main() {
   
   // Enemies
   std::vector<Enemy> enemies;
-  Spawner spawner(WIDTH/2, 0, enemies);
+  Spawner spawner(enemies, levelData);
   spawner.addEnemy();
 
   // The fox box
@@ -133,7 +133,7 @@ int main() {
       spawner.reset();
       gameTime.Reset();
       playerDied = false;
-      p = Player (WIDTH/2, HEIGHT/2, playerLive);
+      p.reset(playerLive);
       foxBox.newPosition();
       score = 0;
     }
@@ -166,7 +166,7 @@ int main() {
     
     // do things with the dead
     if (p.dead) {
-      p = Player(WIDTH/2, HEIGHT/2-4*TILE_SIZE, playerDead);
+      p.reset(playerDead);
       playerDied = true;
     }
     if (!playerDied) {  // note playerDied != p.dead

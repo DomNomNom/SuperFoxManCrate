@@ -1,6 +1,7 @@
 #include <math.h>
 #include "utils.hpp"
 #include "player.hpp"
+#include "spawnPoint.hpp"
 #include "box.hpp"
 
 #define MIN_DISTANCE 3*TILE_SIZE
@@ -9,26 +10,17 @@ Box::Box(float x, float y, sf::Image &pic, const sf::Image &lvl, const Player &p
  : CollisionObject(x, y, pic.GetWidth(), 
  pic.GetHeight()), 
  visual(pic), 
- player(play) { 
+ player(play),
+ spawn(lvl, sf::Color::Yellow) { 
   vel.y = 0.00001;
   
-  // get the spawnPoints from the level
-  int imgWd = lvl.GetWidth();
-  int imgHt = lvl.GetHeight();
-  for (int y=0; y<imgHt; ++y) 
-    for (int x=0; x<imgWd; ++x) 
-      if (lvl.GetPixel(x, y) == sf::Color::Yellow)
-        spawnPoints.push_back(sf::Vector2<float>(x,y));
-
   newPosition();
   update(0); 
 }
 
 void Box::newPosition() {
   do {
-    int index = rand() % spawnPoints.size();
-    pos.x = spawnPoints[index].x * TILE_SIZE;
-    pos.y = spawnPoints[index].y * TILE_SIZE;
+    pos = spawn.getPos();
   } while(hypot(pos.x-player.pos.x, pos.y-player.pos.y) < MIN_DISTANCE);
 }
 

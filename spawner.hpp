@@ -1,15 +1,16 @@
 #include <SFML/Graphics.hpp>
+#include "spawnPoint.hpp"
 
 class Enemy;
 
 class Spawner {
-  int x, y;
+  SpawnPoint spawn;
   sf::Image enemyTile;
   sf::Image largeTile;
   sf::Clock spawnTime;  // in millis
   std::vector<Enemy> &enemies;
 public:
-  Spawner(int X, int Y, std::vector<Enemy> &e);
+  Spawner(std::vector<Enemy> &e, const sf::Image &lvl);
   void addEnemy();
   void update();
   void reset();

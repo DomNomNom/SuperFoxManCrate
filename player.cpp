@@ -8,12 +8,17 @@
 #define PLAYER_JUMP_STRENGTH 0.27
 #define TILE_SIZE 8
 
-Player::Player (float x, float y, sf::Image &playerImage) : CollisionObject(x, y, TILE_SIZE, TILE_SIZE), dead(false), facingLeft(true), freeFly(false) {
-  pos.x=x; pos.y=y;
+Player::Player (const sf::Image &playerImage, const sf::Image &lvl) : CollisionObject(0, 0, TILE_SIZE, TILE_SIZE), spawn(lvl, sf::Color::Red), facingLeft(true), freeFly(false) {
+  reset(playerImage);
+}
+
+void Player::reset(const sf::Image &playerImage) {
+  visual.SetImage(playerImage);
+  pos = spawn.getPos();
   vel.x=0; vel.y=0;
   dV.x =0; dV.y =0;
   inAir = true;
-  visual.SetImage(playerImage);
+  dead = false;
 }
 
 void Player::checkKeys() {
@@ -58,11 +63,11 @@ void Player::update(float dt) {
   if (pos.y > HEIGHT-TILE_SIZE) { pos.y = HEIGHT-TILE_SIZE; vel.y=0; inAir=false; dead=true; }
   if (pos.x < 0) { pos.x=0; vel.x=0; }
   if (pos.y < 0) { pos.y=0; vel.y=0; }
+  visual.SetPosition(pos.x, pos.y);
 }
 
 sf::Drawable &Player::draw() {
   visual.FlipX(facingLeft);  // TODO: moonWalk
-  visual.SetPosition(pos.x, pos.y);
   visual.SetScale(1, 1);
   sf::Drawable &d = visual;
   return d;

@@ -1,12 +1,16 @@
+#ifndef BOX_HPP
+#define BOX_HPP
+
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "collisionObject.hpp"
+#include "spawnPoint.hpp"
 
 class Player;
 
 class Box : public CollisionObject {
   const Player &player;
-  std::vector<sf::Vector2<float> > spawnPoints;
+  SpawnPoint spawn;
 public:
   sf::Sprite visual;
 
@@ -18,3 +22,6 @@ public:
   
   bool collidesWith(CollisionObject &o);  
 };
+
+
+#endif

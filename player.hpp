@@ -2,9 +2,11 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Event.hpp>
 #include "collisionObject.hpp"
+#include "spawnPoint.hpp"
 
 class Player : public CollisionObject {
 private:
+  SpawnPoint spawn;
   sf::Vector2<float> dV;
   bool cancleJump;
   bool inAir;
@@ -15,7 +17,9 @@ public:
   bool facingLeft;
   bool dead;
 
-  Player(float x, float y, sf::Image &tile);
+  Player(const sf::Image &playerImage, const sf::Image &lvl);
+  
+  void reset(const sf::Image &playerImage);
   
   void checkKeys();
   
