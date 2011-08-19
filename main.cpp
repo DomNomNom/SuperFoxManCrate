@@ -127,23 +127,23 @@ int main() {
     // input
     p.checkKeys();
     if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Dash)) usleep(50000); // space  => low framerate for testing (~19 fps)
-    if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Return)) { // restart the game
-      bullets.clear();
-      enemies.clear();
-      spawner.reset();
-      gameTime.Reset();
-      playerDied = false;
-      p.reset(playerLive);
-      foxBox.newPosition();
-      score = 0;
-    }
-    
+
     sf::Event event;  // process window events
     while (app.PollEvent(event)) {
       if (event.Type == sf::Event::Closed) app.Close(); // check for window exit
       else if (event.Type == sf::Event::KeyPressed) {    // check key events
         if (event.Key.Code == sf::Keyboard::Escape) app.Close();       // escape => exit
         else if (event.Key.Code == sf::Keyboard::Space) gun->trigger = true;       // space => fire
+        else if (event.Key.Code == sf::Keyboard::Return) { // restart the game
+          bullets.clear();
+          enemies.clear();
+          spawner.reset();
+          gameTime.Reset();
+          playerDied = false;
+          p.reset(playerLive);
+          foxBox.newPosition();
+          score = 0;
+        }
       }
       else if (event.Type == sf::Event::KeyReleased)
         if (event.Key.Code == sf::Keyboard::Space) gun->trigger = false;
