@@ -1,0 +1,10 @@
+TODO list:
+
+sound
+level visuals seperated from level data
+better platform physics
+more enemy types
+bg music
+game balance (level design/gun nerfing)
+better sprites
+
