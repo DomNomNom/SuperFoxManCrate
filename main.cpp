@@ -182,7 +182,7 @@ int main() {
     for (int i=0; i<bullets.size(); ++i)  // bullets
       app.Draw(placeObject(bullets[i].visual));
     for (int i=0; i<enemies.size(); ++i)  // enemies
-      app.Draw(placeObject(enemies[i].tile));
+      app.Draw(placeObject(enemies[i].visual));
     for (int i=0; i<level.platforms.size(); ++i)  // level
       for (int j=0; j<level.platforms[i].tiles.size(); ++j)
         app.Draw(level.platforms[i].tiles[j]);  // note: no need to call placeObject as the visual doesn't move.

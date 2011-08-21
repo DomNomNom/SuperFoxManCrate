@@ -4,15 +4,19 @@
 
 class Enemy : public CollisionObject {
   int health;
+  bool angry;
+  float speed;
 public:
-  sf::Sprite tile;
+  sf::Sprite visual;
   bool dead;
   
-  Enemy(float x, float y, int hp, sf::Image &pic);
+  Enemy(float x, float y, int hp, const sf::Image &pic);
   
   void update(float dt);
   
   bool collidesWith(CollisionObject &o);
   
   void hurt(int dmg);
+  
+  void anger();
 };

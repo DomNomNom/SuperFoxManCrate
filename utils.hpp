@@ -8,6 +8,6 @@
 
 #define TILE_SIZE 8
 
-#define GRAVITY 0.0006
+#define GRAVITY 0.0007
 
 #endif
