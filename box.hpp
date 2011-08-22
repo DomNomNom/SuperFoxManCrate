@@ -14,7 +14,7 @@ class Box : public CollisionObject {
 public:
   sf::Sprite visual;
 
-  Box(float x, float y, sf::Image &pic, const sf::Image &lvl, const Player &play);
+  Box(float x, float y, sf::Texture &pic, const sf::Image &lvl, const Player &play);
   
   void update(float dt);
   

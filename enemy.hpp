@@ -10,7 +10,7 @@ public:
   sf::Sprite visual;
   bool dead;
   
-  Enemy(float x, float y, int hp, const sf::Image &pic);
+  Enemy(float x, float y, int hp, const sf::Texture &pic);
   
   void update(float dt);
   

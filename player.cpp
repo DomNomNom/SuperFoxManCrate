@@ -8,12 +8,12 @@
 #define PLAYER_JUMP_STRENGTH 0.27
 #define TILE_SIZE 8
 
-Player::Player (const sf::Image &playerImage, const sf::Image &lvl) : CollisionObject(0, 0, TILE_SIZE, TILE_SIZE), spawn(lvl, sf::Color::Red), facingLeft(true), freeFly(false) {
-  reset(playerImage);
+Player::Player (const sf::Texture &playerTexture, const sf::Image &lvl) : CollisionObject(0, 0, TILE_SIZE, TILE_SIZE), spawn(lvl, sf::Color::Red), facingLeft(true), freeFly(false) {
+  reset(playerTexture);
 }
 
-void Player::reset(const sf::Image &playerImage) {
-  visual.SetImage(playerImage);
+void Player::reset(const sf::Texture &playerTexture) {
+  visual.SetTexture(playerTexture);
   pos = spawn.getPos();
   vel.x=0; vel.y=0;
   dV.x =0; dV.y =0;

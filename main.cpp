@@ -49,10 +49,10 @@ int main() {
   screenHt = sf::VideoMode::GetDesktopMode().Height;
   
   // bg image
-  sf::Image bgImage;
-  bgImage.LoadFromFile("images/bg.png");
+  sf::Texture bgTexture;
+  bgTexture.LoadFromFile("images/bg.png");
   sf::Sprite bg;
-  bg.SetImage(bgImage);
+  bg.SetTexture(bgTexture);
   bg.SetColor(sf::Color::Blue);
   placeObject(bg);
   
@@ -66,15 +66,15 @@ int main() {
   }
   
   // player
-  sf::Image playerLive; playerLive.LoadFromFile("images/player_8x8.png");
-  sf::Image playerDead; playerDead.LoadFromFile("images/player_fail.png");
+  sf::Texture playerLive; playerLive.LoadFromFile("images/player_8x8.png");
+  sf::Texture playerDead; playerDead.LoadFromFile("images/player_fail.png");
   Player p(playerLive, levelData);
   
   // Bullets
-  sf::Image smallBullet; smallBullet.LoadFromFile("images/bullet_4x4.png");
-  sf::Image largeBullet; largeBullet.LoadFromFile("images/bullet_6x6.png");
-  sf::Image rocketShell; rocketShell.LoadFromFile("images/rocket_8x4.png");
-  sf::Image grenadeAmmo; grenadeAmmo.LoadFromFile("images/grenade_4x4.png");
+  sf::Texture smallBullet; smallBullet.LoadFromFile("images/bullet_4x4.png");
+  sf::Texture largeBullet; largeBullet.LoadFromFile("images/bullet_6x6.png");
+  sf::Texture rocketShell; rocketShell.LoadFromFile("images/rocket_8x4.png");
+  sf::Texture grenadeAmmo; grenadeAmmo.LoadFromFile("images/grenade_4x4.png");
   std::vector<Bullet> bullets;
   
   // Explosions
@@ -82,7 +82,7 @@ int main() {
   
   // Guns
   Gun *guns[] = {
- // new Gun (bullets, p, <bulletImage>, <coolDn>, <dmg>, <#>, <vel_x/y>, <var_x/y>,  <acc_x/y>, <auto>, <explosive> );
+ // new Gun (bullets, p, <bulletTexture>, <coolDn>, <dmg>, <#>, <vel_x/y>, <var_x/y>,  <acc_x/y>, <auto>, <explosive> );
     new Gun (bullets, p, smallBullet,   100,       1,    1,   0.2,  0,   0,    0,    0,     0,  false,   false ), // pistol
     new Gun (bullets, p, largeBullet,   100,       5,    1,   0.2,  0,   0,    0,    0,     0,  false,   false ), // revolver
     new Gun (bullets, p, smallBullet,    50,       1,    1,   0.2,  0,   0,    0.02, 0,     0,  true,    false ), // machineGun
@@ -101,8 +101,8 @@ int main() {
   spawner.addEnemy();
 
   // The fox box
-  sf::Image boxImage; boxImage.LoadFromFile("images/foxCrate_7x7.png");
-  Box foxBox(WIDTH/2, HEIGHT/2, boxImage, levelData, p);
+  sf::Texture boxTexture; boxTexture.LoadFromFile("images/foxCrate_7x7.png");
+  Box foxBox(WIDTH/2, HEIGHT/2, boxTexture, levelData, p);
 
   // Physics
   Physics phys(p, level, bullets, explosions, enemies, foxBox);

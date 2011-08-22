@@ -12,7 +12,7 @@ class Player;
 class Gun {
 protected:
   const Player &shooter;
-  const sf::Image &bulletTexture;
+  const sf::Texture &bulletSprite;
   std::vector<Bullet> &bullets;
   sf::Clock coolDown;
   
@@ -32,7 +32,7 @@ public:
   Gun(
     std::vector<Bullet> &b, 
     Player &p, 
-    const sf::Image &bulletTex, 
+    const sf::Texture &bulletTex, 
     int coolTime, 
     int dmg, 
     int burst, 

@@ -7,7 +7,7 @@
 #define ENEMY_WALKSPEED 0.05
 #define ENEMY_ANGER_SPEED 0.1
 
-Enemy::Enemy(float x, float y, int hp, const sf::Image &pic) 
+Enemy::Enemy(float x, float y, int hp, const sf::Texture &pic) 
  : CollisionObject(x, y, pic.GetWidth(), pic.GetHeight()), 
  speed(ENEMY_WALKSPEED), 
  visual(pic),

@@ -6,7 +6,7 @@
 #include "utils.hpp"
 
 Level::Level(sf::Image &lvl) {
-  platformTexture.LoadFromFile("images/platform.png");
+  platformSprite.LoadFromFile("images/platform.png");
   
   int imgWd = lvl.GetWidth();
   int imgHt = lvl.GetHeight();
@@ -37,7 +37,7 @@ Level::Level(sf::Image &lvl) {
           }
         }
         // construct platforms
-        platforms.push_back(Platform(x*TILE_SIZE, y*TILE_SIZE, wd*TILE_SIZE, minHt*TILE_SIZE, platformTexture));  
+        platforms.push_back(Platform(x*TILE_SIZE, y*TILE_SIZE, wd*TILE_SIZE, minHt*TILE_SIZE, platformSprite));  
       }
     }
   }

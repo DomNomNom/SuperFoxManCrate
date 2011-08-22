@@ -17,9 +17,9 @@ public:
   bool facingLeft;
   bool dead;
 
-  Player(const sf::Image &playerImage, const sf::Image &lvl);
+  Player(const sf::Texture &playerTexture, const sf::Image &lvl);
   
-  void reset(const sf::Image &playerImage);
+  void reset(const sf::Texture &playerTexture);
   
   void checkKeys();
   

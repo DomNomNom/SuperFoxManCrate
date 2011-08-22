@@ -5,8 +5,8 @@ class Enemy;
 
 class Spawner {
   SpawnPoint spawn;
-  sf::Image enemyTile;
-  sf::Image largeTile;
+  sf::Texture enemyTile;
+  sf::Texture largeTile;
   sf::Clock spawnTime;  // in millis
   std::vector<Enemy> &enemies;
 public:

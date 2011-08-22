@@ -6,7 +6,7 @@ class Platform;
 class Player;
 
 class Level {
-  sf::Image platformTexture;
+  sf::Texture platformSprite;
 public:
   std::vector<Platform> platforms;
   

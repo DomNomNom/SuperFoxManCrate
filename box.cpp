@@ -6,7 +6,7 @@
 
 #define MIN_DISTANCE 3*TILE_SIZE
 
-Box::Box(float x, float y, sf::Image &pic, const sf::Image &lvl, const Player &play) 
+Box::Box(float x, float y, sf::Texture &pic, const sf::Image &lvl, const Player &play) 
  : CollisionObject(x, y, pic.GetWidth(), 
  pic.GetHeight()), 
  visual(pic), 

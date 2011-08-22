@@ -6,7 +6,7 @@
 Gun::Gun(
   std::vector<Bullet> &b, 
   Player &p, 
-  const sf::Image &bulletTex, 
+  const sf::Texture &bulletTex, 
   int coolTime, 
   int dmg, 
   int burst, 
@@ -18,7 +18,7 @@ Gun::Gun(
  ) 
  : bullets(b), 
    shooter(p), 
-   bulletTexture(bulletTex), 
+   bulletSprite(bulletTex), 
    coolingTime(coolTime),
    damadge(dmg),
    burstCount(burst),
@@ -46,7 +46,7 @@ void Gun::shoot() {
         vel.x + inaccuracy.x*(float)rand()/(float)RAND_MAX - inaccuracy.x/2,
         vel.y + inaccuracy.y*(float)rand()/(float)RAND_MAX - inaccuracy.y/2, 
         acc,
-        bulletTexture,
+        bulletSprite,
         damadge,
         explosiveAmmo
       ));
