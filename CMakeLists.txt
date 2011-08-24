@@ -33,6 +33,7 @@ ADD_EXECUTABLE(sfmc ${SRCS})
 TARGET_LINK_LIBRARIES(sfmc
   #${SFML_LIBRARY}
   -lsfml-graphics
+  -lsfml-audio
   -lsfml-window
   -lsfml-network
   -lsfml-system

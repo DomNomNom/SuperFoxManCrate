@@ -59,11 +59,9 @@ int main() {
   // Level 
   sf::Image levelData; levelData.LoadFromFile("levels/level1.png");
   Level level(levelData);
-  for (int i=0; i<level.platforms.size(); ++i) {
-    for (int j=0; j<level.platforms[i].tiles.size(); ++j) {
+  for (int i=0; i<level.platforms.size(); ++i)
+    for (int j=0; j<level.platforms[i].tiles.size(); ++j)
       placeObject(level.platforms[i].tiles[j]);
-    }
-  }
   
   // player
   sf::Texture playerLive; playerLive.LoadFromFile("images/player_8x8.png");
@@ -83,17 +81,20 @@ int main() {
   // Guns
   Gun *guns[] = {
  // new Gun (bullets, p, <bulletTexture>, <coolDn>, <dmg>, <#>, <vel_x/y>, <var_x/y>,  <acc_x/y>, <auto>, <explosive> );
-    new Gun (bullets, p, smallBullet,   100,       1,    1,   0.2,  0,   0,    0,    0,     0,  false,   false ), // pistol
-    new Gun (bullets, p, largeBullet,   100,       5,    1,   0.2,  0,   0,    0,    0,     0,  false,   false ), // revolver
-    new Gun (bullets, p, smallBullet,    50,       1,    1,   0.2,  0,   0,    0.02, 0,     0,  true,    false ), // machineGun
-    new Gun (bullets, p, smallBullet,   500,       1,    6,   0.25, 0,   0.05, 0.05, -.0005,0,  false,   false ), // shotgun
-    new Gun (bullets, p, grenadeAmmo,  1000,      10,    1,   0.1,  -.1, 0,    0,    0,GRAVITY, false,   true  ), // rocketLauncher
-    new Gun (bullets, p, rocketShell,  1000,      10,    1,   0.01, 0,   0,    0,    0.0005,0,  false,   true  )  // 
+    new Gun (bullets, p, smallBullet,     100,       1,    1,   0.2,  0,   0,    0,    0,     0,  false,   false ), // pistol
+    new Gun (bullets, p, largeBullet,     100,       5,    1,   0.2,  0,   0,    0,    0,     0,  false,   false ), // revolver
+    new Gun (bullets, p, smallBullet,      50,       1,    1,   0.2,  0,   0,    0.02, 0,     0,  true,    false ), // machineGun
+    new Gun (bullets, p, smallBullet,     500,       1,    6,   0.25, 0,   0.05, 0.05, -.0005,0,  false,   false ), // shotgun
+    new Gun (bullets, p, grenadeAmmo,    1000,       10,    1,   0.1,  -.1, 0,    0,    0,GRAVITY, false,   true  ), // rocketLauncher
+    new Gun (bullets, p, rocketShell,    1000,      10,    1,   0.01, 0,   0,    0,    0.0005,0,  false,   true  )  // 
   };
   const int gunCount = 6;
   int gunIndex = 0;
   Gun *gun = guns[gunIndex];
-  
+
+  // Gun Sounds
+  sf::Music gunShot; gunShot.OpenFromFile("sound/gunShot.wav");  
+//  sf::Sound gunShot(gunShotData);
   
   // Enemies
   std::vector<Enemy> enemies;
@@ -131,10 +132,13 @@ int main() {
     sf::Event event;  // process window events
     while (app.PollEvent(event)) {
       if (event.Type == sf::Event::Closed) app.Close(); // check for window exit
-      else if (event.Type == sf::Event::KeyPressed) {    // check key events
-        if (event.Key.Code == sf::Keyboard::Escape) app.Close();       // escape => exit
-        else if (event.Key.Code == sf::Keyboard::Space) gun->trigger = true;       // space => fire
-        else if (event.Key.Code == sf::Keyboard::Return) { // restart the game
+      else if (event.Type == sf::Event::KeyPressed) {    // check key down events
+        if (event.Key.Code == sf::Keyboard::Escape) app.Close();  // escape => exit
+        else if (event.Key.Code == sf::Keyboard::Space) {         // space => fire
+          gun->trigger = true; 
+          gunShot.Play();
+        }
+        else if (event.Key.Code == sf::Keyboard::Return) {        // enter => restart the game
           bullets.clear();
           enemies.clear();
           spawner.reset();
