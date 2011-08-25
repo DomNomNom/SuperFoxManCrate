@@ -6,7 +6,7 @@
 #include "utils.hpp"
 
 Level::Level(sf::Image &lvl) {
-  platformSprite.LoadFromFile("images/platform.png");
+  platformSprite.LoadFromFile("resources/images/platform.png");
   
   int imgWd = lvl.GetWidth();
   int imgHt = lvl.GetHeight();

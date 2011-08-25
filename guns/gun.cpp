@@ -5,7 +5,8 @@
 
 Gun::Gun(
   std::vector<Bullet> &b, 
-  Player &p, 
+  const Player &p, 
+  const sf::SoundBuffer &gunSound,
   const sf::Texture &bulletTex, 
   int coolTime, 
   int dmg, 
@@ -18,6 +19,7 @@ Gun::Gun(
  ) 
  : bullets(b), 
    shooter(p), 
+   shotSound(gunSound),
    bulletSprite(bulletTex), 
    coolingTime(coolTime),
    damadge(dmg),
@@ -34,8 +36,9 @@ Gun::Gun(
 void Gun::shoot() {
   if (coolDown.GetElapsedTime() > coolingTime) {
     coolDown.Reset();
+    shotSound.Play();
     if (shooter.facingLeft == inverted) {
-      vel.x *= -1;  // note: logical XOr
+      vel.x *= -1;
       acc.x *= -1;
       inverted = !inverted;
     }
@@ -51,7 +54,7 @@ void Gun::shoot() {
         explosiveAmmo
       ));
     }
-    trigger = automatic;
+    trigger = automatic;  // reset the trigger if not automatic
   }
 }
 

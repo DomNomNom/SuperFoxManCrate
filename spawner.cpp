@@ -4,8 +4,8 @@
 #include "spawner.hpp"
 
 Spawner::Spawner(std::vector<Enemy> &e, const sf::Image &lvl) : enemies(e), spawn(lvl, sf::Color::Green) {  
-  enemyTile.LoadFromFile("images/enemy.png");
-  largeTile.LoadFromFile("images/enemy_16x16.png");
+  enemyTile.LoadFromFile("resources/images/enemy.png");
+  largeTile.LoadFromFile("resources/images/enemy_16x16.png");
 }
 
 void Spawner::update() {

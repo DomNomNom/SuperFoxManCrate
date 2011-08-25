@@ -37,7 +37,7 @@ sf::Drawable &placeObject(sf::Drawable &d) {
 int main() {
   // create the window
   sf::VideoMode screen(sf::VideoMode::GetDesktopMode());
-  sf::RenderWindow app(screen, "Hi World?", sf::Style::Fullscreen);
+  sf::RenderWindow app(screen, "sfmc", sf::Style::Fullscreen);
   app.SetFramerateLimit(60); // Limit to 60 frames per second
   app.ShowMouseCursor(false);
   app.EnableVerticalSync(true);
@@ -50,51 +50,50 @@ int main() {
   
   // bg image
   sf::Texture bgTexture;
-  bgTexture.LoadFromFile("images/bg.png");
+  bgTexture.LoadFromFile("resources/images/bg.png");
   sf::Sprite bg;
   bg.SetTexture(bgTexture);
   bg.SetColor(sf::Color::Blue);
   placeObject(bg);
   
   // Level 
-  sf::Image levelData; levelData.LoadFromFile("levels/level1.png");
+  sf::Image levelData; levelData.LoadFromFile("resources/levels/level1.png");
   Level level(levelData);
   for (int i=0; i<level.platforms.size(); ++i)
     for (int j=0; j<level.platforms[i].tiles.size(); ++j)
       placeObject(level.platforms[i].tiles[j]);
   
   // player
-  sf::Texture playerLive; playerLive.LoadFromFile("images/player_8x8.png");
-  sf::Texture playerDead; playerDead.LoadFromFile("images/player_fail.png");
+  sf::Texture playerLive; playerLive.LoadFromFile("resources/images/player_8x8.png");
+  sf::Texture playerDead; playerDead.LoadFromFile("resources/images/player_fail.png");
   Player p(playerLive, levelData);
   
   // Bullets
-  sf::Texture smallBullet; smallBullet.LoadFromFile("images/bullet_4x4.png");
-  sf::Texture largeBullet; largeBullet.LoadFromFile("images/bullet_6x6.png");
-  sf::Texture rocketShell; rocketShell.LoadFromFile("images/rocket_8x4.png");
-  sf::Texture grenadeAmmo; grenadeAmmo.LoadFromFile("images/grenade_4x4.png");
+  sf::Texture smallBullet; smallBullet.LoadFromFile("resources/images/bullet_4x4.png");
+  sf::Texture largeBullet; largeBullet.LoadFromFile("resources/images/bullet_6x6.png");
+  sf::Texture rocketShell; rocketShell.LoadFromFile("resources/images/rocket_8x4.png");
+  sf::Texture grenadeAmmo; grenadeAmmo.LoadFromFile("resources/images/grenade_4x4.png");
   std::vector<Bullet> bullets;
   
   // Explosions
   std::vector<Explosion> explosions;
   
+  // Gun Sounds
+  sf::SoundBuffer gunShot; gunShot.LoadFromFile("resources/sound/gunShot.wav");
+
   // Guns
   Gun *guns[] = {
- // new Gun (bullets, p, <bulletTexture>, <coolDn>, <dmg>, <#>, <vel_x/y>, <var_x/y>,  <acc_x/y>, <auto>, <explosive> );
-    new Gun (bullets, p, smallBullet,     100,       1,    1,   0.2,  0,   0,    0,    0,     0,  false,   false ), // pistol
-    new Gun (bullets, p, largeBullet,     100,       5,    1,   0.2,  0,   0,    0,    0,     0,  false,   false ), // revolver
-    new Gun (bullets, p, smallBullet,      50,       1,    1,   0.2,  0,   0,    0.02, 0,     0,  true,    false ), // machineGun
-    new Gun (bullets, p, smallBullet,     500,       1,    6,   0.25, 0,   0.05, 0.05, -.0005,0,  false,   false ), // shotgun
-    new Gun (bullets, p, grenadeAmmo,    1000,       10,    1,   0.1,  -.1, 0,    0,    0,GRAVITY, false,   true  ), // rocketLauncher
-    new Gun (bullets, p, rocketShell,    1000,      10,    1,   0.01, 0,   0,    0,    0.0005,0,  false,   true  )  // 
+ // new Gun (bullets, p, <bulletTexture>, <coolDn>, <dmg>, <#>, <vel_x/y>, <var_x/y>,  <acc_x/y>, <auto>, <explosive>), // template
+    new Gun (bullets, p, gunShot, smallBullet,     100,       1,    1,   0.2,  0,   0,    0,    0,     0,  false,   false ), // pistol
+    new Gun (bullets, p, gunShot, largeBullet,     100,       5,    1,   0.2,  0,   0,    0,    0,     0,  false,   false ), // revolver
+    new Gun (bullets, p, gunShot, smallBullet,      50,       1,    1,   0.2,  0,   0,    0.02, 0,     0,  true,    false ), // machineGun
+    new Gun (bullets, p, gunShot, smallBullet,     500,       1,    6,   0.25, 0,   0.05, 0.05, -.0005,0,  false,   false ), // shotgun
+    new Gun (bullets, p, gunShot, grenadeAmmo,    1000,      10,    1,   0.1,  -.1, 0,    0,    0,GRAVITY, false,   true  ), // grenadeLauncher
+    new Gun (bullets, p, gunShot, rocketShell,    1000,      10,    1,   0.01, 0,   0,    0,    0.0005,0,  false,   true  )  // rocketLauncher
   };
   const int gunCount = 6;
   int gunIndex = 0;
   Gun *gun = guns[gunIndex];
-
-  // Gun Sounds
-  sf::Music gunShot; gunShot.OpenFromFile("sound/gunShot.wav");  
-//  sf::Sound gunShot(gunShotData);
   
   // Enemies
   std::vector<Enemy> enemies;
@@ -102,7 +101,7 @@ int main() {
   spawner.addEnemy();
 
   // The fox box
-  sf::Texture boxTexture; boxTexture.LoadFromFile("images/foxCrate_7x7.png");
+  sf::Texture boxTexture; boxTexture.LoadFromFile("resources/images/foxCrate_7x7.png");
   Box foxBox(WIDTH/2, HEIGHT/2, boxTexture, levelData, p);
 
   // Physics
@@ -131,14 +130,11 @@ int main() {
 
     sf::Event event;  // process window events
     while (app.PollEvent(event)) {
-      if (event.Type == sf::Event::Closed) app.Close(); // check for window exit
+      if (event.Type == sf::Event::Closed) app.Close();  // check for window exit
       else if (event.Type == sf::Event::KeyPressed) {    // check key down events
-        if (event.Key.Code == sf::Keyboard::Escape) app.Close();  // escape => exit
-        else if (event.Key.Code == sf::Keyboard::Space) {         // space => fire
-          gun->trigger = true; 
-          gunShot.Play();
-        }
-        else if (event.Key.Code == sf::Keyboard::Return) {        // enter => restart the game
+        if (event.Key.Code == sf::Keyboard::Escape) app.Close();              // escape => exit
+        else if (event.Key.Code == sf::Keyboard::Space) gun->trigger = true;  // space  => fire
+        else if (event.Key.Code == sf::Keyboard::Return) {                    // enter  => restart the game
           bullets.clear();
           enemies.clear();
           spawner.reset();
@@ -173,7 +169,7 @@ int main() {
       p.reset(playerDead);
       playerDied = true;
     }
-    if (!playerDied) {  // note playerDied != p.dead
+    if (!playerDied) {  // note: playerDied != p.dead
       sprintf(scoreString, "%d", score);   
       scoreText.SetString(scoreString);
     }
@@ -199,7 +195,7 @@ int main() {
     fps.SetString(fpsString);
     app.Draw(fps);
     
-    // record time
+    // draw score
     app.Draw(scoreText);
     
     app.Display();
