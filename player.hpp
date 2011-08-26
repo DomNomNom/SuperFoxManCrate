@@ -11,21 +11,16 @@ private:
   bool cancleJump;
   bool inAir;
   bool freeFly;
-  sf::Sprite visual;
   
 public:
   bool facingLeft;
   bool dead;
+  sf::Sprite visual;
 
   Player(const sf::Texture &playerTexture, const sf::Image &lvl);
   
-  void reset(const sf::Texture &playerTexture);
-  
+  void reset(const sf::Texture &playerTexture);  
   void checkKeys();
-  
   void update(float dt);  // dt: delta time => frameTime
-  
   bool collidesWith(CollisionObject &o);
-  
-  sf::Drawable &draw();
 };

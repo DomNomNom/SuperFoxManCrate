@@ -64,13 +64,8 @@ void Player::update(float dt) {
   if (pos.x < 0) { pos.x=0; vel.x=0; }
   if (pos.y < 0) { pos.y=0; vel.y=0; }
   visual.SetPosition(pos.x, pos.y);
-}
-
-sf::Drawable &Player::draw() {
   visual.FlipX(facingLeft);  // TODO: moonWalk
-  visual.SetScale(1, 1);
-  sf::Drawable &d = visual;
-  return d;
+  visual.SetScale(1, 1); 
 }
 
 bool Player::collidesWith(CollisionObject &o) {
@@ -91,6 +86,7 @@ bool Player::collidesWith(CollisionObject &o) {
       vel.y = 0;
       inAir=true;
     }
+    visual.SetPosition(pos.x, pos.y);
     return true;
   }
   else return false;

@@ -48,6 +48,7 @@ bool Box::collidesWith(CollisionObject &o) {
       pos.y = o.pos.y + o.sz.y;
       vel.y = 0;
     }
+    visual.SetPosition(pos.x, pos.y);
     return true;
   }
   else return false;

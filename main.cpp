@@ -177,7 +177,7 @@ int main() {
     // draw
     app.Clear();
     app.Draw(bg);
-    app.Draw(placeObject(p.draw()));      // player
+    app.Draw(placeObject(p.visual));      // player
     app.Draw(placeObject(foxBox.visual)); 
     for (int i=0; i<bullets.size(); ++i)  // bullets
       app.Draw(placeObject(bullets[i].visual));
