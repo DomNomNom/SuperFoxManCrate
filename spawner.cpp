@@ -3,13 +3,15 @@
 #include "enemy.hpp"
 #include "spawner.hpp"
 
+#define SPAWN_INTERVAL 150
+
 Spawner::Spawner(std::vector<Enemy> &e, const sf::Image &lvl) : enemies(e), spawn(lvl, sf::Color::Green) {  
   enemyTile.LoadFromFile("resources/images/enemy.png");
   largeTile.LoadFromFile("resources/images/enemy_16x16.png");
 }
 
 void Spawner::update() {
-  if (spawnTime.GetElapsedTime() > 1500) {
+  if (spawnTime.GetElapsedTime() > SPAWN_INTERVAL) {
     addEnemy();
     spawnTime.Reset();
   }
