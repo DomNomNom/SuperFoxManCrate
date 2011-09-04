@@ -3,7 +3,7 @@
 #include "enemy.hpp"
 #include "spawner.hpp"
 
-#define SPAWN_INTERVAL 150
+#define SPAWN_INTERVAL 1500
 
 Spawner::Spawner(std::vector<Enemy> &e, const sf::Image &lvl) : enemies(e), spawn(lvl, sf::Color::Green) {  
   enemyTile.LoadFromFile("resources/images/enemy.png");
