@@ -21,21 +21,23 @@ Level::Level(sf::Image &lvl) {
       // search for new platfomrs
       if (!isWall[x][y] && lvl.GetPixel(x, y) == sf::Color::Black) {
         // figure out the collision rectangles
-        int minHt = imgHt;
+        int minHt = imgHt+1;
         int wd;
-        // find the rectangle width
+        // find the maximum rectangle width
         for (wd=0; x+wd<imgWd && lvl.GetPixel(x+wd, y) == sf::Color::Black; ++wd){
           // find the minimum rectangle height
-          int ht=1;
+          int ht=0;
           while (y+ht<imgHt && lvl.GetPixel(x+wd, y+ht) == sf::Color::Black) ++ht;
           if (ht < minHt) minHt = ht;
         }
+        
         // mark the platfom area as processed
-        for (int x2=0; x2<x+wd; ++x2) {
+        for (int x2=x; x2<x+wd; ++x2) {
           for (int ht=0; ht<minHt; ++ht) {
             isWall[x2][y+ht] = true;
           }
         }
+        
         // construct platforms
         platforms.push_back(Platform(x*TILE_SIZE, y*TILE_SIZE, wd*TILE_SIZE, minHt*TILE_SIZE, platformSprite));  
       }
