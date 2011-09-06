@@ -5,6 +5,7 @@
 #include <vector>
 #include <stdio.h>  // for text sprintf()
 
+#include "utils.hpp"
 #include "level.hpp"
 #include "platform.hpp"
 #include "guns/gun.hpp"
@@ -15,7 +16,6 @@
 #include "spawner.hpp"
 #include "box.hpp"
 #include "player.hpp"
-#include "utils.hpp"
 
 
 float scale = 4;  // grobal variable to be written to by main() and read by placeObject()
@@ -37,12 +37,12 @@ sf::Drawable &placeObject(sf::Drawable &d) {
 int main() {
   // create the window
   sf::VideoMode screen(sf::VideoMode::GetDesktopMode());
-  sf::RenderWindow app(screen, "sfmc", sf::Style::Fullscreen);
+  sf::RenderWindow app(screen, "sfmc", sf::Style::Default);
   app.SetFramerateLimit(60); // Limit to 60 frames per second
   app.ShowMouseCursor(false);
   app.EnableVerticalSync(true);
   app.EnableKeyRepeat(false);
-  //scale = screen.Height / (float)HEIGHT; // (un-)comment this line to enable/disable dynamic scaling
+  scale = screen.Height / (float)HEIGHT; // (un-)comment this line to enable/disable dynamic scaling
   //std::cout << "scale: x" << scale << std::endl;
   
   screenWd = sf::VideoMode::GetDesktopMode().Width;
@@ -53,11 +53,12 @@ int main() {
   bgTexture.LoadFromFile("resources/images/bg.png");
   sf::Sprite bg;
   bg.SetTexture(bgTexture);
-  bg.SetColor(sf::Color::Blue);
+//  bg.SetColor(sf::Color::Blue);
   placeObject(bg);
   
   // Level 
   sf::Image levelData; levelData.LoadFromFile("resources/levels/level1.png");
+  
   Level level(levelData);
   for (int i=0; i<level.platforms.size(); ++i)
     for (int j=0; j<level.platforms[i].tiles.size(); ++j)
@@ -83,7 +84,7 @@ int main() {
 
   // Guns
   Gun *guns[] = {
- // new Gun (bullets, p, <bulletTexture>, <coolDn>, <dmg>, <#>, <vel_x/y>, <var_x/y>,  <acc_x/y>, <auto>, <explosive>), // template
+ // new Gun (bullets, p, <sound>, <bulletTexture>, <coolDn>, <dmg>, <#>, <vel_x/y>, <var_x/y>,  <acc_x/y>, <auto>, <explosive>), // template
     new Gun (bullets, p, gunShot, smallBullet,     100,       1,    1,   0.2,  0,   0,    0,    0,     0,  false,   false ), // pistol
     new Gun (bullets, p, gunShot, largeBullet,     100,       5,    1,   0.2,  0,   0,    0,    0,     0,  false,   false ), // revolver
     new Gun (bullets, p, gunShot, smallBullet,      50,       1,    1,   0.2,  0,   0,    0.02, 0,     0,  true,    false ), // machineGun
@@ -102,10 +103,11 @@ int main() {
 
   // The fox box
   sf::Texture boxTexture; boxTexture.LoadFromFile("resources/images/foxCrate_7x7.png");
-  Box foxBox(WIDTH/2, HEIGHT/2, boxTexture, levelData, p);
+  Box foxBox(WIDTH/2, HEIGHT/2, boxTexture, levelData, p); 
 
   // Physics
   Physics phys(p, level, bullets, explosions, enemies, foxBox);
+  p.attachPhysics(phys);
 
   // leet FPS counter
   char fpsString[15];
@@ -175,7 +177,7 @@ int main() {
     }
     
     // draw
-    app.Clear();
+    app.Clear(sf::Color::Black);
     app.Draw(bg);
     app.Draw(placeObject(p.visual));      // player
     app.Draw(placeObject(foxBox.visual)); 
@@ -200,6 +202,9 @@ int main() {
     
     app.Display();
     
-  }
+  } // end of main game loop
+ 
+  for (int i=0; i<gunCount; ++i) delete guns[i];  // deallocate memory
+ 
   return EXIT_SUCCESS;
 }

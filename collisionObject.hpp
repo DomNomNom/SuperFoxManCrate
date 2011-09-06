@@ -10,6 +10,8 @@ public:
   sf::Vector2<float> sz;
   CollisionObject(float x, float y, float wd, float ht);
   virtual void update(float dt);
+  virtual float testX(CollisionObject &o);
+  virtual float testY(CollisionObject &o);
   virtual bool collidesWith(CollisionObject &o);
 };
   

@@ -12,13 +12,12 @@ Box::Box(float x, float y, sf::Texture &pic, const sf::Image &lvl, const Player 
  visual(pic), 
  player(play),
  spawn(lvl, sf::Color::Yellow) { 
-  vel.y = 0.00001;
-  
   newPosition();
   update(0); 
 }
 
 void Box::newPosition() {
+  vel.y = 0.00001;
   do {
     pos = spawn.getPos();
   } while(hypot(pos.x-player.pos.x, pos.y-player.pos.y) < MIN_DISTANCE);

@@ -1,3 +1,6 @@
+#ifndef PHYSICS_H
+#define PHYSICS_H
+
 #include <vector>
 
 class Player;
@@ -19,4 +22,9 @@ class Physics {
 public:
   Physics(Player &play, Level &l, std::vector<Bullet> &b, std::vector<Explosion> &x, std::vector<Enemy> &e, Box &bx);
   void update(float dt);
+  bool collidesWithWorld(CollisionObject *o);
+  float testX(CollisionObject *o);
+  float testY(CollisionObject *o);
 };
+
+#endif

@@ -12,6 +12,10 @@ Player::Player (const sf::Texture &playerTexture, const sf::Image &lvl) : Collis
   reset(playerTexture);
 }
 
+void Player::attachPhysics(Physics &p) {
+  phys = &p;
+}
+
 void Player::reset(const sf::Texture &playerTexture) {
   visual.SetTexture(playerTexture);
   pos = spawn.getPos();
@@ -44,7 +48,7 @@ void Player::checkKeys() {
 }
 
 void Player::update(float dt) {
-  if (!freeFly){
+  if (!freeFly) {
     inAir = true;
     // calculate vel
     dV.y += GRAVITY;
@@ -54,18 +58,40 @@ void Player::update(float dt) {
     cancleJump = true;
   }
   
+  // check X-direction
+  pos.x += vel.x * dt;
+  //std::cout << " starting with p.x = " << pos.x;
+  for (float changeX = phys->testX(this); changeX!=0; changeX = phys->testX(this)) {  // as long as there are collisions, keep checking
+    pos.x += changeX;
+    vel.x = 0;
+  }
+  //std::cout << " resulting in " << pos.x << std::endl;
+  
+  // check Y-direction
+  pos.y += vel.y * dt;
+  for (float changeY = phys->testY(this); changeY!=0; changeY = phys->testY(this)) {
+//    if (changeY==0) std::cout << "AAAAAAAHHHHHHHHH! " << std::endl;
+    pos.y += phys->testY(this); 
+    vel.y = 0;
+    if (changeY < 0) inAir = false;
+  }
+  
   // calculate pos
-  pos += vel * dt;
+  //pos += vel * dt;
   
   dV.x=0; dV.y=0; // reset dV
   
-  if (pos.x > WIDTH -TILE_SIZE) { pos.x = WIDTH -TILE_SIZE;  vel.x=0; }
-  if (pos.y > HEIGHT-TILE_SIZE) { pos.y = HEIGHT-TILE_SIZE; vel.y=0; inAir=false; dead=true; }
-  if (pos.x < 0) { pos.x=0; vel.x=0; }
-  if (pos.y < 0) { pos.y=0; vel.y=0; }
+//  if (pos.x > WIDTH -TILE_SIZE) { pos.x = WIDTH -TILE_SIZE;  vel.x=0; }
+//  if (pos.y > HEIGHT-TILE_SIZE) { pos.y = HEIGHT-TILE_SIZE; vel.y=0; inAir=false; dead=true; }
+//  if (pos.x < 0) { pos.x=0; vel.x=0; }
+//  if (pos.y < 0) { pos.y=0; vel.y=0; }
+  
+  
+  
   visual.SetPosition(pos.x, pos.y);
   visual.FlipX(facingLeft);  // TODO: moonWalk
   visual.SetScale(1, 1); 
+  visual.SetRotation(0);
 }
 
 bool Player::collidesWith(CollisionObject &o) {

@@ -7,6 +7,5 @@ class Platform : public CollisionObject {
 public:
   std::vector<sf::Sprite> tiles;
   Platform(float x, float y, float wd, float ht, sf::Texture &texture);
-  bool collidesWith(CollisionObject o);
   std::vector<sf::Sprite> *draw();
 };

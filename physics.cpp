@@ -28,7 +28,7 @@ void Physics::update(float dt) {
   for (int i=0; i<explosions.size(); ++i) explosions[i].update(dt);
   
   // collide stuff
-  l.collidesWith(p);                      // level - player
+  //l.collidesWith(p);                      // level - player
   l.collidesWith(box);                    // level - box
   for (int i=0; i<bullets.size(); ++i) {  // level - bullet
     if (l.collidesWith(bullets[i]) || outsideBounds(bullets[i])) {
@@ -77,6 +77,28 @@ void Physics::update(float dt) {
     }
   }
 
+}
+
+
+bool Physics::collidesWithWorld(CollisionObject *o) {
+  if (outsideBounds(*o))  return true;
+  if (l.collidesWith(*o)) return true;
+  return false;
+}
+
+float Physics::testX(CollisionObject *o) {
+  // test level bounds
+  if (o->pos.x < 0) return - o->pos.x;
+  else if (o->pos.x + o->sz.x > WIDTH) return WIDTH - o->pos.x - o->sz.x;
+  return l.testX(*o);  // test with level
+}
+
+float Physics::testY(CollisionObject *o) {
+    // test level bounds
+  if (o->pos.y < 0) return - o->pos.y;
+  else if (o->pos.y + o->sz.y > HEIGHT) return HEIGHT - o->pos.y - o->sz.y;
+  
+  return l.testY(*o);  // test with level
 }
 
 bool Physics::outsideBounds(CollisionObject &o) {

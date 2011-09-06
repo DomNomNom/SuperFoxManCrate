@@ -1,3 +1,4 @@
+#include "iostream"
 #include "utils.hpp"
 #include "platform.hpp"
 
@@ -9,10 +10,6 @@ Platform::Platform(float X, float Y, float wd, float ht, sf::Texture &texture) :
       tiles[tiles.size()-1].SetPosition(X+x*TILE_SIZE, Y+y*TILE_SIZE);
     }
   }
-}
-
-bool Platform::collidesWith(CollisionObject o) {
-
 }
 
 
