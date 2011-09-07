@@ -2,6 +2,8 @@
 
 #include "collisionObject.hpp"
 
+class Physics;
+
 class Enemy : public CollisionObject {
   int health;
   bool angry;
@@ -12,9 +14,7 @@ public:
   
   Enemy(float x, float y, int hp, const sf::Texture &pic);
   
-  void update(float dt);
-  
-  bool collidesWith(CollisionObject &o);
+  void update(float dt, const Physics &phys);
   
   void hurt(int dmg);
   

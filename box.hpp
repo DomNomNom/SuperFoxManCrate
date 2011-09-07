@@ -16,11 +16,9 @@ public:
 
   Box(float x, float y, sf::Texture &pic, const sf::Image &lvl, const Player &play);
   
-  void update(float dt);
+  void update(float dt, const Physics &phys);
   
   void newPosition();
-  
-  bool collidesWith(CollisionObject &o);  
 };
 
 

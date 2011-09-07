@@ -13,7 +13,7 @@ public:
   // Constructor
   Level(sf::Image &lvl);
   
-  float testX(CollisionObject &o);
-  float testY(CollisionObject &o);
-  bool collidesWith(CollisionObject &p);
+  float testX(const CollisionObject &o) const;
+  float testY(const CollisionObject &o) const;
+  bool collidesWith(const CollisionObject &p) const;
 };

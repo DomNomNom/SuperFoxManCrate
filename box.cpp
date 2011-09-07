@@ -13,7 +13,7 @@ Box::Box(float x, float y, sf::Texture &pic, const sf::Image &lvl, const Player 
  player(play),
  spawn(lvl, sf::Color::Yellow) { 
   newPosition();
-  update(0); 
+  visual.SetPosition(pos.x, pos.y);
 }
 
 void Box::newPosition() {
@@ -23,32 +23,15 @@ void Box::newPosition() {
   } while(hypot(pos.x-player.pos.x, pos.y-player.pos.y) < MIN_DISTANCE);
 }
 
-void Box::update(float dt) {
+void Box::update(float dt, const Physics &phys) {
   vel.y += GRAVITY * dt;
   pos += vel * dt;
+  for (float changeY = phys.testY(*this); changeY!=0; changeY = phys.testY(*this)) {
+    pos.y += phys.testY(*this); 
+    vel.y = 0;
+  }
+  if (phys.testBoundsY(*this) != 0) newPosition();
   
   visual.SetPosition(pos.x, pos.y);
   visual.SetScale(1, 1);
-}
-
-bool Box::collidesWith(CollisionObject &o) {
-  // Compute the intersection boundaries
-  float left   = std::max(pos.x,        o.pos.x);
-  float top    = std::max(pos.y,        o.pos.y);
-  float right  = std::min(pos.x + sz.x, o.pos.x + o.sz.x);
-  float bottom = std::min(pos.y + sz.x, o.pos.y + o.sz.y);
-  // If the intersection is valid (positive non zero area), then there is an intersection
-  if ((left < right) && (top < bottom)) {
-    if (vel.y > 0) {
-      pos.y = o.pos.y - sz.y;
-      vel.y = 0;
-    }
-    else {
-      pos.y = o.pos.y + o.sz.y;
-      vel.y = 0;
-    }
-    visual.SetPosition(pos.x, pos.y);
-    return true;
-  }
-  else return false;
 }

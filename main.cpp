@@ -107,7 +107,6 @@ int main() {
 
   // Physics
   Physics phys(p, level, bullets, explosions, enemies, foxBox);
-  p.attachPhysics(phys);
 
   // leet FPS counter
   char fpsString[15];

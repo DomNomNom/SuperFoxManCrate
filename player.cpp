@@ -12,10 +12,6 @@ Player::Player (const sf::Texture &playerTexture, const sf::Image &lvl) : Collis
   reset(playerTexture);
 }
 
-void Player::attachPhysics(Physics &p) {
-  phys = &p;
-}
-
 void Player::reset(const sf::Texture &playerTexture) {
   visual.SetTexture(playerTexture);
   pos = spawn.getPos();
@@ -47,7 +43,7 @@ void Player::checkKeys() {
   }
 }
 
-void Player::update(float dt) {
+void Player::update(float dt, const Physics &phys) {
   if (!freeFly) {
     inAir = true;
     // calculate vel
@@ -58,62 +54,31 @@ void Player::update(float dt) {
     cancleJump = true;
   }
   
+  // calculate pos
+
   // check X-direction
   pos.x += vel.x * dt;
-  //std::cout << " starting with p.x = " << pos.x;
-  for (float changeX = phys->testX(this); changeX!=0; changeX = phys->testX(this)) {  // as long as there are collisions, keep checking
+  for (float changeX = phys.testX(*this); changeX!=0; changeX = phys.testX(*this)) {  // as long as there are collisions, keep checking
     pos.x += changeX;
     vel.x = 0;
   }
-  //std::cout << " resulting in " << pos.x << std::endl;
+  pos.x += phys.testBoundsX(*this);
   
   // check Y-direction
   pos.y += vel.y * dt;
-  for (float changeY = phys->testY(this); changeY!=0; changeY = phys->testY(this)) {
-//    if (changeY==0) std::cout << "AAAAAAAHHHHHHHHH! " << std::endl;
-    pos.y += phys->testY(this); 
+  for (float changeY = phys.testY(*this); changeY!=0; changeY = phys.testY(*this)) {
+    pos.y += phys.testY(*this); 
     vel.y = 0;
     if (changeY < 0) inAir = false;
   }
+  if (phys.testBoundsY(*this) < 0) {  // when fallen into the pit
+    dead = true;  // indicate death to reset
+  }
   
-  // calculate pos
-  //pos += vel * dt;
-  
-  dV.x=0; dV.y=0; // reset dV
-  
-//  if (pos.x > WIDTH -TILE_SIZE) { pos.x = WIDTH -TILE_SIZE;  vel.x=0; }
-//  if (pos.y > HEIGHT-TILE_SIZE) { pos.y = HEIGHT-TILE_SIZE; vel.y=0; inAir=false; dead=true; }
-//  if (pos.x < 0) { pos.x=0; vel.x=0; }
-//  if (pos.y < 0) { pos.y=0; vel.y=0; }
-  
-  
+  dV.x=0; dV.y=0; // reset dV (change of velocity)
   
   visual.SetPosition(pos.x, pos.y);
   visual.FlipX(facingLeft);  // TODO: moonWalk
   visual.SetScale(1, 1); 
   visual.SetRotation(0);
-}
-
-bool Player::collidesWith(CollisionObject &o) {
-  // Compute the intersection boundaries
-  float left   = std::max(pos.x,        o.pos.x);
-  float top    = std::max(pos.y,        o.pos.y);
-  float right  = std::min(pos.x + TILE_SIZE, o.pos.x + o.sz.x);
-  float bottom = std::min(pos.y + TILE_SIZE, o.pos.y + o.sz.y);
-  // If the intersection is valid (positive non zero area), then there is an intersection
-  if ((left < right) && (top < bottom)) {
-    if (vel.y > 0) {
-      pos.y = o.pos.y - TILE_SIZE;
-      vel.y = 0;
-      inAir=false;
-    }
-    else {
-      pos.y = o.pos.y + o.sz.y;
-      vel.y = 0;
-      inAir=true;
-    }
-    visual.SetPosition(pos.x, pos.y);
-    return true;
-  }
-  else return false;
 }

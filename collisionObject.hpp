@@ -3,16 +3,15 @@
 
 #include <SFML/System/Vector2.hpp>
 
-class CollisionObject {
-public:
+struct CollisionObject {
   sf::Vector2<float> pos;
   sf::Vector2<float> vel;
   sf::Vector2<float> sz;
   CollisionObject(float x, float y, float wd, float ht);
   virtual void update(float dt);
-  virtual float testX(CollisionObject &o);
-  virtual float testY(CollisionObject &o);
-  virtual bool collidesWith(CollisionObject &o);
+  virtual float testX(const CollisionObject &o) const;
+  virtual float testY(const CollisionObject &o) const;
+  virtual bool collidesWith(const CollisionObject &o) const;
 };
   
 #endif

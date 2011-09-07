@@ -45,21 +45,21 @@ Level::Level(sf::Image &lvl) {
   }
 }
 
-float Level::testX(CollisionObject &o) {
+float Level::testX(const CollisionObject &o) const {
   for (int i=0; i<platforms.size(); ++i) {
     if (platforms[i].testX(o) != 0) return platforms[i].testX(o);
   }
   return 0;
 }
 
-float Level::testY(CollisionObject &o) {
+float Level::testY(const CollisionObject &o) const {
   for (int i=0; i<platforms.size(); ++i) {
     if (platforms[i].testY(o) != 0) return platforms[i].testY(o);
   }
   return 0;
 }
 
-bool Level::collidesWith(CollisionObject &p) {
+bool Level::collidesWith(const CollisionObject &p) const {
   int collision = false;
   for (int i=0; i<platforms.size(); ++i) {
     if (p.collidesWith(platforms[i])) collision = true;

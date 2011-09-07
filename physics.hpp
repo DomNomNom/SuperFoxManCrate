@@ -18,13 +18,15 @@ class Physics {
   std::vector<Enemy> &enemies;
   std::vector<Explosion> &explosions;
   Box &box;
-  bool outsideBounds(CollisionObject &o);
+  bool outsideBounds(const CollisionObject &o) const;
 public:
   Physics(Player &play, Level &l, std::vector<Bullet> &b, std::vector<Explosion> &x, std::vector<Enemy> &e, Box &bx);
   void update(float dt);
-  bool collidesWithWorld(CollisionObject *o);
-  float testX(CollisionObject *o);
-  float testY(CollisionObject *o);
+  bool collidesWithWorld(const CollisionObject &o) const;
+  float testX(const CollisionObject &o) const;
+  float testY(const CollisionObject &o) const;
+  float testBoundsX(const CollisionObject &o) const;
+  float testBoundsY(const CollisionObject &o) const;
 };
 
 #endif
