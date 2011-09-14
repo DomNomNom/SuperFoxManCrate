@@ -3,7 +3,7 @@
 #include "utils.hpp"
 #include "enemy.hpp"
 
-#define ENEMY_GRAVITY 0.0015
+#define ENEMY_gravity 0.0015
 #define ENEMY_WALKSPEED 0.05
 #define ENEMY_ANGER_SPEED 0.1
 
@@ -20,7 +20,7 @@ Enemy::Enemy(float x, float y, int hp, const sf::Texture &pic)
 }
 
 void Enemy::update(float dt, const Physics &phys) {
-  vel.y += ENEMY_GRAVITY * dt;
+  vel += phys.gravity * dt;
   
   // check X-direction
   pos.x += vel.x * dt;

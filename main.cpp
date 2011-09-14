@@ -38,7 +38,7 @@ int main() {
   // create the window
   sf::VideoMode screen(sf::VideoMode::GetDesktopMode());
   sf::RenderWindow app(screen, "sfmc", sf::Style::Default);
-  app.SetFramerateLimit(60); // Limit to 60 frames per second
+//  app.SetFramerateLimit(120); // Limit to 60 frames per second
   app.ShowMouseCursor(false);
   app.EnableVerticalSync(true);
   app.EnableKeyRepeat(false);
@@ -82,19 +82,6 @@ int main() {
   // Gun Sounds
   sf::SoundBuffer gunShot; gunShot.LoadFromFile("resources/sound/gunShot.wav");
 
-  // Guns
-  Gun *guns[] = {
- // new Gun (bullets, p, <sound>, <bulletTexture>, <coolDn>, <dmg>, <#>, <vel_x/y>, <var_x/y>,  <acc_x/y>, <auto>, <explosive>), // template
-    new Gun (bullets, p, gunShot, smallBullet,     100,       1,    1,   0.2,  0,   0,    0,    0,     0,  false,   false ), // pistol
-    new Gun (bullets, p, gunShot, largeBullet,     100,       5,    1,   0.2,  0,   0,    0,    0,     0,  false,   false ), // revolver
-    new Gun (bullets, p, gunShot, smallBullet,      50,       1,    1,   0.2,  0,   0,    0.02, 0,     0,  true,    false ), // machineGun
-    new Gun (bullets, p, gunShot, smallBullet,     500,       1,    6,   0.25, 0,   0.05, 0.05, -.0005,0,  false,   false ), // shotgun
-    new Gun (bullets, p, gunShot, grenadeAmmo,    1000,      10,    1,   0.1,  -.1, 0,    0,    0,GRAVITY, false,   true  ), // grenadeLauncher
-    new Gun (bullets, p, gunShot, rocketShell,    1000,      10,    1,   0.01, 0,   0,    0,    0.0005,0,  false,   true  )  // rocketLauncher
-  };
-  const int gunCount = 6;
-  int gunIndex = 0;
-  Gun *gun = guns[gunIndex];
   
   // Enemies
   std::vector<Enemy> enemies;
@@ -107,6 +94,20 @@ int main() {
 
   // Physics
   Physics phys(p, level, bullets, explosions, enemies, foxBox);
+
+  // Guns
+  Gun *guns[] = {
+ // new Gun (bullets, p, <sound>, <bulletTexture>, <coolDn>, <dmg>, <#>, <vel_x/y>, <var_x/y>,  <acc_x/y>, <auto>, <explosive>), // template
+    new Gun (bullets, p, gunShot, smallBullet,     100,       1,    1,   0.2,  0,   0,    0,    0,     0,  false,   false ), // pistol
+    new Gun (bullets, p, gunShot, largeBullet,     100,       5,    1,   0.2,  0,   0,    0,    0,     0,  false,   false ), // revolver
+    new Gun (bullets, p, gunShot, smallBullet,      50,       1,    1,   0.2,  0,   0,    0.02, 0,     0,  true,    false ), // machineGun
+    new Gun (bullets, p, gunShot, smallBullet,     500,       1,    6,   0.25, 0,   0.05, 0.05, -.0005,0,  false,   false ), // shotgun
+    new Gun (bullets, p, gunShot, grenadeAmmo,    1000,      10,    1,   0.1,  -.1, 0,    0,    0,phys.gravity.y,false,   true  ), // grenadeLauncher
+    new Gun (bullets, p, gunShot, rocketShell,    1000,      10,    1,   0.01, 0,   0,    0,    0.0005,0,  false,   true  )  // rocketLauncher
+  };
+  const int gunCount = 6;
+  int gunIndex = 0;
+  Gun *gun = guns[gunIndex];
 
   // leet FPS counter
   char fpsString[15];

@@ -2,6 +2,7 @@
 #define PHYSICS_H
 
 #include <vector>
+#include <SFML/System/Vector2.hpp>
 
 class Player;
 class Level;
@@ -20,6 +21,8 @@ class Physics {
   Box &box;
   bool outsideBounds(const CollisionObject &o) const;
 public:
+  sf::Vector2<float> gravity;
+
   Physics(Player &play, Level &l, std::vector<Bullet> &b, std::vector<Explosion> &x, std::vector<Enemy> &e, Box &bx);
   void update(float dt);
   bool collidesWithWorld(const CollisionObject &o) const;

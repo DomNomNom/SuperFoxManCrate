@@ -24,7 +24,7 @@ void Box::newPosition() {
 }
 
 void Box::update(float dt, const Physics &phys) {
-  vel.y += GRAVITY * dt;
+  vel += phys.gravity * dt;
   pos += vel * dt;
   for (float changeY = phys.testY(*this); changeY!=0; changeY = phys.testY(*this)) {
     pos.y += phys.testY(*this); 

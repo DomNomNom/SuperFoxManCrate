@@ -15,7 +15,8 @@ Physics::Physics(Player &play, Level &level, std::vector<Bullet> &b, std::vector
   bullets(b), 
   explosions(x), 
   enemies(e),
-  box(bx)
+  box(bx),
+  gravity(0, 0.0007)
 { }
 
 

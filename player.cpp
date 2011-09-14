@@ -47,7 +47,7 @@ void Player::update(float dt, const Physics &phys) {
   if (!freeFly) {
     inAir = true;
     // calculate vel
-    dV.y += GRAVITY;
+    dV += phys.gravity;
     vel += dV * dt;
     vel.x = dV.x * PLAYER_WALKSPEED;
     if (inAir && vel.y<0 && cancleJump) vel.y = 0;  // cancle the jump if possible
