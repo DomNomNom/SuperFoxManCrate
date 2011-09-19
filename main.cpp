@@ -145,7 +145,11 @@ int main() {
           p.reset(playerLive);
           foxBox.newPosition();
           score = 0;
-        }
+        } 
+        else if (event.Key.Code == sf::Keyboard::S) phys.rotateGravity(0*90); // note: all angles are in degrees because SFML
+        else if (event.Key.Code == sf::Keyboard::A) phys.rotateGravity(1*90);
+        else if (event.Key.Code == sf::Keyboard::W) phys.rotateGravity(2*90);
+        else if (event.Key.Code == sf::Keyboard::D) phys.rotateGravity(3*90);
       }
       else if (event.Type == sf::Event::KeyReleased)
         if (event.Key.Code == sf::Keyboard::Space) gun->trigger = false;

@@ -16,8 +16,10 @@ Physics::Physics(Player &play, Level &level, std::vector<Bullet> &b, std::vector
   explosions(x), 
   enemies(e),
   box(bx),
-  gravity(0, 0.0007)
-{ }
+  gravity(0, 0.0007)  // TODO: rotate
+{ 
+  rotateGravity(0);
+}
 
 
 void Physics::update(float dt) {
@@ -75,6 +77,14 @@ void Physics::update(float dt) {
 
 }
 
+
+void Physics::rotateGravity(float angle) {
+  gravityAngle = angle;   // note: '=' not '+=' therefore absolute change
+  float gravityMagnitude = hypot(gravity.x, gravity.y);
+  gravity.x = gravityMagnitude * sin(angle*2*M_PI/360);
+  gravity.y = gravityMagnitude * cos(angle*2*M_PI/360);
+  p.rotate(angle);
+}
 
 bool Physics::collidesWithWorld(const CollisionObject &o) const {
   if (outsideBounds(o))  return true;

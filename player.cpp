@@ -41,10 +41,6 @@ void Player::checkKeys() {
     if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Left))  { --dV.x; facingLeft = true;  }
     if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Right)) { ++dV.x; facingLeft = false; }
   }
-  if (sf::Keyboard::IsKeyPressed(sf::Keyboard::S)) { rotate(0*90); }
-  if (sf::Keyboard::IsKeyPressed(sf::Keyboard::A)) { rotate(1*90); }
-  if (sf::Keyboard::IsKeyPressed(sf::Keyboard::W)) { rotate(2*90); }
-  if (sf::Keyboard::IsKeyPressed(sf::Keyboard::D)) { rotate(3*90); }
 }
 
 void Player::update(float dt, const Physics &phys) {
