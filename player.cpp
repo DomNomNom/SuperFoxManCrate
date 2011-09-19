@@ -41,6 +41,10 @@ void Player::checkKeys() {
     if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Left))  { --dV.x; facingLeft = true;  }
     if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Right)) { ++dV.x; facingLeft = false; }
   }
+  if (sf::Keyboard::IsKeyPressed(sf::Keyboard::S)) { rotate(0*90); }
+  if (sf::Keyboard::IsKeyPressed(sf::Keyboard::A)) { rotate(1*90); }
+  if (sf::Keyboard::IsKeyPressed(sf::Keyboard::W)) { rotate(2*90); }
+  if (sf::Keyboard::IsKeyPressed(sf::Keyboard::D)) { rotate(3*90); }
 }
 
 void Player::update(float dt, const Physics &phys) {
@@ -77,8 +81,18 @@ void Player::update(float dt, const Physics &phys) {
   
   dV.x=0; dV.y=0; // reset dV (change of velocity)
   
+  // update the visual
   visual.SetPosition(pos.x, pos.y);
   visual.FlipX(facingLeft);  // TODO: moonWalk
-  visual.SetScale(1, 1); 
-  visual.SetRotation(0);
+  visual.SetScale(1, 1);
+}
+
+void Player::rotate(float angle) {
+  //angle += 180; // inverses direction
+  visual.SetOrigin(0, 0);
+  visual.SetRotation(angle);
+  visual.SetOrigin( // make it seem as if rotating around the centre of the object
+    sz.x/2 - (sqrt(2))*(sz.x/2)*sin((angle+45)*2*M_PI/360.0), 
+    sz.y/2 - (sqrt(2))*(sz.y/2)*cos((angle+45)*2*M_PI/360.0)
+  );
 }

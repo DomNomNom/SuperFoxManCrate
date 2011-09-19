@@ -23,4 +23,5 @@ public:
   void reset(const sf::Texture &playerTexture);  
   void checkKeys();
   void update(float dt, const Physics &phys);  // dt: delta time => frameTime
+  void rotate(float angle); // note: the rotation is absolute, not relative to it's previouse angle.
 };
