@@ -94,6 +94,7 @@ int main() {
 
   // Physics
   Physics phys(p, level, bullets, explosions, enemies, foxBox);
+  int gravityControlInverse = 180;  // a player preference to choose whether the gravity goes with or against the WASD direction
 
   // Guns
   Gun *guns[] = {
@@ -102,7 +103,7 @@ int main() {
     new Gun (bullets, p, gunShot, largeBullet,     100,       5,    1,   0.2,  0,   0,    0,    0,     0,  false,   false ), // revolver
     new Gun (bullets, p, gunShot, smallBullet,      50,       1,    1,   0.2,  0,   0,    0.02, 0,     0,  true,    false ), // machineGun
     new Gun (bullets, p, gunShot, smallBullet,     500,       1,    6,   0.25, 0,   0.05, 0.05, -.0005,0,  false,   false ), // shotgun
-    new Gun (bullets, p, gunShot, grenadeAmmo,    1000,      10,    1,   0.1,  -.1, 0,    0,    0,phys.gravity.y,false,   true  ), // grenadeLauncher
+    new Gun (bullets, p, gunShot, grenadeAmmo,    1000,      10,    1,   0.1,  -.1, 0,    0,    0,phys.gravity.y,false,true), // grenadeLauncher
     new Gun (bullets, p, gunShot, rocketShell,    1000,      10,    1,   0.01, 0,   0,    0,    0.0005,0,  false,   true  )  // rocketLauncher
   };
   const int gunCount = 6;
@@ -146,10 +147,10 @@ int main() {
           foxBox.newPosition();
           score = 0;
         } 
-        else if (event.Key.Code == sf::Keyboard::S) phys.rotateGravity(0*90); // note: all angles are in degrees because SFML
-        else if (event.Key.Code == sf::Keyboard::A) phys.rotateGravity(1*90);
-        else if (event.Key.Code == sf::Keyboard::W) phys.rotateGravity(2*90);
-        else if (event.Key.Code == sf::Keyboard::D) phys.rotateGravity(3*90);
+        else if (event.Key.Code == sf::Keyboard::S) phys.rotateGravity(0*90+gravityControlInverse); // note: all angles are in degrees because SFML
+        else if (event.Key.Code == sf::Keyboard::A) phys.rotateGravity(1*90+gravityControlInverse);
+        else if (event.Key.Code == sf::Keyboard::W) phys.rotateGravity(2*90+gravityControlInverse);
+        else if (event.Key.Code == sf::Keyboard::D) phys.rotateGravity(3*90+gravityControlInverse);
       }
       else if (event.Type == sf::Event::KeyReleased)
         if (event.Key.Code == sf::Keyboard::Space) gun->trigger = false;

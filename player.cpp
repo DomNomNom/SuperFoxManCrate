@@ -84,7 +84,6 @@ void Player::update(float dt, const Physics &phys) {
 }
 
 void Player::rotate(float angle) {
-  //angle += 180; // inverses direction
   visual.SetOrigin(0, 0);
   visual.SetRotation(angle);
   visual.SetOrigin( // make it seem as if rotating around the centre of the object
