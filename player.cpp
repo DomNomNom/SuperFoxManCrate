@@ -1,8 +1,5 @@
 #include <iostream>
-#include <math.h>
-#include "collisionObject.hpp"
 #include "player.hpp"
-#include "utils.hpp"
 
 #define PLAYER_WALKSPEED 0.005
 #define PLAYER_JUMP_STRENGTH 0.27

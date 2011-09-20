@@ -1,11 +1,8 @@
-#include <SFML/Graphics.hpp>
 #include <vector>
 #include "collisionObject.hpp"
 
 
-class Platform : public CollisionObject {
-public:
+struct Platform : public CollisionObject {
   std::vector<sf::Sprite> tiles;
-  Platform(float x, float y, float wd, float ht, sf::Texture &tex);
-  std::vector<sf::Sprite> *draw();
+  Platform(float x, float y, float wd, float ht, const sf::Texture &tex);
 };

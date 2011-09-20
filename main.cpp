@@ -49,16 +49,15 @@ int main() {
   screenHt = sf::VideoMode::GetDesktopMode().Height;
   
   // bg image
-  sf::Texture bgTexture;
-  bgTexture.LoadFromFile("resources/images/bg.png");
+  sf::Texture bgTexture; bgTexture.LoadFromFile("resources/images/bg.png");
   sf::Sprite bg;
   bg.SetTexture(bgTexture);
   placeObject(bg);
   
   // Level 
   sf::Image levelData; levelData.LoadFromFile("resources/levels/level1.png");
-  
-  Level level(levelData);
+  sf::Texture tileTex; tileTex.LoadFromFile("resources/images/platform.png");
+  Level level(levelData, tileTex);
   for (int i=0; i<level.platforms.size(); ++i)
     for (int j=0; j<level.platforms[i].tiles.size(); ++j)
       placeObject(level.platforms[i].tiles[j]);
@@ -80,7 +79,6 @@ int main() {
   
   // Gun Sounds
   sf::SoundBuffer gunShot; gunShot.LoadFromFile("resources/sound/gunShot.wav");
-
   
   // Enemies
   std::vector<Enemy> enemies;

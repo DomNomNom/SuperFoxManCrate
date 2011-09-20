@@ -1,12 +1,11 @@
 #include <fstream>
-#include <iostream>
 #include "platform.hpp"
 #include "player.hpp"
 #include "level.hpp"
 #include "utils.hpp"
 
-Level::Level(sf::Image &lvl) {
-  platformSprite.LoadFromFile("resources/images/platform.png");
+Level::Level(const sf::Image &lvl, const sf::Texture &tileTex) {
+  
   
   int imgWd = lvl.GetWidth();
   int imgHt = lvl.GetHeight();
@@ -39,7 +38,7 @@ Level::Level(sf::Image &lvl) {
         }
         
         // construct platforms
-        platforms.push_back(Platform(x*TILE_SIZE, y*TILE_SIZE, wd*TILE_SIZE, minHt*TILE_SIZE, platformSprite));  
+        platforms.push_back(Platform(x*TILE_SIZE, y*TILE_SIZE, wd*TILE_SIZE, minHt*TILE_SIZE, tileTex));  
       }
     }
   }

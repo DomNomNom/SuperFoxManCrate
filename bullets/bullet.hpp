@@ -1,7 +1,6 @@
 #ifndef BULLET_H
 #define BULLET_H
 
-#include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
 
 #include "../collisionObject.hpp"
@@ -17,7 +16,6 @@ public:
   
   Bullet(float x, float y, float vel_x, float vel_y, sf::Vector2<float> &acceleration, const sf::Texture &tex, int dmg, bool explosion);
   void update(float dt);
-  bool collidesWith(CollisionObject &o);
 };
 
 #endif

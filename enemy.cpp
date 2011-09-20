@@ -1,6 +1,5 @@
 #include <stdlib.h>  // for rand()
 #include "physics.hpp"
-#include "utils.hpp"
 #include "enemy.hpp"
 
 #define ENEMY_gravity 0.0015

@@ -1,8 +1,7 @@
-#include "iostream"
 #include "utils.hpp"
 #include "platform.hpp"
 
-Platform::Platform(float X, float Y, float wd, float ht, sf::Texture &tex) : CollisionObject(X, Y, tex) {
+Platform::Platform(float X, float Y, float wd, float ht, const sf::Texture &tex) : CollisionObject(X, Y, tex) {
   sz.x = wd;
   sz.y = ht;
   for (int y=0; y<ht/TILE_SIZE; ++y) {
@@ -12,10 +11,5 @@ Platform::Platform(float X, float Y, float wd, float ht, sf::Texture &tex) : Col
       tiles[tiles.size()-1].SetPosition(X+x*TILE_SIZE, Y+y*TILE_SIZE);
     }
   }
-}
-
-
-std::vector<sf::Sprite> *Platform::draw() {
-  return &tiles;
 }
 

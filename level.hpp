@@ -6,12 +6,11 @@ class Platform;
 class Player;
 
 class Level {
-  sf::Texture platformSprite;
 public:
   std::vector<Platform> platforms;
   
   // Constructor
-  Level(sf::Image &lvl);
+  Level(const sf::Image &lvl, const sf::Texture &tileTex);
   
   float testX(const CollisionObject &o) const;
   float testY(const CollisionObject &o) const;

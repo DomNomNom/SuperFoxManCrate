@@ -1,10 +1,9 @@
-#include <math.h>
 #include "utils.hpp"
 #include "player.hpp"
 #include "spawnPoint.hpp"
 #include "box.hpp"
 
-#define MIN_DISTANCE 3*TILE_SIZE
+#define MIN_DISTANCE 4*TILE_SIZE
 
 Box::Box(float x, float y, sf::Texture &pic, const sf::Image &lvl, const Player &play) 
  : CollisionObject(x, y, pic),  

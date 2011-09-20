@@ -1,5 +1,4 @@
-#include <cmath>
-#include <iostream>
+#include <math.h> // for hypot
 
 #include "explosion.hpp"
 
@@ -24,13 +23,12 @@ void Explosion::update(float dt) {
 }
 
 bool Explosion::collidesWith(CollisionObject &o) {
-//  std::cout << "collision :" << hypot(pos.x - (o.pos.x), pos.y - (o.pos.y)) << " - " << radius << std::endl;
-  if ( // any of the four corners are within the circle
+  if ( // if any of the four corners are within the circle
     hypot(pos.x - (o.pos.x       ), pos.y - (o.pos.y       )) <= radius  ||
     hypot(pos.x - (o.pos.x+o.sz.x), pos.y - (o.pos.y       )) <= radius  ||
     hypot(pos.x - (o.pos.x       ), pos.y - (o.pos.y+o.sz.y)) <= radius  ||
     hypot(pos.x - (o.pos.x+o.sz.x), pos.y - (o.pos.y+o.sz.y)) <= radius 
-  ) return true;  // radius * constant ?? wtf?
+  ) return true;
   return false;
 }
 
