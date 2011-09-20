@@ -1,8 +1,31 @@
-  #include <iostream>
+#include <iostream>
 #include <algorithm>  // for min and max
 #include "collisionObject.hpp"
 
-CollisionObject::CollisionObject(float x, float y, float wd, float ht) : pos(x, y), vel(0, 0), sz(wd, ht) { }
+CollisionObject::CollisionObject(float x, float y, const sf::Texture &tex) : pos(x, y), visual(tex), vel(0, 0), sz(tex.GetWidth(), tex.GetHeight()) {
+  updateVisual();
+}
+
+void CollisionObject::update(float dt) {
+  pos += vel * dt;
+  updateVisual();
+}
+
+void CollisionObject::updateVisual() {
+  visual.SetPosition(pos.x, pos.y);
+  visual.SetScale(1, 1);
+}
+
+void CollisionObject::rotate(float angle) {
+/*
+  visual.SetOrigin(0, 0);
+  visual.SetRotation(angle);
+  visual.SetOrigin( // make it seem as if rotating around the centre of the object
+    sz.x/2 - (sqrt(2))*(sz.x/2)*sin((angle+45)*2*M_PI/360.0), 
+    sz.y/2 - (sqrt(2))*(sz.y/2)*cos((angle+45)*2*M_PI/360.0)
+  );
+*/
+}
 
 float CollisionObject::testX(const CollisionObject &o) const {
   // Compute the intersection boundaries
@@ -36,7 +59,4 @@ bool CollisionObject::collidesWith(const CollisionObject &o) const {
   return (testX(o) != 0);
 }
 
-void CollisionObject::update(float dt) {
-  pos += vel * dt;
-}
 

@@ -1,5 +1,3 @@
-#include <SFML/Graphics.hpp>
-
 #include "collisionObject.hpp"
 
 class Physics;
@@ -9,10 +7,9 @@ class Enemy : public CollisionObject {
   bool angry;
   float speed;
 public:
-  sf::Sprite visual;
   bool dead;
   
-  Enemy(float x, float y, int hp, const sf::Texture &pic);
+  Enemy(float x, float y, int hp, const sf::Texture &tex);
   
   void update(float dt, const Physics &phys);
   

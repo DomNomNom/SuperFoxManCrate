@@ -1,5 +1,3 @@
-#include <SFML/Graphics.hpp>
-
 #include "../collisionObject.hpp"
 
 class Explosion : public CollisionObject {

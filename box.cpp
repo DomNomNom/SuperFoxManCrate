@@ -7,13 +7,10 @@
 #define MIN_DISTANCE 3*TILE_SIZE
 
 Box::Box(float x, float y, sf::Texture &pic, const sf::Image &lvl, const Player &play) 
- : CollisionObject(x, y, pic.GetWidth(), 
- pic.GetHeight()), 
- visual(pic), 
+ : CollisionObject(x, y, pic),  
  player(play),
  spawn(lvl, sf::Color::Yellow) { 
   newPosition();
-  visual.SetPosition(pos.x, pos.y);
 }
 
 void Box::newPosition() {
@@ -34,6 +31,5 @@ void Box::update(float dt, const Physics &phys) {
   if (phys.testBoundsY(*this) != 0) newPosition();
   pos.x += phys.testBoundsX(*this);
   
-  visual.SetPosition(pos.x, pos.y);
-  visual.SetScale(1, 1);
+  updateVisual();
 }

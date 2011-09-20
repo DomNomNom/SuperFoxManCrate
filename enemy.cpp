@@ -7,16 +7,14 @@
 #define ENEMY_WALKSPEED 0.05
 #define ENEMY_ANGER_SPEED 0.1
 
-Enemy::Enemy(float x, float y, int hp, const sf::Texture &pic) 
- : CollisionObject(x, y, pic.GetWidth(), pic.GetHeight()), 
- speed(ENEMY_WALKSPEED), 
- visual(pic),
+Enemy::Enemy(float x, float y, int hp, const sf::Texture &tex) 
+ : CollisionObject(x, y, tex), 
+ speed(ENEMY_WALKSPEED),
  health(hp), 
  dead(false),
  angry(false) {
-  vel.x = (rand()%2*2-1) * speed; // either left or right walking
-  visual.SetPosition(pos.x, pos.y);
-  visual.FlipX(vel.x<0);
+ vel.x = (rand()%2*2-1) * speed; // either left or right walking
+ visual.FlipX(vel.x<0);
 }
 
 void Enemy::update(float dt, const Physics &phys) {
@@ -49,9 +47,8 @@ void Enemy::update(float dt, const Physics &phys) {
     dead = true;  // indicate death to reset
   }
   
-  visual.SetPosition(pos.x, pos.y);
   visual.FlipX(vel.x<0);
-  visual.SetScale(1, 1);
+  updateVisual();
 }
 
 void Enemy::hurt(int dmg) {

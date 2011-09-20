@@ -14,9 +14,7 @@ public:
   bool explosive;
   bool deadOnSlow;
   int damadge;
-  sf::Sprite visual;
   
-  // TODO: acceleration
   Bullet(float x, float y, float vel_x, float vel_y, sf::Vector2<float> &acceleration, const sf::Texture &tex, int dmg, bool explosion);
   void update(float dt);
   bool collidesWith(CollisionObject &o);

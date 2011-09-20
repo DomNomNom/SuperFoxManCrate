@@ -4,7 +4,7 @@
 #define MINIMUM_VEL 0.0005*dt
 
 Bullet::Bullet(float x, float y, float vel_x, float vel_y, sf::Vector2<float> &acceleration, const sf::Texture &tex, int dmg, bool explosion) : 
- CollisionObject(x, y, tex.GetWidth(), tex.GetHeight()), 
+ CollisionObject(x, y, tex), 
  dead(false),
  upsideDown(false),
  damadge(dmg),
@@ -13,10 +13,7 @@ Bullet::Bullet(float x, float y, float vel_x, float vel_y, sf::Vector2<float> &a
  deadOnSlow(true) {
   vel.x = vel_x;
   vel.y = vel_y;
-  visual.SetTexture(tex);
-  visual.FlipX((vel.x)<0);
-  if (vel.x<0) acceleration.x *= 1;
-  update(0);
+  visual.FlipX(vel.x<0);
 }
 
 void Bullet::update(float dt) {
@@ -28,7 +25,7 @@ void Bullet::update(float dt) {
   
   upsideDown = !upsideDown;
   visual.FlipY(upsideDown);  // cheap animation
-  visual.SetScale(1, 1);
+  updateVisual();
 }
 
 bool Bullet::collidesWith(CollisionObject &o) {

@@ -4,11 +4,15 @@
 #include "player.hpp"
 #include "utils.hpp"
 
-#define PLAYER_WALKSPEED 0.1
+#define PLAYER_WALKSPEED 0.005
 #define PLAYER_JUMP_STRENGTH 0.27
 #define TILE_SIZE 8
 
-Player::Player (const sf::Texture &playerTexture, const sf::Image &lvl) : CollisionObject(0, 0, TILE_SIZE, TILE_SIZE), spawn(lvl, sf::Color::Red), facingLeft(true), freeFly(false) {
+Player::Player (const sf::Texture &playerTexture, const sf::Image &lvl) 
+ : CollisionObject(0, 0, playerTexture), 
+ spawn(lvl, sf::Color::Red), 
+ facingLeft(true), 
+ freeFly(false) {
   reset(playerTexture);
 }
 
@@ -22,6 +26,8 @@ void Player::reset(const sf::Texture &playerTexture) {
 }
 
 void Player::checkKeys() {
+  playerControl.x = 0;
+  playerControl.y = 0;
   if (freeFly) {
     vel.x=0; vel.y=0;
     if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Up))    { vel.y -= PLAYER_WALKSPEED; }
@@ -38,8 +44,8 @@ void Player::checkKeys() {
       cancleJump = false;
     }
     if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Down))  ;
-    if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Left))  { --dV.x; facingLeft = true;  }
-    if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Right)) { ++dV.x; facingLeft = false; }
+    if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Left))  { playerControl.x -= PLAYER_WALKSPEED; facingLeft = true;  }
+    if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Right)) { playerControl.x += PLAYER_WALKSPEED; facingLeft = false; }
   }
 }
 
@@ -50,6 +56,7 @@ void Player::update(float dt, const Physics &phys) {
     dV += phys.gravity;
     vel += dV * dt;
     vel.x = dV.x * PLAYER_WALKSPEED;
+    vel += playerControl * dt;
     if (inAir && vel.y<0 && cancleJump) vel.y = 0;  // cancle the jump if possible
     cancleJump = true;
   }
@@ -63,6 +70,7 @@ void Player::update(float dt, const Physics &phys) {
     vel.x = 0;
   }
   pos.x += phys.testBoundsX(*this);
+  vel.x -= playerControl.x * dt;
   
   // check Y-direction
   pos.y += vel.y * dt;
@@ -74,20 +82,10 @@ void Player::update(float dt, const Physics &phys) {
   if (phys.testBoundsY(*this) < 0) {  // when fallen into the pit
     dead = true;  // indicate death to reset
   }
+  vel.y -= playerControl.y * dt;
   
   dV.x=0; dV.y=0; // reset dV (change of velocity)
   
-  // update the visual
-  visual.SetPosition(pos.x, pos.y);
   visual.FlipX(facingLeft);  // TODO: moonWalk
-  visual.SetScale(1, 1);
-}
-
-void Player::rotate(float angle) {
-  visual.SetOrigin(0, 0);
-  visual.SetRotation(angle);
-  visual.SetOrigin( // make it seem as if rotating around the centre of the object
-    sz.x/2 - (sqrt(2))*(sz.x/2)*sin((angle+45)*2*M_PI/360.0), 
-    sz.y/2 - (sqrt(2))*(sz.y/2)*cos((angle+45)*2*M_PI/360.0)
-  );
+  updateVisual();
 }

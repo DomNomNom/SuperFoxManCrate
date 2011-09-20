@@ -53,7 +53,6 @@ int main() {
   bgTexture.LoadFromFile("resources/images/bg.png");
   sf::Sprite bg;
   bg.SetTexture(bgTexture);
-//  bg.SetColor(sf::Color::Blue);
   placeObject(bg);
   
   // Level 
@@ -121,7 +120,7 @@ int main() {
   char scoreString[15];
   bool playerDied = false;
   sf::Text scoreText;
-  scoreText.SetCharacterSize(40);
+  scoreText.SetCharacterSize(40); 
   scoreText.SetColor(sf::Color(200, 0, 0));
   scoreText.SetPosition(screenWd/2-30, 0);
   
@@ -129,7 +128,7 @@ int main() {
   while (app.IsOpened()) {
     // input
     p.checkKeys();
-    if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Dash)) usleep(50000); // space  => low framerate for testing (~19 fps)
+    //if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Dash)) usleep(50000); // space  => low framerate for testing (~19 fps)
 
     sf::Event event;  // process window events
     while (app.PollEvent(event)) {
@@ -158,7 +157,7 @@ int main() {
     
     // game logic
     float frameTime = app.GetFrameTime();
-    phys.update(frameTime);
+    phys.update(frameTime); // WHERE MOST OF THE WORK IS DONE
     if (foxBox.collidesWith(p)) {
       ++score;
       gun->trigger = false;
