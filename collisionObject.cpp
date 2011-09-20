@@ -17,14 +17,13 @@ void CollisionObject::updateVisual() {
 }
 
 void CollisionObject::rotate(float angle) {
-/*
+  angle *= -1;
   visual.SetOrigin(0, 0);
   visual.SetRotation(angle);
   visual.SetOrigin( // make it seem as if rotating around the centre of the object
     sz.x/2 - (sqrt(2))*(sz.x/2)*sin((angle+45)*2*M_PI/360.0), 
     sz.y/2 - (sqrt(2))*(sz.y/2)*cos((angle+45)*2*M_PI/360.0)
   );
-*/
 }
 
 float CollisionObject::testX(const CollisionObject &o) const {

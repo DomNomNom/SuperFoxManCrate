@@ -84,6 +84,8 @@ void Physics::rotateGravity(float angle) {
   gravity.x = gravityMagnitude * sin(angle*2*M_PI/360);
   gravity.y = gravityMagnitude * cos(angle*2*M_PI/360);
   p.rotate(angle);
+  for (int i=0; i<enemies.size(); ++i)
+    enemies[i].rotate(angle);
 }
 
 bool Physics::collidesWithWorld(const CollisionObject &o) const {
