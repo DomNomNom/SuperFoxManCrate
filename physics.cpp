@@ -16,7 +16,7 @@ Physics::Physics(Player &play, Level &level, std::vector<Bullet> &b, std::vector
   explosions(x), 
   enemies(e),
   box(bx),
-  gravity(0, 0.0007)  // TODO: rotate
+  gravity(0, 0.0007)
 { 
   rotateGravity(0);
 }
