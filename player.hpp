@@ -12,6 +12,9 @@ private:
   bool inAir;
   bool freeFly;
   
+  void canGoX(float dt, const Physics &phys);  // helper functions for update()
+  void canGoY(float dt, const Physics &phys);
+  
 public:
   bool facingLeft;
   bool dead;

@@ -2,8 +2,12 @@ TODO list:
 
 rotating gravity
 more enemy types
-bg music
+  enemies that get angry with explosives
+  flyers
 better sprites
+more weapons
+  taser mine (kills all small, angers big)
+bg music
 level visuals seperated from level data
 game balance (level design/gun nerfing)
 

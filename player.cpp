@@ -45,6 +45,31 @@ void Player::checkKeys() {
   }
 }
 
+void Player::canGoX(float dt, const Physics &phys) {
+  pos.x += vel.x * dt;
+  for (float changeX = phys.testX(*this); changeX!=0; changeX = phys.testX(*this)) {  // as long as there are collisions, keep checking
+    pos.x += changeX;
+    vel.x = 0;
+    if (changeX*cos(phys.gravAngle/180*M_PI) < 0 && abs(changeX)<=abs(phys.testY(*this))) inAir = false;
+  }
+  if (phys.testBoundsX(*this) != 0) {
+    pos.x += phys.testBoundsX(*this);
+    vel.x = 0;
+  }
+}
+
+void Player::canGoY(float dt, const Physics &phys) {
+  pos.y += vel.y * dt;
+  for (float changeY = phys.testY(*this); changeY!=0; changeY = phys.testY(*this)) {
+    pos.y += changeY; 
+    vel.y = 0;
+    if (changeY*cos(phys.gravAngle/180*M_PI) < 0 && abs(changeY)<=abs(phys.testX(*this))) inAir = false;
+  }
+  if (phys.testBoundsY(*this) < 0) {  // when fallen into the pit
+    dead = true;  // indicate death to reset
+  }
+}
+
 void Player::update(float dt, const Physics &phys) {
   if (!freeFly) {
     inAir = true;
@@ -60,28 +85,15 @@ void Player::update(float dt, const Physics &phys) {
   // calculate posistion
 
   // check X-direction
-  pos.x += vel.x * dt;
-  for (float changeX = phys.testX(*this); changeX!=0; changeX = phys.testX(*this)) {  // as long as there are collisions, keep checking
-    pos.x += changeX;
-    vel.x = 0;
-    if (changeX*sin(phys.gravAngle/180*M_PI) < 0) inAir = false;
+  if ((phys.gravAngle+0)%180 == 0) {
+    canGoX(dt, phys);
+    canGoY(dt, phys);
   }
-  if (phys.testBoundsX(*this) != 0) {
-    pos.x += phys.testBoundsX(*this);
-    vel.x = 0;
-  }
-  
+  else {
+    canGoY(dt, phys);
+    canGoX(dt, phys);
+  }  
   // check Y-direction
-  pos.y += vel.y * dt;
-  for (float changeY = phys.testY(*this); changeY!=0; changeY = phys.testY(*this)) {
-    pos.y += changeY; 
-    vel.y = 0;
-    if (changeY*cos(-phys.gravAngle/180*M_PI) < 0) inAir = false;
-  }
-  
-  if (phys.testBoundsY(*this) < 0) {  // when fallen into the pit
-    dead = true;  // indicate death to reset
-  }
   
   visual.FlipX(facingLeft);  // TODO: moonWalk
   updateVisual();

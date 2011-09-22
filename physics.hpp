@@ -22,12 +22,12 @@ class Physics {
   bool outsideBounds(const CollisionObject &o) const;
 public:
   sf::Vector2<float> gravity;
-  float gravAngle;
+  int gravAngle;
 
   Physics(Player &play, Level &l, std::vector<Bullet> &b, std::vector<Explosion> &x, std::vector<Enemy> &e, Box &bx);
 
   void update(float dt);
-  void rotateGravity(float angle);
+  void rotateGravity(int angle);
   bool collidesWithWorld(const CollisionObject &o) const;
   float testX(const CollisionObject &o) const;
   float testY(const CollisionObject &o) const;
