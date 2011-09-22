@@ -17,7 +17,6 @@ void Player::reset(const sf::Texture &playerTexture) {
   visual.SetTexture(playerTexture);
   pos = spawn.getPos();
   vel.x=0; vel.y=0;
-  dV.x =0; dV.y =0;
   inAir = true;
   dead = false;
 }
@@ -35,8 +34,8 @@ void Player::checkKeys() {
   else {
     if (sf::Keyboard::IsKeyPressed(sf::Keyboard::Up)) {
       if (!inAir) { 
-        vel.y -= PLAYER_JUMP_STRENGTH; 
-        inAir = true; 
+        playerControl.y = -PLAYER_JUMP_STRENGTH;
+        inAir = true;
       }
       cancleJump = false;
     }
@@ -49,39 +48,40 @@ void Player::checkKeys() {
 void Player::update(float dt, const Physics &phys) {
   if (!freeFly) {
     inAir = true;
-    // calculate vel
-    dV += phys.gravity;
-    vel += dV * dt;
-    vel.x = dV.x * PLAYER_WALKSPEED;
-    vel += playerControl * dt;
-    if (inAir && vel.y<0 && cancleJump) vel.y = 0;  // cancle the jump if possible
+    vel += phys.gravity * dt;
+    
+    setX(vel, 0, phys.gravAngle);
+    add(vel, (playerControl*dt).x, (playerControl).y, phys.gravAngle); 
+    
+    if (inAir && getY(vel, phys.gravAngle)<0 && cancleJump) setY(vel, 0, phys.gravAngle);  // cancle the jump if possible
     cancleJump = true;
   }
   
-  // calculate pos
+  // calculate posistion
 
   // check X-direction
   pos.x += vel.x * dt;
   for (float changeX = phys.testX(*this); changeX!=0; changeX = phys.testX(*this)) {  // as long as there are collisions, keep checking
     pos.x += changeX;
     vel.x = 0;
+    if (changeX*sin(phys.gravAngle/180*M_PI) < 0) inAir = false;
   }
-  pos.x += phys.testBoundsX(*this);
-  vel.x -= playerControl.x * dt;
+  if (phys.testBoundsX(*this) != 0) {
+    pos.x += phys.testBoundsX(*this);
+    vel.x = 0;
+  }
   
   // check Y-direction
   pos.y += vel.y * dt;
   for (float changeY = phys.testY(*this); changeY!=0; changeY = phys.testY(*this)) {
-    pos.y += phys.testY(*this); 
+    pos.y += changeY; 
     vel.y = 0;
-    if (changeY < 0) inAir = false;
+    if (changeY*cos(-phys.gravAngle/180*M_PI) < 0) inAir = false;
   }
+  
   if (phys.testBoundsY(*this) < 0) {  // when fallen into the pit
     dead = true;  // indicate death to reset
   }
-  vel.y -= playerControl.y * dt;
-  
-  dV.x=0; dV.y=0; // reset dV (change of velocity)
   
   visual.FlipX(facingLeft);  // TODO: moonWalk
   updateVisual();

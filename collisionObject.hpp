@@ -19,6 +19,14 @@ public:
   virtual float testX(const CollisionObject &o) const;
   virtual float testY(const CollisionObject &o) const;
   virtual bool collidesWith(const CollisionObject &o) const;  
+
+  // functions regarding rotation with vectors
+  void add(sf::Vector2<float> &vector, float dX, float dY, int angle);
+  void set(sf::Vector2<float> &vector, float x, float y, int angle);
+  void setX(sf::Vector2<float> &vector, float x, int angle);
+  void setY(sf::Vector2<float> &vector, float x, int angle);
+  float getX(const sf::Vector2<float> &vector, int angle);
+  float getY(const sf::Vector2<float> &vector, int angle);
 };
   
 #endif

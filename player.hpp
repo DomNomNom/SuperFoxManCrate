@@ -7,8 +7,7 @@
 class Player : public CollisionObject {
 private:
   SpawnPoint spawn;
-  sf::Vector2<float> playerControl;
-  sf::Vector2<float> dV;
+  sf::Vector2<float> playerControl; // note: playerControl is relative to the players angle
   bool cancleJump;
   bool inAir;
   bool freeFly;

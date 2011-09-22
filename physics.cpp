@@ -79,7 +79,7 @@ void Physics::update(float dt) {
 
 
 void Physics::rotateGravity(float angle) {
-  gravityAngle = angle;   // note: '=' not '+=' therefore absolute change
+  gravAngle = int(angle)%360;   // note: '=' not '+=' therefore absolute change
   float gravityMagnitude = hypot(gravity.x, gravity.y);
   gravity.x = gravityMagnitude * sin(angle*2*M_PI/360);
   gravity.y = gravityMagnitude * cos(angle*2*M_PI/360);

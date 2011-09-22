@@ -58,4 +58,74 @@ bool CollisionObject::collidesWith(const CollisionObject &o) const {
   return (testX(o) != 0);
 }
 
+// adds dX and dY to the vector with respect to the angle
+void CollisionObject::add(sf::Vector2<float> &vector, float dX, float dY, int angle) {
+  switch (angle) {
+    case 0*90:
+      vector.x += dX;
+      vector.y += dY;
+      break;
+    case 1*90:
+      vector.x += dY;
+      vector.y -= dX;
+      break;
+    case 2*90:
+      vector.x -= dX;
+      vector.y -= dY;
+      break;
+    case 3*90:
+      vector.x -= dY;
+      vector.y += dX;
+      break;
+    default:
+      vector.x = NAN;
+      vector.y = NAN;
+  }
+}
+
+void CollisionObject::set(sf::Vector2<float> &vector, float x, float y, int angle) {
+  setX(vector, x, angle);
+  setY(vector, y, angle);
+}
+
+void CollisionObject::setX(sf::Vector2<float> &vector, float x, int angle) {
+  switch (angle) {
+    case 0*90:  vector.x =  x;  break;
+    case 1*90:  vector.y =  x;  break;
+    case 2*90:  vector.x = -x;  break;
+    case 3*90:  vector.y = -x;  break;
+    default:    vector.x = NAN;
+  }
+}
+
+void CollisionObject::setY(sf::Vector2<float> &vector, float y, int angle) {
+  switch (angle) {
+    case 0*90:  vector.y =  y;  break;
+    case 1*90:  vector.x = -y;  break;  
+    case 2*90:  vector.y = -y;  break;
+    case 3*90:  vector.x =  y;  break;
+    default:    vector.y = NAN;
+  }
+}
+
+
+float CollisionObject::getX(const sf::Vector2<float> &vector, int angle) {
+  switch (angle) {
+    case 0*90:  return  vector.x;
+    case 1*90:  return  vector.y;
+    case 2*90:  return -vector.x;
+    case 3*90:  return -vector.y;
+    default:    return NAN;
+  }
+}
+
+float CollisionObject::getY(const sf::Vector2<float> &vector, int angle) {
+  switch (angle) {
+    case 0*90:  return  vector.y;
+    case 1*90:  return  vector.x;
+    case 2*90:  return -vector.y;
+    case 3*90:  return -vector.x;
+    default:    return NAN;
+  }
+}
 
