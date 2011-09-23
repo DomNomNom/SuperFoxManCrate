@@ -21,14 +21,38 @@ void Box::newPosition() {
 }
 
 void Box::update(float dt, const Physics &phys) {
+  setX(vel, 0, phys.gravAngle);
   vel += phys.gravity * dt;
-  pos += vel * dt;
-  for (float changeY = phys.testY(*this); changeY!=0; changeY = phys.testY(*this)) {
-    pos.y += phys.testY(*this); 
-    vel.y = 0;
+//  pos += vel * dt;
+  
+  if ((phys.gravAngle+0)%180 == 0) {
+    canGoX(dt, phys);
+      canGoY(dt, phys);
   }
-  if (phys.testBoundsY(*this) != 0) newPosition();
-  pos.x += phys.testBoundsX(*this);
+  else {
+      canGoX(dt, phys);
+      canGoY(dt, phys);
+  }
   
   updateVisual();
+}
+
+void Box::canGoX(float dt, const Physics &phys) {
+  pos.x += vel.x * dt;
+  for (float changeX = phys.testX(*this); changeX!=0; changeX = phys.testX(*this)) {  // as long as there are collisions, keep checking
+    pos.x += changeX;
+    vel.x = 0;
+  }
+  if (phys.testBoundsX(*this) != 0) {
+    pos.x += phys.testBoundsX(*this);
+    vel.x = 0;
+  }
+}
+
+void Box::canGoY(float dt, const Physics &phys) {
+  pos.y += vel.y * dt;
+  for (float changeY = phys.testY(*this); changeY!=0; changeY = phys.testY(*this)) {
+    pos.y += changeY; 
+    vel.y = 0;
+  }
 }

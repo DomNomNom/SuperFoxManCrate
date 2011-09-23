@@ -91,7 +91,7 @@ int main() {
 
   // Physics
   Physics phys(p, level, bullets, explosions, enemies, foxBox);
-  int gravityControlInverse = 180;  // a player preference to choose whether the gravity goes with or against the WASD direction
+  int gravityControlInverse = 0;  // a player preference to choose whether the gravity goes with or against the WASD direction (value is either 0/180)
 
   // Guns
   Gun *guns[] = {
@@ -145,9 +145,9 @@ int main() {
           score = 0;
         } 
         else if (event.Key.Code == sf::Keyboard::S) phys.rotateGravity(0*90+gravityControlInverse); // note: all angles are in degrees because SFML
-        else if (event.Key.Code == sf::Keyboard::A) phys.rotateGravity(1*90+gravityControlInverse);
+        else if (event.Key.Code == sf::Keyboard::D) phys.rotateGravity(1*90+gravityControlInverse);
         else if (event.Key.Code == sf::Keyboard::W) phys.rotateGravity(2*90+gravityControlInverse);
-        else if (event.Key.Code == sf::Keyboard::D) phys.rotateGravity(3*90+gravityControlInverse);
+        else if (event.Key.Code == sf::Keyboard::A) phys.rotateGravity(3*90+gravityControlInverse);
       }
       else if (event.Type == sf::Event::KeyReleased)
         if (event.Key.Code == sf::Keyboard::Space) gun->trigger = false;
