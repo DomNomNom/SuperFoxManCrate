@@ -1,5 +1,5 @@
 #include <SFML/System/Vector2.hpp>
-#include <SFML/Window/Event.hpp>
+#include <SFML/Window/Event.hpp>  // for keyboard input
 #include "physics.hpp"
 #include "collisionObject.hpp"
 #include "spawnPoint.hpp"

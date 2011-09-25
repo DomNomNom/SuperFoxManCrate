@@ -13,40 +13,50 @@ Enemy::Enemy(float x, float y, int hp, const sf::Texture &tex)
  dead(false),
  angry(false) {
  vel.x = (rand()%2*2-1) * speed; // either left or right walking
- visual.FlipX(vel.x<0);
+ facingLeft = (vel.x<0);
+ visual.FlipX(facingLeft);
 }
 
 void Enemy::update(float dt, const Physics &phys) {
   vel += phys.gravity * dt;
+  if (facingLeft) setX(vel, -speed, phys.gravAngle%180);
+  else            setX(vel,  speed, phys.gravAngle%180);
   
   // check X-direction
   pos.x += vel.x * dt;
-  bool movedX = false;
+  bool hitWall = false;
   float changeX = phys.testX(*this);
   while (changeX!=0) {  // as long as there are collisions with the level, keep checking
     pos.x += changeX;
-    movedX = true;
+    if (phys.gravAngle%180 == 0) hitWall = true;
+    else setY(vel, 0, phys.gravAngle);
     changeX = phys.testX(*this);
   }
   changeX = phys.testBoundsX(*this);
   if (changeX != 0) {
     pos.x += changeX;
-    movedX = true;
+    hitWall = true;
   }
-  if (movedX) vel.x *= -1;
   
   // check Y-direction
   pos.y += vel.y * dt;
   for (float changeY = phys.testY(*this); changeY!=0; changeY = phys.testY(*this)) {
     pos.y += phys.testY(*this); 
-    vel.y = 0;
+    if (phys.gravAngle%180 == 0) setY(vel, 0, phys.gravAngle);
+    else hitWall = true;
   }
   if (phys.testBoundsY(*this) < 0) {  // when fallen into the pit
     anger();
     dead = true;  // indicate death to reset
   }
   
-  visual.FlipX(vel.x<0);
+  if (hitWall) {
+    setX(vel, -1*getX(vel, phys.gravAngle), phys.gravAngle);
+    facingLeft = !facingLeft;
+  }
+  
+  visual.FlipX(facingLeft);
+  rotate(phys.gravAngle);
   updateVisual();
 }
 

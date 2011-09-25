@@ -12,7 +12,6 @@ void Player::canGoX(float dt, const Physics &phys) {
   for (float changeX = phys.testX(*this); changeX!=0; changeX = phys.testX(*this)) {  // as long as there are collisions, keep checking
     pos.x += changeX;
     vel.x = 0;
-//    std::cout << phys.gravAngle << std::endl;
     if (  // if there was a collision with the ground
       ( (changeX < 0 && phys.gravAngle==90) || (changeX>0 && phys.gravAngle==3*90) ) 
       && abs(changeX)<=abs(phys.testY(*this))

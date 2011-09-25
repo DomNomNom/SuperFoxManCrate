@@ -5,6 +5,7 @@ class Physics;
 class Enemy : public CollisionObject {
   int health;
   bool angry;
+  bool facingLeft;
   float speed;
 public:
   bool dead;

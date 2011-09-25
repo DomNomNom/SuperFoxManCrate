@@ -4,7 +4,6 @@ rotating gravity
 more enemy types
   enemies that get angry with explosives
   flyers
-moonWalk
 better sprites
 more weapons
   taser blob (kills all small, angers big)
@@ -13,4 +12,6 @@ more weapons
 bg music
 level visuals seperated from level data
 game balance (level design/gun nerfing/etc.)
-
+boss fights
+  michael jackson (moon walk)
+  high lander

@@ -102,9 +102,9 @@ void CollisionObject::set(sf::Vector2<float> &vector, float x, float y, int angl
 void CollisionObject::setX(sf::Vector2<float> &vector, float x, int angle) {
   switch (angle) {
     case 0*90:  vector.x =  x;  break;
-    case 1*90:  vector.y =  x;  break;
+    case 1*90:  vector.y = -x;  break;
     case 2*90:  vector.x = -x;  break;
-    case 3*90:  vector.y = -x;  break;
+    case 3*90:  vector.y =  x;  break;
     default:    vector.x = NAN;
   }
 }
