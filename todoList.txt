@@ -4,10 +4,13 @@ rotating gravity
 more enemy types
   enemies that get angry with explosives
   flyers
+moonWalk
 better sprites
 more weapons
-  taser mine (kills all small, angers big)
+  taser blob (kills all small, angers big)
+  mine
+  laser
 bg music
 level visuals seperated from level data
-game balance (level design/gun nerfing)
+game balance (level design/gun nerfing/etc.)
 
