@@ -3,8 +3,9 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include <SFML/System/Vector2.hpp>
 #include <vector>
+
+#include "../vector2.hpp"
 
 
 class Bullet;
@@ -17,9 +18,9 @@ class Gun {
   std::vector<Bullet> &bullets;
   sf::Clock coolDown;
   
-  sf::Vector2<float> vel;
-  sf::Vector2<float> inaccuracy;
-  sf::Vector2<float> acc;
+  vector2<float> vel;
+  vector2<float> inaccuracy;
+  vector2<float> acc;
   
   int coolingTime;
   int damadge;

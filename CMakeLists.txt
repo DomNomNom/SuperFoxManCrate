@@ -22,6 +22,7 @@ SET(SRCS
   ./bullets/bullet.cpp
   ./bullets/explosion.cpp
   ./guns/gun.cpp
+  ./vector2.inl
   )
 
 SET(PROGRAMS sfmc)

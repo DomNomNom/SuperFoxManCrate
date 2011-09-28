@@ -5,12 +5,12 @@
 #include <SFML/Graphics.hpp>
 
 class SpawnPoint {
-  std::vector<sf::Vector2<float> > points;
+  std::vector<vector2<float> > points;
 
 public:
   SpawnPoint(const sf::Image &lvl, const sf::Color &c);
   
-  sf::Vector2<float> &getPos();
+  vector2<float> &getPos();
 };
 
 #endif

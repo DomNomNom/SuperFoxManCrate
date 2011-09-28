@@ -1,4 +1,4 @@
-#include <SFML/System/Vector2.hpp>
+#include "vector2.hpp"
 #include <SFML/Window/Event.hpp>  // for keyboard input
 #include "physics.hpp"
 #include "collisionObject.hpp"
@@ -7,7 +7,7 @@
 class Player : public CollisionObject {
 private:
   SpawnPoint spawn;
-  sf::Vector2<float> playerControl; // note: playerControl is relative to the players angle
+  vector2<float> playerControl; // note: playerControl is relative to the players angle
   bool cancleJump;
   bool inAir;
   bool freeFly;

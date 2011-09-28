@@ -2,7 +2,7 @@
 
 #define MINIMUM_VEL 0.0005*dt
 
-Bullet::Bullet(float x, float y, float vel_x, float vel_y, sf::Vector2<float> &acceleration, const sf::Texture &tex, int dmg, bool explosion) : 
+Bullet::Bullet(float x, float y, float vel_x, float vel_y, vector2<float> &acceleration, const sf::Texture &tex, int dmg, bool explosion) : 
  CollisionObject(x, y, tex), 
  dead(false),
  upsideDown(false),

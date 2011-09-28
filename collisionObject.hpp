@@ -2,13 +2,13 @@
 #define COLLISION_OBJECT_H
 
 #include <SFML/Graphics.hpp>
-#include <SFML/System/Vector2.hpp>
+#include "vector2.hpp"
 
 class CollisionObject {
 public:
-  sf::Vector2<float> pos;
-  sf::Vector2<float> vel;
-  sf::Vector2<float> sz;
+  vector2<float> pos;
+  vector2<float> vel;
+  vector2<float> sz;
   sf::Sprite visual;
   
   CollisionObject(float x, float y, const sf::Texture &tex);
@@ -21,12 +21,12 @@ public:
   virtual bool collidesWith(const CollisionObject &o) const;  
 
   // functions regarding rotation with vectors
-  void add(sf::Vector2<float> &vector, float dX, float dY, int angle);
-  void set(sf::Vector2<float> &vector, float x, float y, int angle);
-  void setX(sf::Vector2<float> &vector, float x, int angle);
-  void setY(sf::Vector2<float> &vector, float x, int angle);
-  float getX(const sf::Vector2<float> &vector, int angle);
-  float getY(const sf::Vector2<float> &vector, int angle);
+  void add(vector2<float> &vector, float dX, float dY, int angle);
+  void set(vector2<float> &vector, float x, float y, int angle);
+  void setX(vector2<float> &vector, float x, int angle);
+  void setY(vector2<float> &vector, float x, int angle);
+  float getX(const vector2<float> &vector, int angle);
+  float getY(const vector2<float> &vector, int angle);
 };
   
 #endif

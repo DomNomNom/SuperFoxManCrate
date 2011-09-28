@@ -24,7 +24,7 @@ void Spawner::update() {
 }
 
 void Spawner::addEnemy() { 
-  sf::Vector2<float> pos = spawn.getPos();
+  vector2<float> pos = spawn.getPos();
   // 25% chance of a big one spawning
   if (rand()%4==0) enemies.push_back(Enemy(pos.x, pos.y, 10, largeTile)); 
   else             enemies.push_back(Enemy(pos.x, pos.y,  2, enemyTile)); 
