@@ -119,8 +119,8 @@ int main() {
   bool playerDied = false;
   sf::Text scoreText;
   scoreText.SetCharacterSize(40); 
-  scoreText.SetColor(sf::Color(200, 0, 0));
-  scoreText.SetPosition(screenWd/2-30, 0);
+  scoreText.SetColor(sf::Color(255, 0, 0));
+  scoreText.SetPosition(screenWd/2 - 30, 0);
   
   // main game loop
   while (app.IsOpened()) {

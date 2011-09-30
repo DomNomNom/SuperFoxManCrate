@@ -13,8 +13,7 @@ Box::Box(float x, float y, sf::Texture &pic, const sf::Image &lvl, const Player 
 }
 
 void Box::newPosition() {
-  vel.y = 0.00001;
-  vel.x = 0;
+  vel.set(0, 0, 0);
   do {
     pos = spawn.getPos();
   } while(hypot(pos.x-player.pos.x, pos.y-player.pos.y) < MIN_DISTANCE);
@@ -23,16 +22,10 @@ void Box::newPosition() {
 void Box::update(float dt, const Physics &phys) {
   vel.setX(0, phys.gravAngle);
   vel += phys.gravity * dt;
-//  pos += vel * dt;
   
-  if ((phys.gravAngle+0)%180 == 0) {
-    canGoX(dt, phys);
-      canGoY(dt, phys);
-  }
-  else {
-      canGoX(dt, phys);
-      canGoY(dt, phys);
-  }
+  if (phys.gravAngle%180 == 0) canGoX(dt, phys);
+  canGoY(dt, phys);
+  if (phys.gravAngle%180 != 0) canGoX(dt, phys);
   
   updateVisual();
 }
@@ -43,10 +36,7 @@ void Box::canGoX(float dt, const Physics &phys) {
     pos.x += changeX;
     vel.x = 0;
   }
-  if (phys.testBoundsX(*this) != 0) {
-    pos.x += phys.testBoundsX(*this);
-    vel.x = 0;
-  }
+  if (phys.testBoundsX(*this) != 0) newPosition();
 }
 
 void Box::canGoY(float dt, const Physics &phys) {
@@ -55,4 +45,5 @@ void Box::canGoY(float dt, const Physics &phys) {
     pos.y += changeY; 
     vel.y = 0;
   }
+  if (phys.testBoundsY(*this) != 0) newPosition();
 }

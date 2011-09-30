@@ -6,6 +6,7 @@
 #define ENEMY_WALKSPEED 0.05
 #define ENEMY_ANGER_SPEED 0.1
 
+// Constructor
 Enemy::Enemy(float x, float y, int hp, const sf::Texture &tex) 
  : CollisionObject(x, y, tex), 
  speed(ENEMY_WALKSPEED),
@@ -17,14 +18,10 @@ Enemy::Enemy(float x, float y, int hp, const sf::Texture &tex)
  visual.FlipX(facingLeft);
 }
 
-void Enemy::update(float dt, const Physics &phys) {
-  vel += phys.gravity * dt;
-  if (facingLeft) vel.setX(-speed, phys.gravAngle%180);
-  else            vel.setX( speed, phys.gravAngle%180);
-  
-  // check X-direction
+
+// helper functions for update()
+void Enemy::canGoX(float dt, const Physics &phys) {
   pos.x += vel.x * dt;
-  bool hitWall = false;
   float changeX = phys.testX(*this);
   while (changeX!=0) {  // as long as there are collisions with the level, keep checking
     pos.x += changeX;
@@ -34,28 +31,40 @@ void Enemy::update(float dt, const Physics &phys) {
   }
   changeX = phys.testBoundsX(*this);
   if (changeX != 0) {
-    pos.x += changeX;
-    hitWall = true;
+    anger(phys);
+    dead = true;  // indicate death to reset
   }
-  
-  // check Y-direction
+}
+
+void Enemy::canGoY(float dt, const Physics &phys) {
   pos.y += vel.y * dt;
   for (float changeY = phys.testY(*this); changeY!=0; changeY = phys.testY(*this)) {
     pos.y += phys.testY(*this); 
     if (phys.gravAngle%180 == 0) vel.setY(0, phys.gravAngle);
     else hitWall = true;
   }
-  if (phys.testBoundsY(*this) < 0) {  // when fallen into the pit
-    anger();
+  if (phys.testBoundsY(*this) != 0) {  // when fallen into the pit
+    anger(phys);
     dead = true;  // indicate death to reset
   }
+}
+  
+void Enemy::update(float dt, const Physics &phys) {
+  vel += phys.gravity * dt;
+  if (facingLeft) vel.setX(-speed, phys.gravAngle%180);
+  else            vel.setX( speed, phys.gravAngle%180);
+  
+  hitWall = false;
+  if (phys.gravAngle%180 == 0) canGoX(dt, phys);
+  canGoY(dt, phys);
+  if (phys.gravAngle%180 != 0) canGoX(dt, phys);
   
   if (hitWall) {
     vel.setX(-1*vel.getX(phys.gravAngle), phys.gravAngle);
     facingLeft = !facingLeft;
   }
   
-  visual.FlipX(facingLeft);
+  visual.FlipX(facingLeft ^ (phys.gravAngle>=180));
   rotate(phys.gravAngle);
   updateVisual();
 }
@@ -65,10 +74,10 @@ void Enemy::hurt(int dmg) {
   if (health <= 0) dead = true;
 }
 
-void Enemy::anger() {
+void Enemy::anger(const Physics &phys) {
   vel.x /= std::abs(vel.x);
   speed = ENEMY_ANGER_SPEED;
-  vel.x *= speed;
+  vel.set(speed, 0, phys.gravAngle);
   visual.SetColor(sf::Color::Red);
   angry = true;
 }

@@ -14,14 +14,11 @@ void Player::canGoX(float dt, const Physics &phys) {
     pos.x += changeX;
     vel.x = 0;
     if (  // if there was a collision with the ground
-      ( (changeX < 0 && phys.gravAngle==90) || (changeX>0 && phys.gravAngle==3*90) ) 
+      ( (changeX < 0 && phys.gravAngle==1*90) || (changeX>0 && phys.gravAngle==3*90) ) 
       && abs(changeX)<=abs(phys.testY(*this))
     ) inAir = false;
   }
-  if (phys.testBoundsX(*this) != 0) {
-    pos.x += phys.testBoundsX(*this);
-    vel.x = 0;
-  }
+  if (phys.testBoundsX(*this) != 0) dead = true; // player fell into a pit.
 }
 
 void Player::canGoY(float dt, const Physics &phys) {
@@ -34,9 +31,7 @@ void Player::canGoY(float dt, const Physics &phys) {
       && abs(changeY)<=abs(phys.testX(*this))
     ) inAir = false;
   }
-  if (phys.testBoundsY(*this) < 0) {  // when fallen into the pit
-    dead = true;  // indicate death to reset
-  }
+  if (phys.testBoundsY(*this) != 0) dead = true;  // player fell into a pit.
 }
 
 // === Constructor: ===

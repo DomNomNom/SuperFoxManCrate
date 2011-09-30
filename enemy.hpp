@@ -6,7 +6,13 @@ class Enemy : public CollisionObject {
   int health;
   bool angry;
   bool facingLeft;
+  bool hitWall;
   float speed;
+  
+  // helper functions for update()
+  void canGoX(float dt, const Physics &phys);  
+  void canGoY(float dt, const Physics &phys);
+
 public:
   bool dead;
   
@@ -16,5 +22,5 @@ public:
   
   void hurt(int dmg);
   
-  void anger();
+  void anger(const Physics &phys);
 };
