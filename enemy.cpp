@@ -19,8 +19,8 @@ Enemy::Enemy(float x, float y, int hp, const sf::Texture &tex)
 
 void Enemy::update(float dt, const Physics &phys) {
   vel += phys.gravity * dt;
-  if (facingLeft) setX(vel, -speed, phys.gravAngle%180);
-  else            setX(vel,  speed, phys.gravAngle%180);
+  if (facingLeft) vel.setX(-speed, phys.gravAngle%180);
+  else            vel.setX( speed, phys.gravAngle%180);
   
   // check X-direction
   pos.x += vel.x * dt;
@@ -29,7 +29,7 @@ void Enemy::update(float dt, const Physics &phys) {
   while (changeX!=0) {  // as long as there are collisions with the level, keep checking
     pos.x += changeX;
     if (phys.gravAngle%180 == 0) hitWall = true;
-    else setY(vel, 0, phys.gravAngle);
+    else vel.setY(0, phys.gravAngle);
     changeX = phys.testX(*this);
   }
   changeX = phys.testBoundsX(*this);
@@ -42,7 +42,7 @@ void Enemy::update(float dt, const Physics &phys) {
   pos.y += vel.y * dt;
   for (float changeY = phys.testY(*this); changeY!=0; changeY = phys.testY(*this)) {
     pos.y += phys.testY(*this); 
-    if (phys.gravAngle%180 == 0) setY(vel, 0, phys.gravAngle);
+    if (phys.gravAngle%180 == 0) vel.setY(0, phys.gravAngle);
     else hitWall = true;
   }
   if (phys.testBoundsY(*this) < 0) {  // when fallen into the pit
@@ -51,7 +51,7 @@ void Enemy::update(float dt, const Physics &phys) {
   }
   
   if (hitWall) {
-    setX(vel, -1*getX(vel, phys.gravAngle), phys.gravAngle);
+    vel.setX(-1*vel.getX(phys.gravAngle), phys.gravAngle);
     facingLeft = !facingLeft;
   }
   

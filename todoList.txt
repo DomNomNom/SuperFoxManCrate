@@ -1,6 +1,5 @@
 TODO list:
 
-rotating gravity
 more enemy types
   enemies that get angry with explosives
   flyers
@@ -15,3 +14,18 @@ game balance (level design/gun nerfing/etc.)
 boss fights
   michael jackson (moon walk)
   high lander
+
+Portals  
+jetpacks
+grappling hook
+teleporter (telefrag)
+
+Magnettic stuff!
+  limited ammo, regain with magnet (kill exttra enemie)
+  plant magnet and curve bullet paths
+  magnets manipulate enviroment
+  flying magnets
+  sticky metal
+  magnetic gas
+
+NO PROGRESS ACHIEVEMENTS!! only extremely hard things

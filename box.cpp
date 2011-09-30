@@ -21,7 +21,7 @@ void Box::newPosition() {
 }
 
 void Box::update(float dt, const Physics &phys) {
-  setX(vel, 0, phys.gravAngle);
+  vel.setX(0, phys.gravAngle);
   vel += phys.gravity * dt;
 //  pos += vel * dt;
   

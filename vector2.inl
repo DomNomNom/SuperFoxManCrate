@@ -28,49 +28,101 @@
 ////////////////////////////////////////////////////////////
 
 
+/*=============== Constructors ===============*/
 template <typename T>
-
-inline vector2<T>::vector2() :
-x(0), 
-y(0)
-{ }
-
-
-////////////////////////////////////////////////////////////
+inline vector2<T>::vector2() : x(0), y(0) { }
 
 template <typename T>
-
-inline vector2<T>::vector2(T X, T Y) :
-x(X), 
-y(Y)
-{ }
-
-
-////////////////////////////////////////////////////////////
+inline vector2<T>::vector2(T X, T Y) : x(X), y(Y) { }
 
 template <typename T>
-
 template <typename U>
-
 inline vector2<T>::vector2(const vector2<U>& vector) :
-x(static_cast<T>(vector.x)), 
-y(static_cast<T>(vector.y))
+ x(static_cast<T>(vector.x)), 
+ y(static_cast<T>(vector.y))
 { }
 
 
-////////////////////////////////////////////////////////////
+/*=============== Angle functions ===============*/
 
 template <typename T>
+void vector2<T>::add(T dX, T dY, int angle) {
+  switch (angle) {
+    case 0*90:
+      x += dX;
+      y += dY;
+      break;
+    case 1*90:
+      x += dY;
+      y -= dX;
+      break;
+    case 2*90:
+      x -= dX;
+      y -= dY;
+      break;
+    case 3*90:
+      x -= dY;
+      y += dX;
+      break;    
+  }
+}
 
+template <typename T>
+void vector2<T>::set(T X, T Y, int angle) {
+  setX(X, angle);
+  setY(Y, angle);
+}
+
+template <typename T>
+void vector2<T>::setX(T X, int angle) {
+  switch (angle) {
+    case 0*90:  x =  X;  break;
+    case 1*90:  y = -X;  break;
+    case 2*90:  x = -X;  break;
+    case 3*90:  y =  X;  break;
+  }
+}
+
+template <typename T>
+void vector2<T>::setY(T Y, int angle) {
+  switch (angle) {
+    case 0*90:  y =  Y;  break;
+    case 1*90:  x = -Y;  break;  
+    case 2*90:  y = -Y;  break;
+    case 3*90:  x =  Y;  break;
+  }
+}
+
+template <typename T>
+T vector2<T>::getX(int angle) {
+  switch (angle) {
+    case 0*90:  return  x;
+    case 1*90:  return  y;
+    case 2*90:  return -x;
+    case 3*90:  return -y;
+  }
+}
+
+template <typename T>
+T vector2<T>::getY(int angle) {
+  switch (angle) {
+    case 0*90:  return  y;
+    case 1*90:  return  x;
+    case 2*90:  return -y;
+    case 3*90:  return -x;
+  }
+}
+
+
+
+/*=============== Operator defenitions ===============*/
+
+template <typename T>
 inline vector2<T> operator -(const vector2<T>& right) {
   return vector2<T>(-right.x, -right.y);
 }
 
-
-////////////////////////////////////////////////////////////
-
 template <typename T>
-
 inline vector2<T>& operator +=(vector2<T>& left, const vector2<T>& right) {
   left.x += right.x;
   left.y += right.y;
@@ -78,11 +130,7 @@ inline vector2<T>& operator +=(vector2<T>& left, const vector2<T>& right) {
   return left;
 }
 
-
-////////////////////////////////////////////////////////////
-
 template <typename T>
-
 inline vector2<T>& operator -=(vector2<T>& left, const vector2<T>& right) {
   left.x -= right.x;
   left.y -= right.y;
@@ -90,47 +138,27 @@ inline vector2<T>& operator -=(vector2<T>& left, const vector2<T>& right) {
   return left;
 }
 
-
-////////////////////////////////////////////////////////////
-
 template <typename T>
-
 inline vector2<T> operator +(const vector2<T>& left, const vector2<T>& right) {
   return vector2<T>(left.x + right.x, left.y + right.y);
 }
 
-
-////////////////////////////////////////////////////////////
-
 template <typename T>
-
 inline vector2<T> operator -(const vector2<T>& left, const vector2<T>& right) {
   return vector2<T>(left.x - right.x, left.y - right.y);
 }
 
-
-////////////////////////////////////////////////////////////
-
 template <typename T>
-
 inline vector2<T> operator *(const vector2<T>& left, T right) {
   return vector2<T>(left.x * right, left.y * right);
 }
 
-
-////////////////////////////////////////////////////////////
-
 template <typename T>
-
 inline vector2<T> operator *(T left, const vector2<T>& right) {
   return vector2<T>(right.x * left, right.y * left);
 }
 
-
-////////////////////////////////////////////////////////////
-
 template <typename T>
-
 inline vector2<T>& operator *=(vector2<T>& left, T right) {
   left.x *= right;
   left.y *= right;
@@ -138,20 +166,12 @@ inline vector2<T>& operator *=(vector2<T>& left, T right) {
   return left;
 }
 
-
-////////////////////////////////////////////////////////////
-
 template <typename T>
-
 inline vector2<T> operator /(const vector2<T>& left, T right) {
   return vector2<T>(left.x / right, left.y / right);
 }
 
-
-////////////////////////////////////////////////////////////
-
 template <typename T>
-
 inline vector2<T>& operator /=(vector2<T>& left, T right) {
   left.x /= right;
   left.y /= right;
@@ -160,23 +180,19 @@ inline vector2<T>& operator /=(vector2<T>& left, T right) {
 }
 
 
-////////////////////////////////////////////////////////////
+/*=============== Comparator defenitions ===============*/
 
 template <typename T>
-
 inline bool operator ==(const vector2<T>& left, const vector2<T>& right) {
   return (left.x == right.x) && (left.y == right.y);
 }
 
-
-
-
-
-////////////////////////////////////////////////////////////
-
 template <typename T>
-
 inline bool operator !=(const vector2<T>& left, const vector2<T>& right) {
   return (left.x != right.x) || (left.y != right.y);
 }
 
+template <typename T>
+void vector2<T>::add(const vector2<T> &v, int angle) {
+  add(v.x, v.y, angle);
+}

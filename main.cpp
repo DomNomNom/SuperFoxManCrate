@@ -28,7 +28,7 @@ sf::Drawable &placeObject(sf::Drawable &d) {
     d.GetPosition().x * (scale-1),
     d.GetPosition().y * (scale-1) 
   );
-  d.Move( // shift to game top-left cornet
+  d.Move( // shift to game top-left corner
     screenWd/2 - scale*WIDTH/2, 
     screenHt/2 - scale*HEIGHT/2
   );
@@ -38,11 +38,11 @@ int main() {
   // create the window
   sf::VideoMode screen(sf::VideoMode::GetDesktopMode());
   sf::RenderWindow app(screen, "sfmc", sf::Style::Default);
-//  app.SetFramerateLimit(120); // Limit to 60 frames per second
+//  app.SetFramerateLimit(60); // Limit to 60 frames per second
   app.ShowMouseCursor(false);
   app.EnableVerticalSync(true);
   app.EnableKeyRepeat(false);
-  scale = screen.Height / (float)HEIGHT; // (un-)comment this line to enable/disable dynamic scaling
+  scale = std::min(screen.Height / (float)HEIGHT, screen.Width/(float)WIDTH); // dynamic scaling
   //std::cout << "scale: x" << scale << std::endl;
   
   screenWd = sf::VideoMode::GetDesktopMode().Width;
@@ -179,7 +179,7 @@ int main() {
     }
     
     // draw
-    app.Clear(sf::Color::Black);
+    app.Clear(sf::Color(127,127,127));
     app.Draw(bg);
     app.Draw(placeObject(p.visual));      // player
     app.Draw(placeObject(foxBox.visual)); 

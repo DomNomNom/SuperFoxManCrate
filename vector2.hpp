@@ -3,7 +3,7 @@
 | Here is it's license:                        |
 \**********************************************/
 
-////////////////////////////////////////////////////////////
+
 //
 // SFML - Simple and Fast Multimedia Library
 // Copyright (C) 2007-2009 Laurent Gomila (laurent.gom@gmail.com)
@@ -25,133 +25,12 @@
 //
 // 3. This notice may not be removed or altered from any source distribution.
 //
-////////////////////////////////////////////////////////////
+
 
 #ifndef VECTOR2_HPP
 #define VECTOR2_HPP
 
-
-////////////////////////////////////////////////////////////
-///  Utility template class for manipulating 2-dimensional vectors
-////////////////////////////////////////////////////////////
-template <typename T>
-class vector2
-{
-public :
-
-    ////////////////////////////////////////////////////////////
-    /// Default constructor
-    ////////////////////////////////////////////////////////////
-    vector2();
-
-    ////////////////////////////////////////////////////////////
-    /// Construct the vector from its coordinates
-    ////////////////////////////////////////////////////////////
-    vector2(T X, T Y);
-
-    ////////////////////////////////////////////////////////////
-    /// Construct the vector from another type of vector
-    ///
-    /// This constructor doesn't replace the copy constructor,
-    /// it's called only when U != T.
-    /// A call to this constructor will fail to compile if U
-    /// is not convertible to T.
-    ////////////////////////////////////////////////////////////
-    template <typename U>
-    explicit vector2(const vector2<U>& vector);
-
-    ////////////////////////////////////////////////////////////
-    /// Member data
-    ////////////////////////////////////////////////////////////
-    T x; ///< X coordinate of the vector
-    T y; ///< Y coordinate of the vector
-};
-
-////////////////////////////////////////////////////////////
-/// Overload of unary operator -
-////////////////////////////////////////////////////////////
-template <typename T>
-vector2<T> operator -(const vector2<T>& right);
-
-////////////////////////////////////////////////////////////
-/// \brief Overload of binary operator +=
-////////////////////////////////////////////////////////////
-template <typename T>
-vector2<T>& operator +=(vector2<T>& left, const vector2<T>& right);
-
-////////////////////////////////////////////////////////////
-/// vector2
-////////////////////////////////////////////////////////////
-template <typename T>
-vector2<T>& operator -=(vector2<T>& left, const vector2<T>& right);
-
-////////////////////////////////////////////////////////////
-/// \brief Overload of binary operator +
-////////////////////////////////////////////////////////////
-template <typename T>
-vector2<T> operator +(const vector2<T>& left, const vector2<T>& right);
-
-////////////////////////////////////////////////////////////
-/// Overload of binary operator -
-////////////////////////////////////////////////////////////
-template <typename T>
-vector2<T> operator -(const vector2<T>& left, const vector2<T>& right);
-
-////////////////////////////////////////////////////////////
-/// Overload of binary operator *
-////////////////////////////////////////////////////////////
-template <typename T>
-vector2<T> operator *(const vector2<T>& left, T right);
-
-////////////////////////////////////////////////////////////
-/// Overload of binary operator *
-////////////////////////////////////////////////////////////
-template <typename T>
-vector2<T> operator *(T left, const vector2<T>& right);
-
-////////////////////////////////////////////////////////////
-/// Overload of binary operator *=
-////////////////////////////////////////////////////////////
-template <typename T>
-vector2<T>& operator *=(vector2<T>& left, T right);
-
-////////////////////////////////////////////////////////////
-/// Overload of binary operator /
-////////////////////////////////////////////////////////////
-template <typename T>
-vector2<T> operator /(const vector2<T>& left, T right);
-
-////////////////////////////////////////////////////////////
-/// Overload of binary operator /=
-////////////////////////////////////////////////////////////
-template <typename T>
-vector2<T>& operator /=(vector2<T>& left, T right);
-
-////////////////////////////////////////////////////////////
-/// Overload of binary operator ==
-////////////////////////////////////////////////////////////
-template <typename T>
-bool operator ==(const vector2<T>& left, const vector2<T>& right);
-
-////////////////////////////////////////////////////////////
-/// Overload of binary operator !=
-////////////////////////////////////////////////////////////
-template <typename T>
-bool operator !=(const vector2<T>& left, const vector2<T>& right);
-
-#include "vector2.inl"
-
-// Define the most common types
-typedef vector2<int>          vector2i;
-typedef vector2<unsigned int> vector2u;
-typedef vector2<float>        vector2f;
-
-
-
-#endif // SFML_VECTOR2_HPP
-
-
-////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 ///
 /// vector2 is a simple class that defines a mathematical
 /// vector with two coordinates (x and y). It can be used to
@@ -168,8 +47,7 @@ typedef vector2<float>        vector2f;
 /// vector2<int> is vector2i
 ///
 /// The vector2 class has a small and simple interface, its x and y members
-/// can be accessed directly (there's no accessor like SetX(), GetX()) and it
-/// contains no mathematical function like dot product, cross product, length, etc.
+/// can be accessed directly (there's no accessor like SetX(), GetX()).
 ///
 /// Usage example:
 /// vector2f v1(16.5f, 24.f);
@@ -182,6 +60,99 @@ typedef vector2<float>        vector2f;
 ///
 /// bool different = (v2 != v3);
 ///
-/// Note: for 3-dimensional vectors, see sf::Vector3.
-///
-////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+
+template <typename T>
+class vector2{
+public :
+  // Member data
+  T x; // X coordinate of the vector
+  T y; // Y coordinate of the vector
+  
+  // Constructors
+  vector2();         // the default constructor
+  vector2(T X, T Y); // Construct the vector from its coordinates
+
+  template <typename U>
+  explicit vector2(const vector2<U>& vector); // Consruct the vector from another vector and typecast the contents
+
+
+  /// functions modifying the vector while assuming a rotation by an angle (angle: multiples of 90 within 0-360) 
+  void add(const vector2<T> &v, int angle);
+  void add(T dX, T dY, int angle);
+  
+  void set(T X, T Y, int angle);
+  void setX(T X, int angle);
+  void setY(T Y, int angle);
+  
+  T getX(int angle);
+  T getY(int angle);
+};
+
+
+
+/*=============== operator declarations ===============*/
+
+/// Overload of unary operator -
+template <typename T>
+vector2<T> operator -(const vector2<T>& right);
+
+/// Overload of binary operator +=
+template <typename T>
+vector2<T>& operator +=(vector2<T>& left, const vector2<T>& right);
+
+/// Overload of binary operator -
+template <typename T>
+vector2<T>& operator -=(vector2<T>& left, const vector2<T>& right);
+
+/// Overload of binary operator +
+template <typename T>
+vector2<T> operator +(const vector2<T>& left, const vector2<T>& right);
+
+/// Overload of binary operator -
+template <typename T>
+vector2<T> operator -(const vector2<T>& left, const vector2<T>& right);
+
+/// Overload of binary operator *
+template <typename T>
+vector2<T> operator *(const vector2<T>& left, T right);
+
+/// Overload of binary operator *
+template <typename T>
+vector2<T> operator *(T left, const vector2<T>& right);
+
+/// Overload of binary operator *=
+template <typename T>
+vector2<T>& operator *=(vector2<T>& left, T right);
+
+/// Overload of binary operator /
+template <typename T>
+vector2<T> operator /(const vector2<T>& left, T right);
+
+/// Overload of binary operator /=
+template <typename T>
+vector2<T>& operator /=(vector2<T>& left, T right);
+
+
+/*=============== Comparator declarations ===============*/
+
+/// Overload of binary operator ==
+template <typename T>
+bool operator ==(const vector2<T>& left, const vector2<T>& right);
+
+/// Overload of binary operator !=
+template <typename T>
+bool operator !=(const vector2<T>& left, const vector2<T>& right);
+
+
+
+#include "vector2.inl"
+
+// Define the most common types
+typedef vector2<int>          vector2i;
+typedef vector2<unsigned int> vector2u;
+typedef vector2<float>        vector2f;
+
+
+
+#endif

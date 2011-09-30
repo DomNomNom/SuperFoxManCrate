@@ -1,4 +1,5 @@
 #include <iostream>
+#include "vector2.hpp"
 #include "player.hpp"
 
 #define PLAYER_WALKSPEED 0.005
@@ -87,11 +88,11 @@ void Player::update(float dt, const Physics &phys) {
     inAir = true;
     vel += phys.gravity * dt;
     
-    setX(vel, 0, phys.gravAngle);
-    add(vel, (playerControl*dt).x, (playerControl).y, phys.gravAngle); 
+    vel.setX(0, phys.gravAngle);
+    vel.add((playerControl*dt).x, (playerControl).y, phys.gravAngle); 
     
-    if (inAir && getY(vel, phys.gravAngle)<0 && cancleJump) 
-      setY(vel, 0, phys.gravAngle);  // cancle the jump if possible
+    if (inAir && vel.getY(phys.gravAngle)<0 && cancleJump) 
+      vel.setY(0, phys.gravAngle);  // cancle the jump if possible
     cancleJump = true;
   }
   
